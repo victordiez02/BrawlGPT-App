@@ -1,0 +1,113 @@
+
+import React, { useState } from 'react';
+import { Brawler, brawlers } from '@/lib/brawlers';
+import BrawlerCard from './BrawlerCard';
+import { Ban } from 'lucide-react';
+
+interface BannedBrawlersProps {
+  bannedBrawlers: number[];
+  onBanBrawler: (brawlerId: number) => void;
+  onUnbanBrawler: (brawlerId: number) => void;
+}
+
+const BannedBrawlers: React.FC<BannedBrawlersProps> = ({
+  bannedBrawlers,
+  onBanBrawler,
+  onUnbanBrawler
+}) => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [showDropdown, setShowDropdown] = useState(false);
+  
+  // Filter brawlers for dropdown
+  const filteredBrawlers = brawlers
+    .filter(brawler => !bannedBrawlers.includes(brawler.id))
+    .filter(brawler => 
+      brawler.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    
+  // Get banned brawler objects
+  const bannedBrawlerObjects = bannedBrawlers.map(id => 
+    brawlers.find(brawler => brawler.id === id)
+  ).filter(Boolean) as Brawler[];
+  
+  return (
+    <div className="glass-panel p-4 animate-fade-in">
+      <h3 className="flex items-center text-lg font-bold mb-4">
+        <Ban size={20} className="mr-2 text-red-500" />
+        Brawlers Baneados ({bannedBrawlers.length})
+      </h3>
+      
+      <div className="relative mb-4">
+        <div className="flex">
+          <input
+            type="text"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            onFocus={() => setShowDropdown(true)}
+            placeholder="Buscar brawler para banear..."
+            className="flex-1 p-2 rounded-l-lg border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-brawl-red"
+          />
+          <button
+            onClick={() => setShowDropdown(!showDropdown)}
+            className="bg-brawl-red text-white px-3 rounded-r-lg"
+          >
+            +
+          </button>
+        </div>
+        
+        {showDropdown && (
+          <div className="absolute z-10 mt-1 w-full max-h-60 overflow-auto bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700">
+            {filteredBrawlers.length > 0 ? (
+              filteredBrawlers.slice(0, 8).map(brawler => (
+                <div
+                  key={brawler.id}
+                  className="flex items-center space-x-3 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
+                  onClick={() => {
+                    onBanBrawler(brawler.id);
+                    setSearchTerm('');
+                    setShowDropdown(false);
+                  }}
+                >
+                  <img
+                    src={brawler.image}
+                    alt={brawler.name}
+                    className="w-8 h-8 rounded-md"
+                  />
+                  <span>{brawler.name}</span>
+                </div>
+              ))
+            ) : (
+              <div className="p-2 text-gray-500 text-center">No hay resultados</div>
+            )}
+          </div>
+        )}
+      </div>
+      
+      <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-3">
+        {bannedBrawlerObjects.length > 0 ? (
+          bannedBrawlerObjects.map(brawler => (
+            <div key={brawler.id} className="relative">
+              <BrawlerCard
+                brawler={brawler}
+                banned={true}
+                size="sm"
+              />
+              <button
+                onClick={() => onUnbanBrawler(brawler.id)}
+                className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center hover:bg-red-600 transition-colors"
+              >
+                ×
+              </button>
+            </div>
+          ))
+        ) : (
+          <div className="col-span-full text-center py-4 text-gray-500 dark:text-gray-400">
+            No hay brawlers baneados
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default BannedBrawlers;
