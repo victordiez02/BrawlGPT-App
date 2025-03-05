@@ -5,7 +5,7 @@ import DraftSimulator from '@/components/DraftSimulator';
 
 const Index = () => {
   return (
-    <div className="min-h-screen pb-12 bg-gray-200 bg-opacity-70 text-gray-800">
+    <div className="min-h-screen pb-12 bg-gray-100 bg-opacity-70 text-gray-800">
       <Header />
       <main className="container mx-auto pb-20">
         <DraftSimulator />

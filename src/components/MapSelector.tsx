@@ -25,6 +25,11 @@ const MapSelector: React.FC<MapSelectorProps> = ({ selectedMap, onSelectMap }) =
       map.mode.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>, mapName: string) => {
+    console.error(`Failed to load image for map ${mapName}:`, e.currentTarget.src);
+    e.currentTarget.src = 'https://cdn.brawlify.com/placeholder.png';
+  };
+
   return (
     <div className="w-full animate-slide-in">
       <div className="mb-2">
@@ -44,6 +49,7 @@ const MapSelector: React.FC<MapSelectorProps> = ({ selectedMap, onSelectMap }) =
                     src={selectedMap.image} 
                     alt={selectedMap.name} 
                     className="w-full h-full object-cover"
+                    onError={(e) => handleImageError(e, selectedMap.name)}
                   />
                 </div>
                 <div>
@@ -59,6 +65,7 @@ const MapSelector: React.FC<MapSelectorProps> = ({ selectedMap, onSelectMap }) =
             )}
             <div className="flex items-center">
               <button 
+                type="button"
                 onClick={(e) => {
                   e.stopPropagation();
                   setIsExpandedView(!isExpandedView);
@@ -89,6 +96,7 @@ const MapSelector: React.FC<MapSelectorProps> = ({ selectedMap, onSelectMap }) =
                 
                 <div className="flex flex-wrap gap-1 mt-2">
                   <button
+                    type="button"
                     onClick={() => setFilterMode(null)}
                     className={`px-2 py-1 text-xs rounded-full transition-colors ${
                       filterMode === null 
@@ -100,6 +108,7 @@ const MapSelector: React.FC<MapSelectorProps> = ({ selectedMap, onSelectMap }) =
                   </button>
                   {modes.map(mode => (
                     <button
+                      type="button"
                       key={mode}
                       onClick={() => setFilterMode(mode)}
                       className={`px-2 py-1 text-xs rounded-full transition-colors ${
@@ -118,6 +127,7 @@ const MapSelector: React.FC<MapSelectorProps> = ({ selectedMap, onSelectMap }) =
                 {filteredMaps.length > 0 ? (
                   filteredMaps.map(map => (
                     <button
+                      type="button"
                       key={map.id}
                       className={`w-full flex items-center space-x-3 px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors ${
                         selectedMap?.id === map.id ? 'bg-blue-50 dark:bg-blue-900/20' : ''
@@ -132,6 +142,7 @@ const MapSelector: React.FC<MapSelectorProps> = ({ selectedMap, onSelectMap }) =
                           src={map.image} 
                           alt={map.name} 
                           className="w-full h-full object-cover"
+                          onError={(e) => handleImageError(e, map.name)}
                         />
                       </div>
                       <div className="flex-1">
@@ -158,6 +169,7 @@ const MapSelector: React.FC<MapSelectorProps> = ({ selectedMap, onSelectMap }) =
         <div className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4">
           <div className="relative max-w-3xl w-full">
             <button 
+              type="button"
               onClick={() => setIsExpandedView(false)}
               className="absolute -top-4 -right-4 bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center"
             >
@@ -181,6 +193,7 @@ const MapSelector: React.FC<MapSelectorProps> = ({ selectedMap, onSelectMap }) =
               
               <div className="flex flex-wrap gap-2 mb-4">
                 <button
+                  type="button"
                   onClick={() => setFilterMode(null)}
                   className={`px-3 py-1.5 text-sm rounded-full transition-colors ${
                     filterMode === null 
@@ -192,6 +205,7 @@ const MapSelector: React.FC<MapSelectorProps> = ({ selectedMap, onSelectMap }) =
                 </button>
                 {modes.map(mode => (
                   <button
+                    type="button"
                     key={mode}
                     onClick={() => setFilterMode(mode)}
                     className={`px-3 py-1.5 text-sm rounded-full transition-colors ${
@@ -224,6 +238,7 @@ const MapSelector: React.FC<MapSelectorProps> = ({ selectedMap, onSelectMap }) =
                         src={map.image}
                         alt={map.name}
                         className="w-full h-full object-cover transition-transform hover:scale-110"
+                        onError={(e) => handleImageError(e, map.name)}
                       />
                     </div>
                     <div className="p-2 bg-white/80 dark:bg-gray-800/80">
@@ -244,6 +259,7 @@ const MapSelector: React.FC<MapSelectorProps> = ({ selectedMap, onSelectMap }) =
             src={selectedMap.image}
             alt={selectedMap.name}
             className="w-full h-full object-cover"
+            onError={(e) => handleImageError(e, selectedMap.name)}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
           <div className="absolute bottom-0 left-0 right-0 p-2 text-white">
