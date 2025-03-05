@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useMemo } from 'react';
 import { brawlers, Brawler } from '@/lib/brawlers';
 import { GameMap } from '@/lib/maps';
@@ -77,6 +76,54 @@ const DraftSimulator: React.FC = () => {
     return false;
   }, [selectedBrawlers, pickOrder]);
 
+  // Get detailed error message about missing picks
+  const getMissingPicksMessage = () => {
+    const filledPositions = selectedBrawlers
+      .map((id, index) => ({ id, index }))
+      .filter(item => item.id !== null)
+      .map(item => item.index);
+    
+    // Find which picks are missing
+    const missingPicks = [];
+    for (let i = 0; i < 6; i++) {
+      const pickPosition = pickOrder[i];
+      if (!filledPositions.includes(pickPosition)) {
+        missingPicks.push(i + 1); // Convert to 1-based for user display
+      }
+    }
+    
+    // Filter to show only the next expected picks based on the filled count
+    const filledCount = filledPositions.length;
+    
+    if (filledCount === 0) return "Selecciona el primer pick";
+    if (filledCount === 1) {
+      if (filledPositions[0] !== pickOrder[0]) return `Falta el brawler para el 1º pick`;
+      return `Falta el brawler para el 2º pick`;
+    }
+    if (filledCount === 2) {
+      if (!filledPositions.includes(pickOrder[0]) || 
+          !filledPositions.includes(pickOrder[1])) {
+        return `Faltan brawlers para los picks 1º y 2º`;
+      }
+      return `Falta el brawler para el 3º pick`;
+    }
+    if (filledCount === 3) {
+      if (!isValidPhase) return `Orden de picks incorrecto. Faltan los picks ${missingPicks.slice(0, 3).join('º, ')}º`;
+      return `Falta el brawler para el 4º pick`;
+    }
+    if (filledCount === 4) {
+      if (!filledPositions.includes(pickOrder[0]) || 
+          !filledPositions.includes(pickOrder[1]) ||
+          !filledPositions.includes(pickOrder[2]) ||
+          !filledPositions.includes(pickOrder[3])) {
+        return `Orden de picks incorrecto. Faltan los picks ${missingPicks.slice(0, 4).join('º, ')}º`;
+      }
+      return `Falta el brawler para el 5º pick`;
+    }
+    
+    return `Orden de picks incorrecto. Faltan los picks ${missingPicks.join('º, ')}º`;
+  };
+
   // Generate button state and text
   const generateButtonConfig = useMemo(() => {
     const phase = getCurrentDraftPhase();
@@ -93,7 +140,7 @@ const DraftSimulator: React.FC = () => {
       return {
         enabled: false,
         text: "Generar Mejor Opción",
-        disabledReason: "Orden de picks incorrecto"
+        disabledReason: getMissingPicksMessage()
       };
     }
     
@@ -129,7 +176,7 @@ const DraftSimulator: React.FC = () => {
           disabledReason: "Configura el draft correctamente"
         };
     }
-  }, [selectedMap, isValidPhase, getCurrentDraftPhase]);
+  }, [selectedMap, isValidPhase, getCurrentDraftPhase, getMissingPicksMessage]);
   
   // Handle brawler selection
   const handleSelectBrawler = (brawler: Brawler) => {

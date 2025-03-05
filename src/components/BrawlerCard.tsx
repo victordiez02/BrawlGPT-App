@@ -48,6 +48,10 @@ const BrawlerCard: React.FC<BrawlerCardProps> = ({
           alt={brawler.name}
           className="w-full h-full object-cover transition-transform duration-300"
           loading="lazy"
+          onError={(e) => {
+            console.error(`Failed to load image for ${brawler.name}:`, brawler.image);
+            e.currentTarget.src = `https://cdn.brawlify.com/brawler-thumbs/${brawler.name.toLowerCase().replace(/\s+/g, '-')}.png`;
+          }}
         />
         
         {banned && (
