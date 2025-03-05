@@ -84,7 +84,7 @@
   }
 
   body {
-    @apply bg-background text-foreground font-exo antialiased;
+    @apply bg-gray-200 text-foreground font-exo antialiased;
     background-image: radial-gradient(
       circle at top center,
       rgba(14, 165, 233, 0.05) 0%,

@@ -3,7 +3,8 @@ import React, { useMemo, useState, useCallback } from 'react';
 import { Brawler } from '@/lib/brawlers';
 import BrawlerCard from './BrawlerCard';
 import BrawlerSearch from './BrawlerSearch';
-import { ArrowDownAZ, ArrowUpAZ, LayoutGrid } from 'lucide-react';
+import { ArrowDownAZ, ArrowUpAZ, Filter, LayoutGrid } from 'lucide-react';
+import { toast } from 'sonner';
 
 interface BrawlerGridProps {
   brawlers: Brawler[];
@@ -22,6 +23,7 @@ const BrawlerGrid: React.FC<BrawlerGridProps> = ({
 }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [sortOrder, setSortOrder] = useState<'rarity' | 'nameAsc' | 'nameDesc'>('rarity');
+  const [showSortDropdown, setShowSortDropdown] = useState(false);
   
   // Find which team (if any) the brawler is on
   const getBrawlerTeam = (brawlerId: number) => {
@@ -37,6 +39,10 @@ const BrawlerGrid: React.FC<BrawlerGridProps> = ({
   const handleBrawlerContextMenu = useCallback((e: React.MouseEvent, brawler: Brawler) => {
     e.preventDefault();
     if (!selectedBrawlers.includes(brawler.id) && !bannedBrawlers.includes(brawler.id)) {
+      if (bannedBrawlers.length >= 6) {
+        toast.error("No puedes banear más de 6 brawlers");
+        return;
+      }
       onBanBrawler(brawler.id);
     }
   }, [selectedBrawlers, bannedBrawlers, onBanBrawler]);
@@ -111,31 +117,59 @@ const BrawlerGrid: React.FC<BrawlerGridProps> = ({
       }));
   }, [brawlers, searchTerm, sortOrder, filteredAndSortedBrawlers]);
   
-  // Toggle sort order
-  const toggleSortOrder = () => {
-    if (sortOrder === 'rarity') setSortOrder('nameAsc');
-    else if (sortOrder === 'nameAsc') setSortOrder('nameDesc');
-    else setSortOrder('rarity');
-  };
-  
   return (
     <div className="glass-panel p-4 animate-fade-in">
       <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
         <h3 className="text-lg font-bold">Selecciona Brawlers</h3>
         
         <div className="flex items-center space-x-2">
-          <button
-            onClick={toggleSortOrder}
-            className="flex items-center space-x-1 p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-          >
-            {sortOrder === 'rarity' && <LayoutGrid size={16} />}
-            {sortOrder === 'nameAsc' && <ArrowDownAZ size={16} />}
-            {sortOrder === 'nameDesc' && <ArrowUpAZ size={16} />}
-            <span className="text-sm">
-              {sortOrder === 'rarity' ? 'Rareza' : 
-               sortOrder === 'nameAsc' ? 'A-Z' : 'Z-A'}
-            </span>
-          </button>
+          <div className="relative">
+            <button
+              onClick={() => setShowSortDropdown(!showSortDropdown)}
+              className="flex items-center space-x-1 p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+            >
+              <Filter size={16} />
+              <span className="text-sm">Ordenar por</span>
+            </button>
+            
+            {showSortDropdown && (
+              <div className="absolute right-0 z-10 mt-1 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700">
+                <div 
+                  className="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
+                  onClick={() => {
+                    setSortOrder('rarity');
+                    setShowSortDropdown(false);
+                  }}
+                >
+                  <LayoutGrid size={16} />
+                  <span className="text-sm">Por rareza</span>
+                  {sortOrder === 'rarity' && <span className="ml-auto text-green-500">✓</span>}
+                </div>
+                <div 
+                  className="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
+                  onClick={() => {
+                    setSortOrder('nameAsc');
+                    setShowSortDropdown(false);
+                  }}
+                >
+                  <ArrowDownAZ size={16} />
+                  <span className="text-sm">Nombre (A-Z)</span>
+                  {sortOrder === 'nameAsc' && <span className="ml-auto text-green-500">✓</span>}
+                </div>
+                <div 
+                  className="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
+                  onClick={() => {
+                    setSortOrder('nameDesc');
+                    setShowSortDropdown(false);
+                  }}
+                >
+                  <ArrowUpAZ size={16} />
+                  <span className="text-sm">Nombre (Z-A)</span>
+                  {sortOrder === 'nameDesc' && <span className="ml-auto text-green-500">✓</span>}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
       

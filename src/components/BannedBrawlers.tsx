@@ -3,12 +3,15 @@ import React, { useState } from 'react';
 import { Brawler, brawlers } from '@/lib/brawlers';
 import BrawlerCard from './BrawlerCard';
 import { Ban } from 'lucide-react';
+import { toast } from 'sonner';
 
 interface BannedBrawlersProps {
   bannedBrawlers: number[];
   onBanBrawler: (brawlerId: number) => void;
   onUnbanBrawler: (brawlerId: number) => void;
 }
+
+const MAX_BANNED_BRAWLERS = 6;
 
 const BannedBrawlers: React.FC<BannedBrawlersProps> = ({
   bannedBrawlers,
@@ -30,11 +33,19 @@ const BannedBrawlers: React.FC<BannedBrawlersProps> = ({
     brawlers.find(brawler => brawler.id === id)
   ).filter(Boolean) as Brawler[];
   
+  const handleBanBrawler = (brawlerId: number) => {
+    if (bannedBrawlers.length >= MAX_BANNED_BRAWLERS) {
+      toast.error(`No puedes banear más de ${MAX_BANNED_BRAWLERS} brawlers`);
+      return;
+    }
+    onBanBrawler(brawlerId);
+  };
+  
   return (
     <div className="glass-panel p-4 animate-fade-in">
       <h3 className="flex items-center text-lg font-bold mb-4">
         <Ban size={20} className="mr-2 text-red-500" />
-        Brawlers Baneados ({bannedBrawlers.length})
+        Brawlers Baneados ({bannedBrawlers.length}/{MAX_BANNED_BRAWLERS})
       </h3>
       
       <div className="relative mb-4">
@@ -49,7 +60,8 @@ const BannedBrawlers: React.FC<BannedBrawlersProps> = ({
           />
           <button
             onClick={() => setShowDropdown(!showDropdown)}
-            className="bg-brawl-red text-white px-3 rounded-r-lg"
+            className={`${bannedBrawlers.length >= MAX_BANNED_BRAWLERS ? 'bg-gray-400 cursor-not-allowed' : 'bg-brawl-red'} text-white px-3 rounded-r-lg`}
+            disabled={bannedBrawlers.length >= MAX_BANNED_BRAWLERS}
           >
             +
           </button>
@@ -63,9 +75,13 @@ const BannedBrawlers: React.FC<BannedBrawlersProps> = ({
                   key={brawler.id}
                   className="flex items-center space-x-3 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
                   onClick={() => {
-                    onBanBrawler(brawler.id);
-                    setSearchTerm('');
-                    setShowDropdown(false);
+                    if (bannedBrawlers.length < MAX_BANNED_BRAWLERS) {
+                      handleBanBrawler(brawler.id);
+                      setSearchTerm('');
+                      setShowDropdown(false);
+                    } else {
+                      toast.error(`No puedes banear más de ${MAX_BANNED_BRAWLERS} brawlers`);
+                    }
                   }}
                 >
                   <img

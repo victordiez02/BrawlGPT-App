@@ -1,7 +1,7 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { brawlers, Brawler } from '@/lib/brawlers';
-import { GameMap, gameMaps } from '@/lib/maps';
+import { GameMap } from '@/lib/maps';
 import MapSelector from './MapSelector';
 import TeamSelector from './TeamSelector';
 import DraftTeam from './DraftTeam';
@@ -9,7 +9,7 @@ import BannedBrawlers from './BannedBrawlers';
 import BrawlerGrid from './BrawlerGrid';
 import ResultModal from './ResultModal';
 import { ApiResponse, DraftData, submitDraft } from '@/lib/api';
-import { ArrowLeft, Loader2, Zap } from 'lucide-react';
+import { ArrowLeft, Info, Loader2, Zap } from 'lucide-react';
 import { toast } from 'sonner';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -32,6 +32,104 @@ const DraftSimulator: React.FC = () => {
   
   // Determine which team is currently picking based on the current pick index
   const currentPickTeam = currentPickIndex < 3 ? 'blue' : 'red';
+
+  // Get current draft phase
+  const getCurrentDraftPhase = (): number => {
+    const filledPicks = selectedBrawlers.filter(id => id !== null).length;
+    if (filledPicks === 0) return 1; // First phase - no picks
+    if (filledPicks === 1) return 2; // Second phase - only first pick
+    if (filledPicks === 3) return 3; // Third phase - picks 1, 2, 3
+    if (filledPicks === 5) return 4; // Fourth phase - picks 1, 2, 3, 4, 5
+    return 0; // Not a valid phase for recommendations
+  };
+
+  // Check if picks match a valid phase
+  const isValidPhase = useMemo(() => {
+    const filledPositions = selectedBrawlers
+      .map((id, index) => ({ id, index }))
+      .filter(item => item.id !== null)
+      .map(item => item.index);
+    
+    const phase = getCurrentDraftPhase();
+    
+    // First phase - no picks
+    if (phase === 1 && filledPositions.length === 0) return true;
+    
+    // Second phase - only first pick
+    if (phase === 2 && filledPositions.length === 1) {
+      return filledPositions[0] === pickOrder[0];
+    }
+    
+    // Third phase - picks 1, 2, 3
+    if (phase === 3 && filledPositions.length === 3) {
+      const expectedPositions = [pickOrder[0], pickOrder[1], pickOrder[2]].sort();
+      const actualPositions = [...filledPositions].sort();
+      return JSON.stringify(expectedPositions) === JSON.stringify(actualPositions);
+    }
+    
+    // Fourth phase - picks 1, 2, 3, 4, 5
+    if (phase === 4 && filledPositions.length === 5) {
+      const expectedPositions = [pickOrder[0], pickOrder[1], pickOrder[2], pickOrder[3], pickOrder[4]].sort();
+      const actualPositions = [...filledPositions].sort();
+      return JSON.stringify(expectedPositions) === JSON.stringify(actualPositions);
+    }
+    
+    return false;
+  }, [selectedBrawlers, pickOrder]);
+
+  // Generate button state and text
+  const generateButtonConfig = useMemo(() => {
+    const phase = getCurrentDraftPhase();
+    
+    if (!selectedMap) {
+      return {
+        enabled: false,
+        text: "Generar Mejor Opción",
+        disabledReason: "Selecciona un mapa primero"
+      };
+    }
+    
+    if (!isValidPhase) {
+      return {
+        enabled: false,
+        text: "Generar Mejor Opción",
+        disabledReason: "Orden de picks incorrecto"
+      };
+    }
+    
+    switch (phase) {
+      case 1:
+        return {
+          enabled: true,
+          text: "Genera la mejor opción para la primera fase",
+          disabledReason: ""
+        };
+      case 2:
+        return {
+          enabled: true,
+          text: "Genera la mejor opción para la segunda fase",
+          disabledReason: ""
+        };
+      case 3:
+        return {
+          enabled: true,
+          text: "Genera la mejor opción para la tercera fase",
+          disabledReason: ""
+        };
+      case 4:
+        return {
+          enabled: true,
+          text: "Genera la mejor opción para la última fase",
+          disabledReason: ""
+        };
+      default:
+        return {
+          enabled: false,
+          text: "Generar Mejor Opción",
+          disabledReason: "Configura el draft correctamente"
+        };
+    }
+  }, [selectedMap, isValidPhase, getCurrentDraftPhase]);
   
   // Handle brawler selection
   const handleSelectBrawler = (brawler: Brawler) => {
@@ -92,20 +190,42 @@ const DraftSimulator: React.FC = () => {
   const handleMoveBrawler = (fromIndex: number, toIndex: number) => {
     const newSelectedBrawlers = [...selectedBrawlers];
     const fromBrawlerId = newSelectedBrawlers[fromIndex];
-    const toBrawlerId = newSelectedBrawlers[toIndex];
     
-    // Swap the brawlers
-    newSelectedBrawlers[fromIndex] = toBrawlerId;
-    newSelectedBrawlers[toIndex] = fromBrawlerId;
-    
-    setSelectedBrawlers(newSelectedBrawlers);
-    toast.info("Brawlers intercambiados");
+    // Only proceed if there's a source brawler
+    if (fromBrawlerId !== null) {
+      const toBrawlerId = newSelectedBrawlers[toIndex];
+      
+      // Update brawler positions
+      newSelectedBrawlers[fromIndex] = null;
+      newSelectedBrawlers[toIndex] = fromBrawlerId;
+      
+      setSelectedBrawlers(newSelectedBrawlers);
+      
+      const fromBrawler = brawlers.find(b => b.id === fromBrawlerId);
+      const toBrawler = toBrawlerId !== null ? brawlers.find(b => b.id === toBrawlerId) : null;
+      
+      if (fromBrawler) {
+        if (toBrawler) {
+          toast.info(`${fromBrawler.name} intercambiado con ${toBrawler.name}`);
+        } else {
+          toast.info(`${fromBrawler.name} movido a nueva posición`);
+        }
+      }
+      
+      // Set current pick index to the source slot
+      setCurrentPickIndex(fromIndex);
+    }
   };
   
   // Handle banning a brawler
   const handleBanBrawler = (brawlerId: number) => {
-    // Skip if already banned or selected
+    // Skip if already banned or selected or max bans reached
     if (bannedBrawlers.includes(brawlerId) || selectedBrawlers.includes(brawlerId)) {
+      return;
+    }
+    
+    if (bannedBrawlers.length >= 6) {
+      toast.error("No puedes banear más de 6 brawlers");
       return;
     }
     
@@ -134,10 +254,8 @@ const DraftSimulator: React.FC = () => {
       return;
     }
     
-    // Count filled picks
-    const filledPicks = selectedBrawlers.filter(id => id !== null).length;
-    if (filledPicks < 3) {
-      toast.error('Debes seleccionar al menos 3 brawlers para el draft');
+    if (!generateButtonConfig.enabled) {
+      toast.error(generateButtonConfig.disabledReason);
       return;
     }
     
@@ -241,8 +359,12 @@ const DraftSimulator: React.FC = () => {
           <div className="p-4 bg-gray-50 dark:bg-gray-800/50">
             <button
               onClick={handleGenerateRecommendation}
-              disabled={isGenerating}
-              className="btn-success w-full flex items-center justify-center"
+              disabled={!generateButtonConfig.enabled || isGenerating}
+              className={`w-full flex items-center justify-center ${
+                generateButtonConfig.enabled 
+                  ? 'btn-success' 
+                  : 'bg-gradient-to-r from-green-300 to-green-400 text-white font-bold py-3 px-6 rounded-xl opacity-60 cursor-not-allowed'
+              }`}
             >
               {isGenerating ? (
                 <>
@@ -252,10 +374,17 @@ const DraftSimulator: React.FC = () => {
               ) : (
                 <>
                   <Zap size={20} className="mr-2" />
-                  Generar Mejor Opción
+                  {generateButtonConfig.text}
                 </>
               )}
             </button>
+            
+            {!generateButtonConfig.enabled && generateButtonConfig.disabledReason && (
+              <div className="mt-2 flex items-center justify-center text-sm text-red-500">
+                <Info size={14} className="mr-1" />
+                {generateButtonConfig.disabledReason}
+              </div>
+            )}
           </div>
         </div>
         

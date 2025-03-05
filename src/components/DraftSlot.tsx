@@ -41,7 +41,7 @@ const DraftSlot: React.FC<DraftSlotProps> = ({
       isDragging: !!monitor.isDragging()
     }),
     canDrag: brawlerId !== null
-  }));
+  }), [brawlerId, index]);
   
   // Set up drop
   const [{ isOver }, drop] = useDrop(() => ({
@@ -54,24 +54,36 @@ const DraftSlot: React.FC<DraftSlotProps> = ({
     collect: (monitor) => ({
       isOver: !!monitor.isOver()
     })
-  }));
+  }), [index, onMoveBrawler]);
   
   // Combine drag and drop refs
-  const dragDropRef = React.useRef(null);
-  drag(drop(dragDropRef));
+  const dragDropRef = React.useRef<HTMLDivElement>(null);
+  const dragRef = (el: HTMLDivElement | null) => {
+    if (el && brawlerId !== null) {
+      drag(el);
+    }
+  };
+  
+  const dropRef = (el: HTMLDivElement | null) => {
+    drop(el);
+    if (el) {
+      dragDropRef.current = el;
+    }
+  };
   
   return (
     <div className="flex flex-col items-center space-y-2">
       <div 
-        ref={dragDropRef}
+        ref={dropRef}
         className={`w-full aspect-square ${teamColorClass} ${
           isActiveSlot ? 'ring-2 ring-yellow-400 animate-pulse-soft' : ''
-        } ${isOver ? 'ring-2 ring-white' : ''} ${
-          isDragging ? 'opacity-50' : ''
-        }`}
+        } ${isOver ? 'ring-2 ring-white' : ''}`}
       >
         {brawler ? (
-          <div className="relative w-full h-full">
+          <div 
+            ref={dragRef}
+            className={`relative w-full h-full ${isDragging ? 'opacity-50' : ''}`}
+          >
             <BrawlerCard
               brawler={brawler}
               size="lg"
