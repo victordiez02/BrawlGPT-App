@@ -2,22 +2,22 @@
 import React from 'react';
 
 interface TeamSelectorProps {
-  selectedTeam: 'blue' | 'red';
-  onSelectTeam: (team: 'blue' | 'red') => void;
+  firstPick: 'blue' | 'red';
+  onSelectFirstPick: (team: 'blue' | 'red') => void;
 }
 
-const TeamSelector: React.FC<TeamSelectorProps> = ({ selectedTeam, onSelectTeam }) => {
+const TeamSelector: React.FC<TeamSelectorProps> = ({ firstPick, onSelectFirstPick }) => {
   return (
     <div className="mb-6 animate-slide-in">
       <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-        Selecciona tu equipo
+        ¿Quién empieza eligiendo?
       </label>
       
       <div className="flex space-x-4">
         <button
-          onClick={() => onSelectTeam('blue')}
+          onClick={() => onSelectFirstPick('blue')}
           className={`flex-1 glass-card py-3 transition-all duration-300 ${
-            selectedTeam === 'blue' 
+            firstPick === 'blue' 
               ? 'ring-2 ring-brawl-blue shadow-lg shadow-blue-500/20' 
               : 'opacity-70 hover:opacity-100'
           }`}
@@ -29,9 +29,9 @@ const TeamSelector: React.FC<TeamSelectorProps> = ({ selectedTeam, onSelectTeam 
         </button>
         
         <button
-          onClick={() => onSelectTeam('red')}
+          onClick={() => onSelectFirstPick('red')}
           className={`flex-1 glass-card py-3 transition-all duration-300 ${
-            selectedTeam === 'red' 
+            firstPick === 'red' 
               ? 'ring-2 ring-brawl-red shadow-lg shadow-red-500/20' 
               : 'opacity-70 hover:opacity-100'
           }`}

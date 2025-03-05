@@ -11,11 +11,13 @@ import ResultModal from './ResultModal';
 import { ApiResponse, DraftData, submitDraft } from '@/lib/api';
 import { ArrowLeft, Loader2, Zap } from 'lucide-react';
 import { toast } from 'sonner';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 const DraftSimulator: React.FC = () => {
   // State management
   const [selectedMap, setSelectedMap] = useState<GameMap | null>(null);
-  const [userTeam, setUserTeam] = useState<'blue' | 'red'>('blue');
+  const [firstPick, setFirstPick] = useState<'blue' | 'red'>('blue');
   const [selectedBrawlers, setSelectedBrawlers] = useState<(number | null)[]>([null, null, null, null, null, null]);
   const [bannedBrawlers, setBannedBrawlers] = useState<number[]>([]);
   const [currentPickIndex, setCurrentPickIndex] = useState<number>(0);
@@ -23,8 +25,13 @@ const DraftSimulator: React.FC = () => {
   const [apiResult, setApiResult] = useState<ApiResponse | null>(null);
   const [showResultModal, setShowResultModal] = useState<boolean>(false);
   
-  // Determine which team is currently picking
-  const currentPickTeam = currentPickIndex % 2 === 0 ? 'blue' : 'red';
+  // Calculate pick order based on who goes first
+  const pickOrder = firstPick === 'blue' 
+    ? [0, 3, 4, 1, 2, 5] // Blue first: Blue picks 1st, 4th, 5th; Red picks 2nd, 3rd, 6th
+    : [3, 0, 1, 4, 5, 2]; // Red first: Red picks 1st, 4th, 5th; Blue picks 2nd, 3rd, 6th
+  
+  // Determine which team is currently picking based on the current pick index
+  const currentPickTeam = currentPickIndex < 3 ? 'blue' : 'red';
   
   // Handle brawler selection
   const handleSelectBrawler = (brawler: Brawler) => {
@@ -33,18 +40,32 @@ const DraftSimulator: React.FC = () => {
       return;
     }
     
+    // Find the next available position according to the pick order
+    let nextAvailableIndex = -1;
+    for (let i = 0; i < pickOrder.length; i++) {
+      if (selectedBrawlers[pickOrder[i]] === null) {
+        nextAvailableIndex = pickOrder[i];
+        break;
+      }
+    }
+    
+    if (nextAvailableIndex === -1) return; // All positions are filled
+    
     // Update selected brawlers
     const newSelectedBrawlers = [...selectedBrawlers];
-    newSelectedBrawlers[currentPickIndex] = brawler.id;
+    newSelectedBrawlers[nextAvailableIndex] = brawler.id;
     setSelectedBrawlers(newSelectedBrawlers);
     
-    // Move to next pick if not at the end
-    if (currentPickIndex < 5) {
-      setCurrentPickIndex(currentPickIndex + 1);
+    // Update current pick index to the next available slot
+    const nextIndex = pickOrder.findIndex(i => i === nextAvailableIndex);
+    const followingIndex = nextIndex < pickOrder.length - 1 ? pickOrder[nextIndex + 1] : -1;
+    if (followingIndex !== -1 && newSelectedBrawlers[followingIndex] === null) {
+      setCurrentPickIndex(followingIndex);
     }
     
     // Show success toast
-    toast.success(`${brawler.name} seleccionado para el equipo ${currentPickTeam === 'blue' ? 'Azul' : 'Rojo'}`);
+    const team = nextAvailableIndex < 3 ? 'Azul' : 'Rojo';
+    toast.success(`${brawler.name} seleccionado para el equipo ${team}`);
   };
   
   // Handle brawler removal
@@ -65,6 +86,20 @@ const DraftSimulator: React.FC = () => {
       // Set current pick index to the removed slot
       setCurrentPickIndex(index);
     }
+  };
+  
+  // Handle moving brawlers (drag and drop)
+  const handleMoveBrawler = (fromIndex: number, toIndex: number) => {
+    const newSelectedBrawlers = [...selectedBrawlers];
+    const fromBrawlerId = newSelectedBrawlers[fromIndex];
+    const toBrawlerId = newSelectedBrawlers[toIndex];
+    
+    // Swap the brawlers
+    newSelectedBrawlers[fromIndex] = toBrawlerId;
+    newSelectedBrawlers[toIndex] = fromBrawlerId;
+    
+    setSelectedBrawlers(newSelectedBrawlers);
+    toast.info("Brawlers intercambiados");
   };
   
   // Handle banning a brawler
@@ -116,7 +151,7 @@ const DraftSimulator: React.FC = () => {
           name: selectedMap.name,
           mode: selectedMap.mode
         },
-        userTeam,
+        userTeam: 'blue', // User is always blue team in Brawl Stars
         blueTeam: selectedBrawlers.slice(0, 3),
         redTeam: selectedBrawlers.slice(3, 6),
         banned: bannedBrawlers
@@ -143,102 +178,114 @@ const DraftSimulator: React.FC = () => {
     }
   };
   
+  // Update current pick index based on first pick changes
+  useEffect(() => {
+    setCurrentPickIndex(firstPick === 'blue' ? 0 : 3);
+  }, [firstPick]);
+  
   return (
-    <div className="w-full max-w-6xl mx-auto px-4 animate-fade-in">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-        <div className="md:col-span-2">
-          <MapSelector 
-            selectedMap={selectedMap} 
-            onSelectMap={setSelectedMap} 
-          />
+    <DndProvider backend={HTML5Backend}>
+      <div className="w-full max-w-6xl mx-auto px-4 animate-fade-in">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+          <div className="md:col-span-2">
+            <MapSelector 
+              selectedMap={selectedMap} 
+              onSelectMap={setSelectedMap} 
+            />
+          </div>
+          <div>
+            <TeamSelector 
+              firstPick={firstPick}
+              onSelectFirstPick={setFirstPick}
+            />
+          </div>
         </div>
-        <div>
-          <TeamSelector 
-            selectedTeam={userTeam}
-            onSelectTeam={setUserTeam}
-          />
-        </div>
-      </div>
-      
-      <div className="glass-panel mb-6 overflow-hidden">
-        <div className="p-4">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-bold">Draft en Curso</h2>
-            <button
-              onClick={handleResetDraft}
-              className="flex items-center text-sm text-gray-600 hover:text-red-500 transition-colors"
-            >
-              <ArrowLeft size={16} className="mr-1" /> Reiniciar
-            </button>
+        
+        <div className="glass-panel mb-6 overflow-hidden">
+          <div className="p-4">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-bold">Draft en Curso</h2>
+              <button
+                onClick={handleResetDraft}
+                className="flex items-center text-sm text-gray-600 hover:text-red-500 transition-colors"
+              >
+                <ArrowLeft size={16} className="mr-1" /> Reiniciar
+              </button>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <DraftTeam
+                team="blue"
+                brawlerIds={selectedBrawlers.slice(0, 3)}
+                activeSlot={currentPickTeam === 'blue' ? currentPickIndex : null}
+                currentPickTeam={currentPickTeam}
+                pickOrder={pickOrder}
+                onRemoveBrawler={handleRemoveBrawler}
+                onMoveBrawler={handleMoveBrawler}
+              />
+              
+              <DraftTeam
+                team="red"
+                brawlerIds={selectedBrawlers.slice(3, 6)}
+                activeSlot={currentPickTeam === 'red' ? currentPickIndex - 3 : null}
+                currentPickTeam={currentPickTeam}
+                pickOrder={pickOrder}
+                onRemoveBrawler={handleRemoveBrawler}
+                onMoveBrawler={handleMoveBrawler}
+              />
+            </div>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <DraftTeam
-              team="blue"
-              brawlerIds={selectedBrawlers.slice(0, 3)}
-              activeSlot={currentPickTeam === 'blue' ? currentPickIndex : null}
-              currentPickTeam={currentPickTeam}
-              onRemoveBrawler={handleRemoveBrawler}
+          <div className="bg-gradient-to-r from-brawl-blue via-brawl-purple to-brawl-red h-1"></div>
+          
+          <div className="p-4 bg-gray-50 dark:bg-gray-800/50">
+            <button
+              onClick={handleGenerateRecommendation}
+              disabled={isGenerating}
+              className="btn-success w-full flex items-center justify-center"
+            >
+              {isGenerating ? (
+                <>
+                  <Loader2 size={20} className="mr-2 animate-spin" />
+                  Generando...
+                </>
+              ) : (
+                <>
+                  <Zap size={20} className="mr-2" />
+                  Generar Mejor Opción
+                </>
+              )}
+            </button>
+          </div>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+          <div className="md:col-span-1 order-2 md:order-1">
+            <BannedBrawlers
+              bannedBrawlers={bannedBrawlers}
+              onBanBrawler={handleBanBrawler}
+              onUnbanBrawler={handleUnbanBrawler}
             />
-            
-            <DraftTeam
-              team="red"
-              brawlerIds={selectedBrawlers.slice(3, 6)}
-              activeSlot={currentPickTeam === 'red' ? currentPickIndex - 3 : null}
-              currentPickTeam={currentPickTeam}
-              onRemoveBrawler={handleRemoveBrawler}
+          </div>
+          
+          <div className="md:col-span-2 order-1 md:order-2">
+            <BrawlerGrid
+              brawlers={brawlers}
+              selectedBrawlers={selectedBrawlers}
+              bannedBrawlers={bannedBrawlers}
+              onSelectBrawler={handleSelectBrawler}
+              onBanBrawler={handleBanBrawler}
             />
           </div>
         </div>
         
-        <div className="bg-gradient-to-r from-brawl-blue via-brawl-purple to-brawl-red h-1"></div>
-        
-        <div className="p-4 bg-gray-50 dark:bg-gray-800/50">
-          <button
-            onClick={handleGenerateRecommendation}
-            disabled={isGenerating}
-            className="btn-success w-full flex items-center justify-center"
-          >
-            {isGenerating ? (
-              <>
-                <Loader2 size={20} className="mr-2 animate-spin" />
-                Generando...
-              </>
-            ) : (
-              <>
-                <Zap size={20} className="mr-2" />
-                Generar Mejor Opción
-              </>
-            )}
-          </button>
-        </div>
+        <ResultModal
+          isOpen={showResultModal}
+          onClose={() => setShowResultModal(false)}
+          result={apiResult}
+        />
       </div>
-      
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-        <div className="md:col-span-1 order-2 md:order-1">
-          <BannedBrawlers
-            bannedBrawlers={bannedBrawlers}
-            onBanBrawler={handleBanBrawler}
-            onUnbanBrawler={handleUnbanBrawler}
-          />
-        </div>
-        
-        <div className="md:col-span-2 order-1 md:order-2">
-          <BrawlerGrid
-            brawlers={brawlers}
-            selectedBrawlers={selectedBrawlers}
-            bannedBrawlers={bannedBrawlers}
-            onSelectBrawler={handleSelectBrawler}
-          />
-        </div>
-      </div>
-      
-      <ResultModal
-        isOpen={showResultModal}
-        onClose={() => setShowResultModal(false)}
-        result={apiResult}
-      />
-    </div>
+    </DndProvider>
   );
 };
 

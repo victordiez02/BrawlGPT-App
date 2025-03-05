@@ -1,15 +1,16 @@
 
 import React from 'react';
-import BrawlerCard from './BrawlerCard';
-import { Brawler, brawlers } from '@/lib/brawlers';
 import { UserRound } from 'lucide-react';
+import DraftSlot from './DraftSlot';
 
 interface DraftTeamProps {
   team: 'blue' | 'red';
   brawlerIds: (number | null)[];
   activeSlot: number | null;
   currentPickTeam: 'blue' | 'red';
+  pickOrder: number[];
   onRemoveBrawler: (index: number) => void;
+  onMoveBrawler: (fromIndex: number, toIndex: number) => void;
 }
 
 const DraftTeam: React.FC<DraftTeamProps> = ({
@@ -17,24 +18,15 @@ const DraftTeam: React.FC<DraftTeamProps> = ({
   brawlerIds,
   activeSlot,
   currentPickTeam,
-  onRemoveBrawler
+  pickOrder,
+  onRemoveBrawler,
+  onMoveBrawler
 }) => {
-  const teamColorClass = team === 'blue' ? 'draft-slot-blue' : 'draft-slot-red';
-  
-  // Find brawler by id
-  const getBrawler = (id: number | null): Brawler | null => {
-    if (id === null) return null;
-    return brawlers.find(b => b.id === id) || null;
-  };
-  
   // Determine pick order labels
   const getPickLabel = (index: number): string => {
     const globalIndex = team === 'blue' ? index : index + 3;
-    
-    const pickOrder = ['1st Pick', '3rd Pick', '5th Pick'];
-    
-    if (team === 'blue') return pickOrder[index];
-    return ['2nd Pick', '4th Pick', '6th Pick'][index];
+    const pickNumber = pickOrder.indexOf(globalIndex) + 1;
+    return `${pickNumber}° Pick`;
   };
   
   return (
@@ -50,42 +42,22 @@ const DraftTeam: React.FC<DraftTeamProps> = ({
       
       <div className="grid grid-cols-3 gap-3 p-4 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-b-lg">
         {Array.from({ length: 3 }).map((_, index) => {
+          const globalIndex = team === 'blue' ? index : index + 3;
           const brawlerId = brawlerIds[index];
-          const brawler = getBrawler(brawlerId);
           const isActiveSlot = team === currentPickTeam && ((team === 'blue' && index === activeSlot) || 
                               (team === 'red' && index + 3 === activeSlot));
           
           return (
-            <div key={index} className="flex flex-col items-center space-y-2">
-              <div className={`w-full aspect-square ${teamColorClass} ${
-                isActiveSlot ? 'ring-2 ring-yellow-400 animate-pulse-soft' : ''
-              }`}>
-                {brawler ? (
-                  <div className="relative w-full h-full">
-                    <BrawlerCard
-                      brawler={brawler}
-                      size="lg"
-                      team={team}
-                    />
-                    <button
-                      onClick={() => onRemoveBrawler(team === 'blue' ? index : index + 3)}
-                      className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-600 transition-colors"
-                    >
-                      ×
-                    </button>
-                  </div>
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center">
-                    {isActiveSlot && (
-                      <span className="text-sm font-medium opacity-70 animate-pulse">Selecciona</span>
-                    )}
-                  </div>
-                )}
-              </div>
-              <span className="text-xs font-medium text-gray-600 dark:text-gray-400">
-                {getPickLabel(index)}
-              </span>
-            </div>
+            <DraftSlot
+              key={index}
+              index={globalIndex}
+              team={team}
+              brawlerId={brawlerId}
+              isActiveSlot={isActiveSlot}
+              pickLabel={getPickLabel(index)}
+              onRemoveBrawler={onRemoveBrawler}
+              onMoveBrawler={onMoveBrawler}
+            />
           );
         })}
       </div>
