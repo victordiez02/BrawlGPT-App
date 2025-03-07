@@ -47,10 +47,9 @@ const DraftTeam: React.FC<DraftTeamProps> = ({
         {Array.from({ length: 3 }).map((_, index) => {
           const globalIndex = team === 'blue' ? index : index + 3;
           const brawlerId = brawlerIds[index];
-          const isActiveSlot = currentPickTeam === team && (
-            (team === 'blue' && activeSlot === index) || 
-            (team === 'red' && activeSlot - 3 === index)
-          );
+          
+          // Fix: properly calculate isActiveSlot for both teams
+          const isActiveSlot = currentPickTeam === team && activeSlot === index;
           
           return (
             <DraftSlot
