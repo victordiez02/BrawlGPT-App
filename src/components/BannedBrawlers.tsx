@@ -4,6 +4,7 @@ import { Brawler, brawlers } from '@/lib/brawlers';
 import BrawlerCard from './BrawlerCard';
 import { Ban } from 'lucide-react';
 import { toast } from 'sonner';
+import { useTranslation } from 'react-i18next';
 
 interface BannedBrawlersProps {
   bannedBrawlers: number[];
@@ -20,6 +21,7 @@ const BannedBrawlers: React.FC<BannedBrawlersProps> = ({
 }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [showDropdown, setShowDropdown] = useState(false);
+  const { t } = useTranslation();
   
   // Filter brawlers for dropdown
   const filteredBrawlers = brawlers
@@ -35,7 +37,7 @@ const BannedBrawlers: React.FC<BannedBrawlersProps> = ({
   
   const handleBanBrawler = (brawlerId: number) => {
     if (bannedBrawlers.length >= MAX_BANNED_BRAWLERS) {
-      toast.error(`No puedes banear más de ${MAX_BANNED_BRAWLERS} brawlers`);
+      toast.error(t('max_bans_error'));
       return;
     }
     onBanBrawler(brawlerId);
@@ -43,9 +45,9 @@ const BannedBrawlers: React.FC<BannedBrawlersProps> = ({
   
   return (
     <div className="glass-panel p-4 animate-fade-in">
-      <h3 className="flex items-center text-lg font-bold mb-4">
+      <h3 className="flex items-center text-lg font-bold mb-4 font-brawl">
         <Ban size={20} className="mr-2 text-red-500" />
-        Brawlers Baneados ({bannedBrawlers.length}/{MAX_BANNED_BRAWLERS})
+        {t('banned_brawlers')} ({bannedBrawlers.length}/{MAX_BANNED_BRAWLERS})
       </h3>
       
       <div className="relative mb-4">
@@ -55,7 +57,7 @@ const BannedBrawlers: React.FC<BannedBrawlersProps> = ({
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             onFocus={() => setShowDropdown(true)}
-            placeholder="Buscar brawler para banear..."
+            placeholder={t('search_to_ban')}
             className="flex-1 p-2 rounded-l-lg border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-brawl-red"
           />
           <button
@@ -80,7 +82,7 @@ const BannedBrawlers: React.FC<BannedBrawlersProps> = ({
                       setSearchTerm('');
                       setShowDropdown(false);
                     } else {
-                      toast.error(`No puedes banear más de ${MAX_BANNED_BRAWLERS} brawlers`);
+                      toast.error(t('max_bans_error'));
                     }
                   }}
                 >
@@ -93,7 +95,7 @@ const BannedBrawlers: React.FC<BannedBrawlersProps> = ({
                 </div>
               ))
             ) : (
-              <div className="p-2 text-gray-500 text-center">No hay resultados</div>
+              <div className="p-2 text-gray-500 text-center">{t('no_brawlers_found')}</div>
             )}
           </div>
         )}
@@ -117,8 +119,8 @@ const BannedBrawlers: React.FC<BannedBrawlersProps> = ({
             </div>
           ))
         ) : (
-          <div className="col-span-full text-center py-4 text-gray-500 dark:text-gray-400">
-            No hay brawlers baneados
+          <div className="col-span-full text-center py-4 text-gray-500 dark:text-gray-400 font-brawl">
+            {t('no_banned_brawlers')}
           </div>
         )}
       </div>

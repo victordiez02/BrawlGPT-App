@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useMemo } from 'react';
 import { brawlers, Brawler } from '@/lib/brawlers';
 import { GameMap } from '@/lib/maps';
@@ -15,10 +14,14 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useTranslation } from 'react-i18next';
 
-const DraftSimulator: React.FC = () => {
+interface DraftSimulatorProps {
+  initialMap?: GameMap | null;
+}
+
+const DraftSimulator: React.FC<DraftSimulatorProps> = ({ initialMap = null }) => {
   const { t } = useTranslation();
   // State management
-  const [selectedMap, setSelectedMap] = useState<GameMap | null>(null);
+  const [selectedMap, setSelectedMap] = useState<GameMap | null>(initialMap);
   const [firstPick, setFirstPick] = useState<'blue' | 'red'>('blue');
   const [selectedBrawlers, setSelectedBrawlers] = useState<(number | null)[]>([null, null, null, null, null, null]);
   const [bannedBrawlers, setBannedBrawlers] = useState<number[]>([]);
@@ -29,7 +32,8 @@ const DraftSimulator: React.FC = () => {
   
   // Define findTeamByIndex function first before using it in useMemo
   const findTeamByIndex = (index: number) => {
-    return index < 3 ? 'blue' : 'red';
+    if (index < 3) return 'blue';
+    return 'red';
   };
   
   // Calculate pick order based on who goes first
@@ -409,13 +413,13 @@ const DraftSimulator: React.FC = () => {
     <DndProvider backend={HTML5Backend}>
       <div className="w-full max-w-6xl mx-auto px-4 animate-fade-in">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-          <div className="md:col-span-2">
+          <div className="md:col-span-2 glass-panel p-4">
             <MapSelector 
               selectedMap={selectedMap} 
               onSelectMap={setSelectedMap} 
             />
           </div>
-          <div>
+          <div className="glass-panel p-4">
             <TeamSelector 
               firstPick={firstPick}
               onSelectFirstPick={setFirstPick}
@@ -423,102 +427,106 @@ const DraftSimulator: React.FC = () => {
           </div>
         </div>
         
-        <div className="glass-panel mb-6 overflow-hidden">
-          <div className="p-4">
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-bold font-brawl">{t('current_draft')}</h2>
-              <button
-                onClick={handleResetDraft}
-                className="flex items-center text-sm text-gray-600 hover:text-red-500 transition-colors font-brawl"
-              >
-                <ArrowLeft size={16} className="mr-1" /> {t('reset')}
-              </button>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <DraftTeam
-                team="blue"
-                brawlerIds={selectedBrawlers.slice(0, 3)}
-                activeSlot={currentPickTeam === 'blue' ? currentPickIndex : null}
-                currentPickTeam={currentPickTeam}
-                pickOrder={pickOrder}
-                onRemoveBrawler={handleRemoveBrawler}
-                onMoveBrawler={handleMoveBrawler}
-              />
-              
-              <DraftTeam
-                team="red"
-                brawlerIds={selectedBrawlers.slice(3, 6)}
-                activeSlot={currentPickTeam === 'red' ? currentPickIndex - 3 : null}
-                currentPickTeam={currentPickTeam}
-                pickOrder={pickOrder}
-                onRemoveBrawler={handleRemoveBrawler}
-                onMoveBrawler={handleMoveBrawler}
-              />
-            </div>
-          </div>
-          
-          <div className="bg-gradient-to-r from-brawl-blue via-brawl-purple to-brawl-red h-1"></div>
-          
-          <div className="p-4 bg-gray-50 dark:bg-gray-800/50">
-            <button
-              onClick={handleGenerateRecommendation}
-              disabled={!generateButtonConfig.enabled || isGenerating}
-              className={`w-full flex items-center justify-center font-brawl ${
-                generateButtonConfig.enabled 
-                  ? 'btn-success' 
-                  : 'bg-gradient-to-r from-green-300 to-green-400 text-white font-bold py-3 px-6 rounded-xl opacity-60 cursor-not-allowed'
-              }`}
-            >
-              {isGenerating ? (
-                <>
-                  <Loader2 size={20} className="mr-2 animate-spin" />
-                  {t('generating')}
-                </>
-              ) : (
-                <>
-                  <Zap size={20} className="mr-2" />
-                  {generateButtonConfig.text}
-                </>
-              )}
-            </button>
-            
-            {!generateButtonConfig.enabled && generateButtonConfig.disabledReason && (
-              <div className="mt-2 flex items-center justify-center text-sm text-red-500 font-brawl">
-                <Info size={14} className="mr-1" />
-                {generateButtonConfig.disabledReason}
+        {selectedMap && (
+          <>
+            <div className="glass-panel mb-6 overflow-hidden">
+              <div className="p-4">
+                <div className="flex justify-between items-center mb-4">
+                  <h2 className="text-xl font-bold font-brawl">{t('current_draft')}</h2>
+                  <button
+                    onClick={handleResetDraft}
+                    className="flex items-center text-sm text-gray-600 hover:text-red-500 transition-colors font-brawl"
+                  >
+                    <ArrowLeft size={16} className="mr-1" /> {t('reset')}
+                  </button>
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <DraftTeam
+                    team="blue"
+                    brawlerIds={selectedBrawlers.slice(0, 3)}
+                    activeSlot={currentPickTeam === 'blue' ? currentPickIndex : null}
+                    currentPickTeam={currentPickTeam}
+                    pickOrder={pickOrder}
+                    onRemoveBrawler={handleRemoveBrawler}
+                    onMoveBrawler={handleMoveBrawler}
+                  />
+                  
+                  <DraftTeam
+                    team="red"
+                    brawlerIds={selectedBrawlers.slice(3, 6)}
+                    activeSlot={currentPickTeam === 'red' ? currentPickIndex - 3 : null}
+                    currentPickTeam={currentPickTeam}
+                    pickOrder={pickOrder}
+                    onRemoveBrawler={handleRemoveBrawler}
+                    onMoveBrawler={handleMoveBrawler}
+                  />
+                </div>
               </div>
-            )}
-          </div>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-          <div className="md:col-span-1 order-2 md:order-1">
-            <BannedBrawlers
-              bannedBrawlers={bannedBrawlers}
-              onBanBrawler={handleBanBrawler}
-              onUnbanBrawler={handleUnbanBrawler}
+              
+              <div className="bg-gradient-to-r from-brawl-blue via-brawl-purple to-brawl-red h-1"></div>
+              
+              <div className="p-4 bg-gray-50 dark:bg-gray-800/50">
+                <button
+                  onClick={handleGenerateRecommendation}
+                  disabled={!generateButtonConfig.enabled || isGenerating}
+                  className={`w-full flex items-center justify-center font-brawl ${
+                    generateButtonConfig.enabled 
+                      ? 'btn-success' 
+                      : 'bg-gradient-to-r from-green-300 to-green-400 text-white font-bold py-3 px-6 rounded-xl opacity-60 cursor-not-allowed'
+                  }`}
+                >
+                  {isGenerating ? (
+                    <>
+                      <Loader2 size={20} className="mr-2 animate-spin" />
+                      {t('generating')}
+                    </>
+                  ) : (
+                    <>
+                      <Zap size={20} className="mr-2" />
+                      {generateButtonConfig.text}
+                    </>
+                  )}
+                </button>
+                
+                {!generateButtonConfig.enabled && generateButtonConfig.disabledReason && (
+                  <div className="mt-2 flex items-center justify-center text-sm text-red-500 font-brawl">
+                    <Info size={14} className="mr-1" />
+                    {generateButtonConfig.disabledReason}
+                  </div>
+                )}
+              </div>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+              <div className="md:col-span-1 order-2 md:order-1">
+                <BannedBrawlers
+                  bannedBrawlers={bannedBrawlers}
+                  onBanBrawler={handleBanBrawler}
+                  onUnbanBrawler={handleUnbanBrawler}
+                />
+              </div>
+              
+              <div className="md:col-span-2 order-1 md:order-2">
+                <BrawlerGrid
+                  brawlers={brawlers}
+                  selectedBrawlers={selectedBrawlers}
+                  bannedBrawlers={bannedBrawlers}
+                  onSelectBrawler={handleSelectBrawler}
+                  onBanBrawler={handleBanBrawler}
+                  onUnbanBrawler={handleUnbanBrawler}
+                  onRemoveBrawlerFromDraft={handleRemoveBrawlerById}
+                />
+              </div>
+            </div>
+            
+            <ResultModal
+              isOpen={showResultModal}
+              onClose={() => setShowResultModal(false)}
+              result={apiResult}
             />
-          </div>
-          
-          <div className="md:col-span-2 order-1 md:order-2">
-            <BrawlerGrid
-              brawlers={brawlers}
-              selectedBrawlers={selectedBrawlers}
-              bannedBrawlers={bannedBrawlers}
-              onSelectBrawler={handleSelectBrawler}
-              onBanBrawler={handleBanBrawler}
-              onUnbanBrawler={handleUnbanBrawler}
-              onRemoveBrawlerFromDraft={handleRemoveBrawlerById}
-            />
-          </div>
-        </div>
-        
-        <ResultModal
-          isOpen={showResultModal}
-          onClose={() => setShowResultModal(false)}
-          result={apiResult}
-        />
+          </>
+        )}
       </div>
     </DndProvider>
   );

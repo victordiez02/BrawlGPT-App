@@ -18,6 +18,15 @@ const enTranslations = {
   'cta_button': 'Generate Optimal Pick with AI',
   'footer_text': 'Unofficial tool for Brawl Stars',
   
+  // Common
+  'back_to_home': 'Back to Home',
+  'search': 'Search...',
+  'all_modes': 'All Modes',
+  'no_maps_found': 'No maps found',
+  'banned_brawlers': 'Banned Brawlers',
+  'search_to_ban': 'Search to ban...',
+  'no_banned_brawlers': 'No banned brawlers',
+  
   // Simulator page
   'select_brawlers': 'Select Brawlers',
   'sort_by': 'Sort by',
@@ -76,6 +85,15 @@ const esTranslations = {
   'draft_visualization_text': 'Representación visual del draft con picks dinámicos.',
   'cta_button': 'Generar Pick Óptimo con IA',
   'footer_text': 'Herramienta no oficial para Brawl Stars',
+  
+  // Common
+  'back_to_home': 'Volver al inicio',
+  'search': 'Buscar...',
+  'all_modes': 'Todos los modos',
+  'no_maps_found': 'No se encontraron mapas',
+  'banned_brawlers': 'Brawlers Baneados',
+  'search_to_ban': 'Buscar para banear...',
+  'no_banned_brawlers': 'No hay brawlers baneados',
   
   // Simulator page
   'select_brawlers': 'Seleccionar Brawlers',
