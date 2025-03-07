@@ -75,27 +75,17 @@ const DraftSlot: React.FC<DraftSlotProps> = ({
         } ${isOver ? 'ring-2 ring-white' : ''}`}
       >
         {brawler ? (
-          <>
-            <button
-              onClick={() => onRemoveBrawler(index)}
-              className="absolute -top-2 -right-2 z-20 bg-red-500/80 text-white rounded-full flex items-center justify-center hover:bg-red-600 transition-colors shadow-lg"
-              aria-label="Remove brawler"
-              style={{ width: '24px', height: '24px' }}
-            >
-              <span className="text-white font-bold text-sm">✕</span>
-            </button>
-            <div 
-              ref={drag}
-              className={`relative w-full h-full ${isDragging ? 'opacity-50' : ''}`}
-              onContextMenu={handleContextMenu}
-            >
-              <BrawlerCard
-                brawler={brawler}
-                size="lg"
-                team={team}
-              />
-            </div>
-          </>
+          <div 
+            ref={drag}
+            className={`relative w-full h-full ${isDragging ? 'opacity-50' : ''}`}
+            onContextMenu={handleContextMenu}
+          >
+            <BrawlerCard
+              brawler={brawler}
+              size="lg"
+              team={team}
+            />
+          </div>
         ) : (
           <div className="w-full h-full flex items-center justify-center">
             {isActiveSlot && (
