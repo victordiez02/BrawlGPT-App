@@ -7,6 +7,7 @@ import DraftTeam from './DraftTeam';
 import BannedBrawlers from './BannedBrawlers';
 import BrawlerGrid from './BrawlerGrid';
 import ResultModal from './ResultModal';
+import TrashCan from './TrashCan';
 import { ApiResponse, DraftData, submitDraft } from '@/lib/api';
 import { ArrowLeft, Info, Loader2, Zap } from 'lucide-react';
 import { toast } from 'sonner';
@@ -20,7 +21,7 @@ interface DraftSimulatorProps {
 
 const DraftSimulator: React.FC<DraftSimulatorProps> = ({ initialMap = null }) => {
   const { t } = useTranslation();
-  // State management
+  
   const [selectedMap, setSelectedMap] = useState<GameMap | null>(initialMap);
   const [firstPick, setFirstPick] = useState<'blue' | 'red'>('blue');
   const [selectedBrawlers, setSelectedBrawlers] = useState<(number | null)[]>([null, null, null, null, null, null]);
@@ -30,23 +31,19 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({ initialMap = null }) =>
   const [apiResult, setApiResult] = useState<ApiResponse | null>(null);
   const [showResultModal, setShowResultModal] = useState<boolean>(false);
   
-  // Define findTeamByIndex function first before using it in useMemo
   const findTeamByIndex = (index: number) => {
     if (index < 3) return 'blue';
     return 'red';
   };
   
-  // Calculate pick order based on who goes first
   const pickOrder = firstPick === 'blue' 
     ? [0, 3, 4, 1, 2, 5] // Blue first: Blue picks 1st, 4th, 5th; Red picks 2nd, 3rd, 6th
     : [3, 0, 1, 4, 5, 2]; // Red first: Red picks 1st, 4th, 5th; Blue picks 2nd, 3rd, 6th
   
-  // Determine which team is currently picking based on the current pick index
   const currentPickTeam = useMemo(() => {
     return findTeamByIndex(currentPickIndex);
   }, [currentPickIndex]);
 
-  // Get current draft phase
   const getCurrentDraftPhase = (): number => {
     const filledPicks = selectedBrawlers.filter(id => id !== null).length;
     if (filledPicks === 0) return 1; // First phase - no picks
@@ -56,7 +53,6 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({ initialMap = null }) =>
     return 0; // Not a valid phase for recommendations
   };
 
-  // Check if picks match a valid phase
   const isValidPhase = useMemo(() => {
     const filledPositions = selectedBrawlers
       .map((id, index) => ({ id, index }))
@@ -65,22 +61,18 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({ initialMap = null }) =>
     
     const phase = getCurrentDraftPhase();
     
-    // First phase - no picks
     if (phase === 1 && filledPositions.length === 0) return true;
     
-    // Second phase - only first pick
     if (phase === 2 && filledPositions.length === 1) {
       return filledPositions[0] === pickOrder[0];
     }
     
-    // Third phase - picks 1, 2, 3
     if (phase === 3 && filledPositions.length === 3) {
       const expectedPositions = [pickOrder[0], pickOrder[1], pickOrder[2]].sort();
       const actualPositions = [...filledPositions].sort();
       return JSON.stringify(expectedPositions) === JSON.stringify(actualPositions);
     }
     
-    // Fourth phase - picks 1, 2, 3, 4, 5
     if (phase === 4 && filledPositions.length === 5) {
       const expectedPositions = [pickOrder[0], pickOrder[1], pickOrder[2], pickOrder[3], pickOrder[4]].sort();
       const actualPositions = [...filledPositions].sort();
@@ -90,42 +82,37 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({ initialMap = null }) =>
     return false;
   }, [selectedBrawlers, pickOrder]);
 
-  // Get detailed error message about missing picks
   const getMissingPicksMessage = () => {
     const filledPositions = selectedBrawlers
       .map((id, index) => ({ id, index }))
       .filter(item => item.id !== null)
       .map(item => item.index);
     
-    // Find which picks are missing
     const missingPicks = [];
     for (let i = 0; i < 6; i++) {
       const pickPosition = pickOrder[i];
       if (!filledPositions.includes(pickPosition)) {
-        missingPicks.push(i + 1); // Convert to 1-based for user display
+        missingPicks.push(i + 1);
       }
     }
     
-    // Filter to show only the next expected picks based on the filled count
-    const filledCount = filledPositions.length;
-    
-    if (filledCount === 0) return t('select_first_pick');
-    if (filledCount === 1) {
+    if (filledPositions.length === 0) return t('select_first_pick');
+    if (filledPositions.length === 1) {
       if (filledPositions[0] !== pickOrder[0]) return t('select_first_pick_brawler');
       return t('select_second_pick_brawler');
     }
-    if (filledCount === 2) {
+    if (filledPositions.length === 2) {
       if (!filledPositions.includes(pickOrder[0]) || 
           !filledPositions.includes(pickOrder[1])) {
         return t('select_first_second_pick_brawlers');
       }
       return t('select_third_pick_brawler');
     }
-    if (filledCount === 3) {
+    if (filledPositions.length === 3) {
       if (!isValidPhase) return t('incorrect_pick_order', { missingPicks: missingPicks.slice(0, 3).join('º, ') });
       return t('select_fourth_pick_brawler');
     }
-    if (filledCount === 4) {
+    if (filledPositions.length === 4) {
       if (!filledPositions.includes(pickOrder[0]) || 
           !filledPositions.includes(pickOrder[1]) ||
           !filledPositions.includes(pickOrder[2]) ||
@@ -134,14 +121,13 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({ initialMap = null }) =>
       }
       return t('select_fifth_pick_brawler');
     }
-    if (filledCount === 6) {
+    if (filledPositions.length === 6) {
       return t('remove_sixth_pick');
     }
     
     return t('incorrect_pick_order', { missingPicks: missingPicks.join('º, ') });
   };
 
-  // Find the next empty slot for picking
   const findNextPickSlot = () => {
     for (let i = 0; i < pickOrder.length; i++) {
       const slotIndex = pickOrder[i];
@@ -149,10 +135,9 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({ initialMap = null }) =>
         return slotIndex;
       }
     }
-    return -1; // All slots filled
+    return -1;
   };
 
-  // Update the active slot
   useEffect(() => {
     const nextSlot = findNextPickSlot();
     if (nextSlot !== -1) {
@@ -160,7 +145,6 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({ initialMap = null }) =>
     }
   }, [selectedBrawlers]);
 
-  // Generate button state and text
   const generateButtonConfig = useMemo(() => {
     const phase = getCurrentDraftPhase();
     
@@ -214,14 +198,11 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({ initialMap = null }) =>
     }
   }, [selectedMap, isValidPhase, getMissingPicksMessage, t]);
   
-  // Handle brawler selection
   const handleSelectBrawler = (brawler: Brawler) => {
-    // Skip if the brawler is already selected or banned
     if (selectedBrawlers.includes(brawler.id) || bannedBrawlers.includes(brawler.id)) {
       return;
     }
     
-    // Find the next available position according to the pick order
     let nextAvailableIndex = -1;
     for (let i = 0; i < pickOrder.length; i++) {
       if (selectedBrawlers[pickOrder[i]] === null) {
@@ -230,24 +211,20 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({ initialMap = null }) =>
       }
     }
     
-    if (nextAvailableIndex === -1) return; // All positions are filled
+    if (nextAvailableIndex === -1) return;
     
-    // Update selected brawlers
     const newSelectedBrawlers = [...selectedBrawlers];
     newSelectedBrawlers[nextAvailableIndex] = brawler.id;
     setSelectedBrawlers(newSelectedBrawlers);
     
-    // Show success toast
     const team = nextAvailableIndex < 3 ? t('blue_team') : t('red_team');
     toast.success(t('brawler_selected', { name: brawler.name, team }));
   };
   
-  // Handle brawler removal
   const handleRemoveBrawler = (index: number) => {
     const newSelectedBrawlers = [...selectedBrawlers];
     const removedBrawlerId = newSelectedBrawlers[index];
     
-    // Only proceed if there's a brawler to remove
     if (removedBrawlerId !== null) {
       const brawler = brawlers.find(b => b.id === removedBrawlerId);
       if (brawler) {
@@ -259,7 +236,6 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({ initialMap = null }) =>
     }
   };
 
-  // Handle removing a brawler from draft by ID
   const handleRemoveBrawlerById = (brawlerId: number) => {
     const index = selectedBrawlers.indexOf(brawlerId);
     if (index !== -1) {
@@ -267,24 +243,19 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({ initialMap = null }) =>
     }
   };
   
-  // Handle moving brawlers (drag and drop) - swap implementation
   const handleMoveBrawler = (fromIndex: number, toIndex: number) => {
-    // Don't do anything if source and destination are the same
     if (fromIndex === toIndex) return;
     
     const newSelectedBrawlers = [...selectedBrawlers];
     const fromBrawlerId = newSelectedBrawlers[fromIndex];
     const toBrawlerId = newSelectedBrawlers[toIndex];
     
-    // Only proceed if there's a source brawler
     if (fromBrawlerId !== null) {
-      // Simply swap the positions
       newSelectedBrawlers[fromIndex] = toBrawlerId;
       newSelectedBrawlers[toIndex] = fromBrawlerId;
       
       setSelectedBrawlers(newSelectedBrawlers);
       
-      // Get brawler names for toast
       const fromBrawler = brawlers.find(b => b.id === fromBrawlerId);
       const toBrawler = toBrawlerId !== null ? brawlers.find(b => b.id === toBrawlerId) : null;
       
@@ -298,9 +269,7 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({ initialMap = null }) =>
     }
   };
   
-  // Handle banning a brawler
   const handleBanBrawler = (brawlerId: number) => {
-    // Skip if already banned or selected or max bans reached
     if (bannedBrawlers.includes(brawlerId) || selectedBrawlers.includes(brawlerId)) {
       return;
     }
@@ -317,7 +286,6 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({ initialMap = null }) =>
     }
   };
   
-  // Handle unbanning a brawler
   const handleUnbanBrawler = (brawlerId: number) => {
     const brawler = brawlers.find(b => b.id === brawlerId);
     if (brawler) {
@@ -327,9 +295,7 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({ initialMap = null }) =>
     setBannedBrawlers(bannedBrawlers.filter(id => id !== brawlerId));
   };
   
-  // Generate API request
   const handleGenerateRecommendation = async () => {
-    // Validate requirements
     if (!selectedMap) {
       toast.error(t('must_select_map'));
       return;
@@ -343,20 +309,18 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({ initialMap = null }) =>
     setIsGenerating(true);
     
     try {
-      // Prepare draft data
       const draftData: DraftData = {
         map: {
           id: selectedMap.id,
           name: selectedMap.name,
           mode: selectedMap.mode
         },
-        userTeam: 'blue', // User is always blue team in Brawl Stars
+        userTeam: 'blue',
         blueTeam: selectedBrawlers.slice(0, 3),
         redTeam: selectedBrawlers.slice(3, 6),
         banned: bannedBrawlers
       };
       
-      // Call API
       const result = await submitDraft(draftData);
       setApiResult(result);
       setShowResultModal(true);
@@ -368,34 +332,29 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({ initialMap = null }) =>
     }
   };
   
-  // Reset draft
   const handleResetDraft = () => {
     if (window.confirm(t('confirm_reset_draft'))) {
       setSelectedBrawlers([null, null, null, null, null, null]);
+      setBannedBrawlers([]);
       setCurrentPickIndex(firstPick === 'blue' ? 0 : 3);
       toast.info(t('draft_reset'));
     }
   };
   
-  // Update current pick index based on first pick changes
   useEffect(() => {
     setCurrentPickIndex(firstPick === 'blue' ? 0 : 3);
   }, [firstPick]);
   
-  // Listen for custom events to remove brawlers from draft
   useEffect(() => {
     const handleRemoveBrawlerEvent = (event: Event) => {
       const customEvent = event as CustomEvent<{index: number, shouldBan: boolean}>;
       const { index, shouldBan } = customEvent.detail;
       
-      // Get the brawler ID before removing it
       const brawlerId = selectedBrawlers[index];
       
       if (brawlerId !== null) {
-        // Remove from draft
         handleRemoveBrawler(index);
         
-        // Ban the brawler if requested
         if (shouldBan) {
           handleBanBrawler(brawlerId);
         }
@@ -425,7 +384,6 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({ initialMap = null }) =>
               onSelectFirstPick={setFirstPick}
             />
             
-            {/* Moved BannedBrawlers component here */}
             <div className="mt-4">
               <BannedBrawlers
                 bannedBrawlers={bannedBrawlers}
@@ -442,12 +400,10 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({ initialMap = null }) =>
               <div className="p-4">
                 <div className="flex justify-between items-center mb-4">
                   <h2 className="text-xl font-bold font-brawl">{t('current_draft')}</h2>
-                  <button
-                    onClick={handleResetDraft}
-                    className="flex items-center text-sm text-gray-600 hover:text-red-500 transition-colors font-brawl"
-                  >
-                    <ArrowLeft size={16} className="mr-1" /> {t('reset')}
-                  </button>
+                  <TrashCan
+                    onResetDraft={handleResetDraft}
+                    onRemoveBrawler={handleRemoveBrawlerById}
+                  />
                 </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
