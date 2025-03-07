@@ -70,30 +70,32 @@ const DraftSlot: React.FC<DraftSlotProps> = ({
     <div className="flex flex-col items-center space-y-2">
       <div 
         ref={drop}
-        className={`w-full aspect-square ${teamColorClass} ${
+        className={`w-full aspect-square relative ${teamColorClass} ${
           isActiveSlot ? 'ring-2 ring-yellow-400 animate-pulse-soft' : ''
         } ${isOver ? 'ring-2 ring-white' : ''}`}
       >
         {brawler ? (
-          <div 
-            ref={drag}
-            className={`relative w-full h-full ${isDragging ? 'opacity-50' : ''}`}
-            onContextMenu={handleContextMenu}
-          >
-            <BrawlerCard
-              brawler={brawler}
-              size="lg"
-              team={team}
-            />
+          <>
             <button
               onClick={() => onRemoveBrawler(index)}
-              className="absolute -top-2 -right-2 z-10 bg-red-500/80 text-white rounded-full flex items-center justify-center hover:bg-red-600 transition-colors shadow-lg"
+              className="absolute -top-2 -right-2 z-20 bg-red-500/80 text-white rounded-full flex items-center justify-center hover:bg-red-600 transition-colors shadow-lg"
               aria-label="Remove brawler"
               style={{ width: '24px', height: '24px' }}
             >
               <span className="text-white font-bold text-sm">✕</span>
             </button>
-          </div>
+            <div 
+              ref={drag}
+              className={`relative w-full h-full ${isDragging ? 'opacity-50' : ''}`}
+              onContextMenu={handleContextMenu}
+            >
+              <BrawlerCard
+                brawler={brawler}
+                size="lg"
+                team={team}
+              />
+            </div>
+          </>
         ) : (
           <div className="w-full h-full flex items-center justify-center">
             {isActiveSlot && (
