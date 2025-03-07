@@ -69,7 +69,7 @@ const BrawlerCard: React.FC<BrawlerCardProps> = ({
             </p>
           </div>
         ) : (
-          <div className="absolute bottom-0 left-0 right-0 bg-black/60 p-1">
+          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-1">
             <p className="text-xs text-white font-brawl text-center truncate">
               {brawler.name}
             </p>

@@ -12,7 +12,7 @@ const TeamSelector: React.FC<TeamSelectorProps> = ({ firstPick, onSelectFirstPic
   
   return (
     <div className="mb-6 animate-slide-in">
-      <label className="block text-sm font-medium text-white mb-2 font-brawl">
+      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 font-brawl">
         {t('who_picks_first')}
       </label>
       
