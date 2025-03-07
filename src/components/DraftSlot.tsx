@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { useDrag, useDrop } from 'react-dnd';
+import { X } from 'lucide-react';
 import BrawlerCard from './BrawlerCard';
 import { Brawler, brawlers } from '@/lib/brawlers';
 import { useTranslation } from 'react-i18next';
@@ -82,7 +83,7 @@ const DraftSlot: React.FC<DraftSlotProps> = ({
               aria-label="Remove brawler"
               style={{ width: '24px', height: '24px' }}
             >
-              <span className="text-white font-bold text-sm">✕</span>
+              <X size={14} className="text-white" />
             </button>
             <div 
               ref={drag}
