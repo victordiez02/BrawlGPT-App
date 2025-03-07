@@ -1,4 +1,3 @@
-
 export interface GameMap {
   id: number;
   name: string;
@@ -119,5 +118,19 @@ export const gameMaps: GameMap[] = [
     translatedName: 'Estrella Fugaz',
     mode: 'Bounty',
     image: 'https://cdn.brawlify.com/maps/regular/15000012.png'
+  },
+  {
+    id: 17,
+    name: 'Deep End',
+    translatedName: 'Fin Profundo',
+    mode: 'Knockout',
+    image: 'https://cdn.brawlify.com/placeholder.png'
+  },
+  {
+    id: 18,
+    name: 'Ice Fort',
+    translatedName: 'Fuerte de Hielo',
+    mode: 'Brawl Hockey',
+    image: 'https://cdn.brawlify.com/placeholder.png'
   }
 ];

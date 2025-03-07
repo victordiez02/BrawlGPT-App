@@ -1,4 +1,3 @@
-
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
@@ -87,7 +86,15 @@ const enTranslations = {
   'epic': 'Epic',
   'mythic': 'Mythic',
   'legendary': 'Legendary',
-  'chromatic': 'Chromatic'
+  'chromatic': 'Chromatic',
+
+  // Footer
+  'footer_copyright': '© 2025 BrawlGPT - Fan-made tool for non-commercial purposes.',
+  'footer_developer': 'Developed by <strong>Víctor Díez</strong>',
+  'footer_contact': 'Contact:',
+  'footer_source_code': 'Source code:',
+  'footer_github': 'Available on GitHub',
+  'footer_disclaimer': 'BrawlGPT is not an official Supercell tool and is not affiliated with them in any way.'
 };
 
 // Spanish translations
@@ -175,7 +182,15 @@ const esTranslations = {
   'epic': 'Épico',
   'mythic': 'Mítico',
   'legendary': 'Legendario',
-  'chromatic': 'Cromático'
+  'chromatic': 'Cromático',
+
+  // Footer
+  'footer_copyright': '© 2025 BrawlGPT - Herramienta sin fines comerciales, creada por fans.',
+  'footer_developer': 'Desarrollado por <strong>Víctor Díez</strong>',
+  'footer_contact': 'Contacto:',
+  'footer_source_code': 'Código fuente:',
+  'footer_github': 'Disponible en GitHub',
+  'footer_disclaimer': 'BrawlGPT no es una herramienta oficial de Supercell ni está afiliada con ellos de ninguna manera.'
 };
 
 // Initialize i18next
