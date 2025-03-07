@@ -37,6 +37,25 @@ const BrawlerCard: React.FC<BrawlerCardProps> = ({
       : 'ring-4 ring-brawl-red shadow-md shadow-red-500/30'
     : '';
 
+  // Imagen de respaldo en caso de que falle la principal
+  const fallbackImage = 'https://pbs.twimg.com/media/GkaLsRAXoAEltn9.jpg';
+  const [imgSrc, setImgSrc] = React.useState(brawler.image);
+
+  const handleImageError = () => {
+    console.error(`Failed to load image for ${brawler.name}:`, brawler.image);
+    
+    // Intenta primero con la imagen de brawlify
+    const fallbackId = brawler.id.toString().padStart(8, '0');
+    const brawlifyUrl = `https://cdn.brawlify.com/brawler-thumbs/${fallbackId}.png`;
+    
+    // Si ya estamos usando la URL de brawlify y falló, usa la imagen de respaldo general
+    if (imgSrc.includes('brawlify.com')) {
+      setImgSrc(fallbackImage);
+    } else {
+      setImgSrc(brawlifyUrl);
+    }
+  };
+
   return (
     <div 
       className={`brawler-card ${sizeClasses[size]} ${statusClass} ${teamBorderClass} animate-scale-in`}
@@ -44,15 +63,11 @@ const BrawlerCard: React.FC<BrawlerCardProps> = ({
     >
       <div className="relative w-full h-full overflow-hidden rounded-xl">
         <img 
-          src={brawler.image} 
+          src={imgSrc} 
           alt={brawler.name}
           className="w-full h-full object-cover transition-transform duration-300"
           loading="lazy"
-          onError={(e) => {
-            console.error(`Failed to load image for ${brawler.name}:`, brawler.image);
-            const fallbackId = brawler.id.toString().padStart(8, '0');
-            e.currentTarget.src = `https://cdn.brawlify.com/brawler-thumbs/${fallbackId}.png`;
-          }}
+          onError={handleImageError}
         />
         
         {banned && (

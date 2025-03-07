@@ -3,9 +3,11 @@ import React, { useState } from 'react';
 import { useDrop } from 'react-dnd';
 import { useTranslation } from 'react-i18next';
 
-// Importamos las imágenes de la papelera
-const closedTrashIcon = '/lovable-uploads/e9ace023-3ed0-422c-935d-e57a74e3c836.png';
-const openTrashIcon = '/lovable-uploads/43f1ba95-7071-4421-a01d-bed1fbc96b28.png';
+// Actualizamos las rutas de las imágenes de la papelera
+const closedTrashIcon = '/lovable-uploads/9e53a253-1bbc-45f2-a646-89f8b516246c.png';
+const openTrashIcon = '/lovable-uploads/02a39218-4cc4-4a22-8974-ca0ce2251f99.png';
+// Imagen de respaldo en caso de que fallen las principales
+const fallbackTrashIcon = 'https://pbs.twimg.com/media/GkaLsRAXoAEltn9.jpg';
 
 interface TrashCanProps {
   onResetDraft: () => void;
@@ -15,6 +17,7 @@ interface TrashCanProps {
 const TrashCan: React.FC<TrashCanProps> = ({ onResetDraft, onRemoveBrawler }) => {
   const { t } = useTranslation();
   const [isHovered, setIsHovered] = useState(false);
+  const [imageError, setImageError] = useState(false);
 
   // Configuramos el drop target para recibir brawlers arrastrados
   const [{ isOver }, drop] = useDrop(() => ({
@@ -29,20 +32,29 @@ const TrashCan: React.FC<TrashCanProps> = ({ onResetDraft, onRemoveBrawler }) =>
     })
   }), [onRemoveBrawler]);
 
+  const handleImageError = () => {
+    console.error('Failed to load trash can image, using fallback');
+    setImageError(true);
+  };
+
   return (
     <div 
       ref={drop}
-      className="flex items-center cursor-pointer transition-transform hover:scale-105"
+      className="flex items-center justify-center cursor-pointer transition-transform hover:scale-110"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={onResetDraft}
       title={t('reset')}
     >
       <img 
-        src={isHovered || isOver ? openTrashIcon : closedTrashIcon} 
+        src={imageError 
+          ? fallbackTrashIcon 
+          : (isHovered || isOver ? openTrashIcon : closedTrashIcon)
+        } 
         alt={t('reset')} 
-        className={`w-8 h-8 ${isOver ? 'scale-110' : ''}`}
+        className={`w-12 h-12 ${isOver ? 'scale-115' : ''}`}
         style={{ transition: 'all 0.2s ease' }}
+        onError={handleImageError}
       />
     </div>
   );

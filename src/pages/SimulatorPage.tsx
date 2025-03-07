@@ -12,6 +12,11 @@ const SimulatorPage: React.FC = () => {
   const [selectedMap, setSelectedMap] = useState<GameMap | null>(null);
   const { t } = useTranslation();
 
+  // Función para volver a la selección de mapas
+  const handleResetMapSelection = () => {
+    setSelectedMap(null);
+  };
+
   return (
     <div className="min-h-screen pb-12 bg-cybernetic text-white">
       <Header />
@@ -21,7 +26,10 @@ const SimulatorPage: React.FC = () => {
       
       <main className="container mx-auto pb-20">
         {selectedMap ? (
-          <DraftSimulator initialMap={selectedMap} />
+          <DraftSimulator 
+            initialMap={selectedMap} 
+            onBackToMapSelection={handleResetMapSelection}
+          />
         ) : (
           <MapSelectionPage onSelectMap={setSelectedMap} />
         )}
