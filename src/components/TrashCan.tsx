@@ -4,8 +4,7 @@ import { useDrop } from 'react-dnd';
 import { useTranslation } from 'react-i18next';
 
 // Actualizamos las rutas de las imágenes de la papelera
-const closedTrashIcon = '/lovable-uploads/9e53a253-1bbc-45f2-a646-89f8b516246c.png';
-const openTrashIcon = '/lovable-uploads/02a39218-4cc4-4a22-8974-ca0ce2251f99.png';
+const trashIcon = 'https://cdn-icons-png.freepik.com/512/16/16367.png';
 // Imagen de respaldo en caso de que fallen las principales
 const fallbackTrashIcon = 'https://pbs.twimg.com/media/GkaLsRAXoAEltn9.jpg';
 
@@ -47,13 +46,13 @@ const TrashCan: React.FC<TrashCanProps> = ({ onResetDraft, onRemoveBrawler }) =>
       title={t('reset')}
     >
       <img 
-        src={imageError 
-          ? fallbackTrashIcon 
-          : (isHovered || isOver ? openTrashIcon : closedTrashIcon)
-        } 
+        src={imageError ? fallbackTrashIcon : trashIcon} 
         alt={t('reset')} 
-        className={`w-12 h-12 ${isOver ? 'scale-115' : ''}`}
-        style={{ transition: 'all 0.2s ease' }}
+        className={`w-12 h-12 ${isOver || isHovered ? 'scale-115' : ''}`}
+        style={{ 
+          transition: 'all 0.2s ease',
+          filter: isOver || isHovered ? 'brightness(1.2) drop-shadow(0 0 4px #ffffff)' : 'none'
+        }}
         onError={handleImageError}
       />
     </div>
