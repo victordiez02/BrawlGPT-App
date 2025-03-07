@@ -333,12 +333,10 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({ initialMap = null }) =>
   };
   
   const handleResetDraft = () => {
-    if (window.confirm(t('confirm_reset_draft'))) {
-      setSelectedBrawlers([null, null, null, null, null, null]);
-      setBannedBrawlers([]);
-      setCurrentPickIndex(firstPick === 'blue' ? 0 : 3);
-      toast.info(t('draft_reset'));
-    }
+    setSelectedBrawlers([null, null, null, null, null, null]);
+    setBannedBrawlers([]);
+    setCurrentPickIndex(firstPick === 'blue' ? 0 : 3);
+    toast.info(t('draft_reset'));
   };
   
   useEffect(() => {
