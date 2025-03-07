@@ -4,6 +4,7 @@ import { useDrag, useDrop } from 'react-dnd';
 import BrawlerCard from './BrawlerCard';
 import { Brawler, brawlers } from '@/lib/brawlers';
 import { useTranslation } from 'react-i18next';
+import { X } from 'lucide-react';
 
 type DraftItemType = {
   id: number;
@@ -87,9 +88,10 @@ const DraftSlot: React.FC<DraftSlotProps> = ({
             />
             <button
               onClick={() => onRemoveBrawler(index)}
-              className="absolute -top-3 -right-3 bg-red-500 text-white rounded-full w-7 h-7 flex items-center justify-center hover:bg-red-600 transition-colors z-10 shadow-md border border-white/20"
+              className="absolute -top-2 -right-2 z-10 bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center hover:bg-red-600 transition-colors shadow-lg border-2 border-white"
+              aria-label="Remove brawler"
             >
-              ×
+              <X size={20} className="text-white" />
             </button>
           </div>
         ) : (

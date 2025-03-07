@@ -2,6 +2,7 @@
 import React from 'react';
 import { UserRound } from 'lucide-react';
 import DraftSlot from './DraftSlot';
+import { useTranslation } from 'react-i18next';
 
 interface DraftTeamProps {
   team: 'blue' | 'red';
@@ -22,6 +23,8 @@ const DraftTeam: React.FC<DraftTeamProps> = ({
   onRemoveBrawler,
   onMoveBrawler
 }) => {
+  const { t } = useTranslation();
+  
   // Determine pick order labels
   const getPickLabel = (index: number): string => {
     const globalIndex = team === 'blue' ? index : index + 3;
@@ -36,7 +39,7 @@ const DraftTeam: React.FC<DraftTeamProps> = ({
       } text-white rounded-t-lg`}>
         <h3 className="font-bold flex items-center text-lg">
           <UserRound size={20} className="mr-2" />
-          Equipo {team === 'blue' ? 'Azul' : 'Rojo'}
+          {team === 'blue' ? t('blue_team') : t('red_team')}
         </h3>
       </div>
       
@@ -44,8 +47,10 @@ const DraftTeam: React.FC<DraftTeamProps> = ({
         {Array.from({ length: 3 }).map((_, index) => {
           const globalIndex = team === 'blue' ? index : index + 3;
           const brawlerId = brawlerIds[index];
-          const isActiveSlot = team === currentPickTeam && ((team === 'blue' && index === activeSlot) || 
-                              (team === 'red' && index + 3 === activeSlot));
+          const isActiveSlot = currentPickTeam === team && (
+            (team === 'blue' && activeSlot === index) || 
+            (team === 'red' && activeSlot - 3 === index)
+          );
           
           return (
             <DraftSlot
