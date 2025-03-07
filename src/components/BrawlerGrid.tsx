@@ -178,7 +178,7 @@ const BrawlerGrid: React.FC<BrawlerGridProps> = ({
               <span className="text-sm font-brawl">{t('sort_by')}</span>
             </button>
             
-            {showSortDropdown && <div className="absolute right-0 z-10 mt-1 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700">
+            {showSortDropdown && <div className="absolute right-0 z-10 mt-1 w-48 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 bg-slate-500">
                 <div onClick={() => {
               setSortOrder('rarity');
               setShowSortDropdown(false);
