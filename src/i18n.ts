@@ -1,4 +1,3 @@
-
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
@@ -78,7 +77,7 @@ const enTranslations = {
   'hot_zone': 'Hot Zone',
   'bounty': 'Bounty',
   'knockout': 'Knockout',
-  'basket_brawl': 'Basket Brawl',
+  'brawl_hockey': 'Brawl Hockey',
   
   // Rarities
   'common': 'Common',
@@ -166,7 +165,7 @@ const esTranslations = {
   'hot_zone': 'Zona Restringida',
   'bounty': 'Caza Estelar',
   'knockout': 'Noqueo',
-  'basket_brawl': 'Hockey Brawl',
+  'brawl_hockey': 'Hockey Brawl',
   
   // Rarities
   'common': 'Común',

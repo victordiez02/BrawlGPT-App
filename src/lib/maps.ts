@@ -119,5 +119,35 @@ export const gameMaps: GameMap[] = [
     translatedName: 'Estrella Fugaz',
     mode: 'Bounty',
     image: 'https://cdn.brawlify.com/maps/regular/15000012.png'
+  },
+  // New Knockout maps
+  {
+    id: 17,
+    name: 'Out in the Open',
+    translatedName: 'Al Descubierto',
+    mode: 'Knockout',
+    image: 'https://cdn.brawlify.com/maps/regular/15000214.png'
+  },
+  {
+    id: 18,
+    name: 'Goldarm Gulch',
+    translatedName: 'Barranco Brazosdorados',
+    mode: 'Knockout',
+    image: 'https://cdn.brawlify.com/maps/regular/15000209.png'
+  },
+  // New Hockey maps
+  {
+    id: 19,
+    name: 'Center Ice',
+    translatedName: 'Hielo Central',
+    mode: 'Brawl Hockey',
+    image: 'https://cdn.brawlify.com/maps/regular/15000304.png'
+  },
+  {
+    id: 20,
+    name: 'Hot Potato Rink',
+    translatedName: 'Pista Patata Caliente',
+    mode: 'Brawl Hockey',
+    image: 'https://cdn.brawlify.com/maps/regular/15000305.png'
   }
 ];
