@@ -1,17 +1,15 @@
 
-import React from 'react';
-import Header from '@/components/Header';
-import DraftSimulator from '@/components/DraftSimulator';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Index = () => {
-  return (
-    <div className="min-h-screen pb-12 bg-gray-100 bg-opacity-70 text-gray-800">
-      <Header />
-      <main className="container mx-auto pb-20">
-        <DraftSimulator />
-      </main>
-    </div>
-  );
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+    navigate('/', { replace: true });
+  }, [navigate]);
+  
+  return <div className="flex items-center justify-center min-h-screen">Redirecting...</div>;
 };
 
 export default Index;

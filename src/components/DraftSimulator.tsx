@@ -235,28 +235,58 @@ const DraftSimulator: React.FC = () => {
   
   // Handle moving brawlers (drag and drop)
   const handleMoveBrawler = (fromIndex: number, toIndex: number) => {
+    // Don't do anything if source and destination are the same
+    if (fromIndex === toIndex) return;
+    
     const newSelectedBrawlers = [...selectedBrawlers];
     const fromBrawlerId = newSelectedBrawlers[fromIndex];
     
     // Only proceed if there's a source brawler
     if (fromBrawlerId !== null) {
-      const toBrawlerId = newSelectedBrawlers[toIndex];
+      // Store the brawler being moved
+      const movingBrawler = brawlers.find(b => b.id === fromBrawlerId);
       
-      // Update brawler positions
+      // Start by creating a new array without the source brawler
       newSelectedBrawlers[fromIndex] = null;
-      newSelectedBrawlers[toIndex] = fromBrawlerId;
+      
+      // Determine which team we're working with to create the right shift effect
+      const isBlueTeam = fromIndex < 3 && toIndex < 3;
+      const isRedTeam = fromIndex >= 3 && toIndex >= 3;
+      const sameTeam = isBlueTeam || isRedTeam;
+      
+      if (sameTeam) {
+        // If shifting within the same team, we need to shift brawlers
+        const teamOffset = isBlueTeam ? 0 : 3;
+        const teamSize = 3;
+        
+        // Convert to team-relative indices
+        const relativeFromIndex = fromIndex - teamOffset;
+        const relativeToIndex = toIndex - teamOffset;
+        
+        if (relativeFromIndex < relativeToIndex) {
+          // Moving right - shift brawlers left
+          for (let i = relativeFromIndex; i < relativeToIndex; i++) {
+            newSelectedBrawlers[i + teamOffset] = newSelectedBrawlers[i + teamOffset + 1];
+          }
+        } else {
+          // Moving left - shift brawlers right
+          for (let i = relativeFromIndex; i > relativeToIndex; i--) {
+            newSelectedBrawlers[i + teamOffset] = newSelectedBrawlers[i + teamOffset - 1];
+          }
+        }
+        
+        // Place the moved brawler in the destination
+        newSelectedBrawlers[toIndex] = fromBrawlerId;
+      } else {
+        // If moving between teams, simply place the brawler in the new spot
+        // If destination already has a brawler, it will be replaced
+        newSelectedBrawlers[toIndex] = fromBrawlerId;
+      }
       
       setSelectedBrawlers(newSelectedBrawlers);
       
-      const fromBrawler = brawlers.find(b => b.id === fromBrawlerId);
-      const toBrawler = toBrawlerId !== null ? brawlers.find(b => b.id === toBrawlerId) : null;
-      
-      if (fromBrawler) {
-        if (toBrawler) {
-          toast.info(`${fromBrawler.name} intercambiado con ${toBrawler.name}`);
-        } else {
-          toast.info(`${fromBrawler.name} movido a nueva posición`);
-        }
+      if (movingBrawler) {
+        toast.info(`${movingBrawler.name} movido a nueva posición`);
       }
       
       // Set current pick index to the source slot

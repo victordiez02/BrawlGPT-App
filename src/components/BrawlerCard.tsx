@@ -22,7 +22,7 @@ const BrawlerCard: React.FC<BrawlerCardProps> = ({
   const sizeClasses = {
     sm: 'w-16 h-16',
     md: 'w-20 h-20',
-    lg: 'w-24 h-24'
+    lg: 'w-full h-full' // Changed to fill the container
   };
   
   const statusClass = banned 
@@ -50,7 +50,8 @@ const BrawlerCard: React.FC<BrawlerCardProps> = ({
           loading="lazy"
           onError={(e) => {
             console.error(`Failed to load image for ${brawler.name}:`, brawler.image);
-            e.currentTarget.src = `https://cdn.brawlify.com/brawler-thumbs/${brawler.name.toLowerCase().replace(/\s+/g, '-')}.png`;
+            const fallbackId = brawler.id.toString().padStart(8, '0');
+            e.currentTarget.src = `https://cdn.brawlify.com/brawler-thumbs/${fallbackId}.png`;
           }}
         />
         
