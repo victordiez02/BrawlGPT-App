@@ -33,8 +33,8 @@ const BrawlerCard: React.FC<BrawlerCardProps> = ({
       
   const teamBorderClass = team 
     ? team === 'blue' 
-      ? 'ring-4 ring-brawl-blue' 
-      : 'ring-4 ring-brawl-red'
+      ? 'ring-5 ring-brawl-blue' 
+      : 'ring-5 ring-brawl-red'
     : '';
 
   return (
@@ -57,19 +57,19 @@ const BrawlerCard: React.FC<BrawlerCardProps> = ({
         
         {banned && (
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-full h-1 bg-red-500 rotate-45 transform origin-center"></div>
-            <div className="w-full h-1 bg-red-500 -rotate-45 transform origin-center"></div>
+            <div className="w-full h-1.5 bg-red-500 rotate-45 transform origin-center"></div>
+            <div className="w-full h-1.5 bg-red-500 -rotate-45 transform origin-center"></div>
           </div>
         )}
         
         {size === 'lg' ? (
-          <div className="absolute bottom-0 left-0 right-0 bg-black py-1 px-2">
+          <div className="absolute bottom-0 left-0 right-0 bg-black/70 py-2 px-2 backdrop-blur-sm">
             <p className="text-white font-brawl text-center uppercase tracking-wider">
               {brawler.name}
             </p>
           </div>
         ) : (
-          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-1">
+          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-1">
             <p className="text-xs text-white font-brawl text-center truncate">
               {brawler.name}
             </p>

@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Globe } from 'lucide-react';
 
 const LanguageSelector: React.FC = () => {
   const { i18n } = useTranslation();
@@ -16,7 +17,7 @@ const LanguageSelector: React.FC = () => {
         onClick={() => changeLanguage('en')}
         title="English"
       >
-        <span className="text-xl">🇺🇸</span>
+        <span role="img" aria-label="English" className="text-xl">🇺🇸</span>
       </button>
       
       <button
@@ -24,7 +25,7 @@ const LanguageSelector: React.FC = () => {
         onClick={() => changeLanguage('es')}
         title="Español"
       >
-        <span className="text-xl">🇪🇸</span>
+        <span role="img" aria-label="Español" className="text-xl">🇪🇸</span>
       </button>
     </div>
   );

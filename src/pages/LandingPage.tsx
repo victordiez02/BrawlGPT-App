@@ -26,9 +26,19 @@ const LandingPage: React.FC = () => {
               <p className="text-xl md:text-2xl opacity-90 mb-4 animate-fade-in delay-200 font-brawl">
                 {t('landing_subtitle_1')}
               </p>
-              <p className="text-lg opacity-80 animate-fade-in delay-200">
+              <p className="text-lg opacity-80 animate-fade-in delay-200 mb-6">
                 {t('landing_subtitle_2')}
               </p>
+              
+              {/* Moved Generate Optimal Pick Button */}
+              <Link 
+                to="/simulator" 
+                className="btn-primary group flex items-center px-12 py-4 text-xl font-medium rounded-xl transition-all transform hover:scale-105 hover:shadow-lg hover:shadow-blue-500/20 animate-float mx-auto max-w-fit"
+              >
+                <Zap size={24} className="mr-2" />
+                {t('cta_button')}
+                <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+              </Link>
             </div>
           </div>
           
@@ -71,7 +81,7 @@ const LandingPage: React.FC = () => {
               {[...Array(6)].map((_, i) => (
                 <div 
                   key={i} 
-                  className={`aspect-square rounded-xl ${i < 3 ? 'bg-blue-500/30 border border-blue-500/50' : 'bg-red-500/30 border border-red-500/50'} 
+                  className={`aspect-square rounded-xl ${i < 3 ? 'bg-blue-500/30 border-4 border-blue-500/50' : 'bg-red-500/30 border-4 border-red-500/50'} 
                   ${[0, 3].includes(i) ? 'animate-pulse-soft' : ''}`}
                 >
                   {[0, 3].includes(i) && (
@@ -82,19 +92,7 @@ const LandingPage: React.FC = () => {
                 </div>
               ))}
             </div>
-            <p className="text-center opacity-70 font-brawl">{t('draft_visualization_text')}</p>
-          </div>
-          
-          {/* CTA Button */}
-          <div className="flex justify-center">
-            <Link 
-              to="/simulator" 
-              className="btn-primary group flex items-center px-12 py-4 text-xl font-medium rounded-xl transition-all transform hover:scale-105 hover:shadow-lg hover:shadow-blue-500/20 animate-float"
-            >
-              <Zap size={24} className="mr-2" />
-              {t('cta_button')}
-              <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-            </Link>
+            <p className="text-center opacity-80 font-brawl">{t('draft_visualization_text')}</p>
           </div>
         </div>
       </div>

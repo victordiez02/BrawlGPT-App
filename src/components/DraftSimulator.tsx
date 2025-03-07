@@ -27,6 +27,11 @@ const DraftSimulator: React.FC = () => {
   const [apiResult, setApiResult] = useState<ApiResponse | null>(null);
   const [showResultModal, setShowResultModal] = useState<boolean>(false);
   
+  // Define findTeamByIndex function first before using it in useMemo
+  const findTeamByIndex = (index: number) => {
+    return index < 3 ? 'blue' : 'red';
+  };
+  
   // Calculate pick order based on who goes first
   const pickOrder = firstPick === 'blue' 
     ? [0, 3, 4, 1, 2, 5] // Blue first: Blue picks 1st, 4th, 5th; Red picks 2nd, 3rd, 6th
@@ -36,10 +41,6 @@ const DraftSimulator: React.FC = () => {
   const currentPickTeam = useMemo(() => {
     return findTeamByIndex(currentPickIndex);
   }, [currentPickIndex]);
-
-  const findTeamByIndex = (index: number) => {
-    return index < 3 ? 'blue' : 'red';
-  };
 
   // Get current draft phase
   const getCurrentDraftPhase = (): number => {

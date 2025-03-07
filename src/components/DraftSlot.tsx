@@ -95,12 +95,14 @@ const DraftSlot: React.FC<DraftSlotProps> = ({
         ) : (
           <div className="w-full h-full flex items-center justify-center">
             {isActiveSlot && (
-              <span className="text-sm font-medium opacity-70 animate-pulse font-brawl">{t('select')}</span>
+              <span className="text-sm font-medium opacity-80 animate-pulse font-brawl text-white text-shadow">
+                {t('select')}
+              </span>
             )}
           </div>
         )}
       </div>
-      <span className="text-xs font-medium text-gray-600 dark:text-gray-400 font-brawl">
+      <span className="text-xs font-medium text-white dark:text-gray-200 font-brawl text-glow">
         {pickLabel}
       </span>
     </div>
