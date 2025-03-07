@@ -1,23 +1,30 @@
 
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const Header = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+  
+  const handleBackClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    navigate('/');
+  };
   
   return (
     <header className="w-full mb-8 text-center animate-fade-in relative">
       <div className="max-w-5xl mx-auto px-4 py-6">
-        <Link 
-          to="/" 
-          className="absolute left-4 top-8 inline-flex items-center gap-1 text-white/80 hover:text-white transition-colors"
+        <Button 
+          variant="ghost" 
+          className="absolute left-4 top-8 inline-flex items-center gap-1 text-white/80 hover:text-white transition-colors p-0"
+          onClick={handleBackClick}
         >
           <ArrowLeft className="h-4 w-4" />
           <span className="font-brawl">{t('back_to_home')}</span>
-        </Link>
+        </Button>
         
         <div className="flex flex-col items-center justify-center relative">
           <div className="absolute opacity-20 -z-10 transform scale-150">
