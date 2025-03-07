@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface TeamSelectorProps {
   firstPick: 'blue' | 'red';
@@ -7,10 +8,12 @@ interface TeamSelectorProps {
 }
 
 const TeamSelector: React.FC<TeamSelectorProps> = ({ firstPick, onSelectFirstPick }) => {
+  const { t } = useTranslation();
+  
   return (
     <div className="mb-6 animate-slide-in">
-      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-        ¿Quién empieza eligiendo?
+      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 font-brawl">
+        {t('who_picks_first')}
       </label>
       
       <div className="flex space-x-4">
@@ -24,7 +27,7 @@ const TeamSelector: React.FC<TeamSelectorProps> = ({ firstPick, onSelectFirstPic
         >
           <div className="flex flex-col items-center">
             <div className="w-6 h-6 bg-brawl-blue rounded-full mb-2"></div>
-            <span className="font-medium">Equipo Azul</span>
+            <span className="font-medium font-brawl">{t('blue_team')}</span>
           </div>
         </button>
         
@@ -38,7 +41,7 @@ const TeamSelector: React.FC<TeamSelectorProps> = ({ firstPick, onSelectFirstPic
         >
           <div className="flex flex-col items-center">
             <div className="w-6 h-6 bg-brawl-red rounded-full mb-2"></div>
-            <span className="font-medium">Equipo Rojo</span>
+            <span className="font-medium font-brawl">{t('red_team')}</span>
           </div>
         </button>
       </div>

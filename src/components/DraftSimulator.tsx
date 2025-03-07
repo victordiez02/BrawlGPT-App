@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useMemo } from 'react';
 import { brawlers, Brawler } from '@/lib/brawlers';
 import { GameMap } from '@/lib/maps';
@@ -12,8 +13,10 @@ import { ArrowLeft, Info, Loader2, Zap } from 'lucide-react';
 import { toast } from 'sonner';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import { useTranslation } from 'react-i18next';
 
 const DraftSimulator: React.FC = () => {
+  const { t } = useTranslation();
   // State management
   const [selectedMap, setSelectedMap] = useState<GameMap | null>(null);
   const [firstPick, setFirstPick] = useState<'blue' | 'red'>('blue');
@@ -30,7 +33,13 @@ const DraftSimulator: React.FC = () => {
     : [3, 0, 1, 4, 5, 2]; // Red first: Red picks 1st, 4th, 5th; Blue picks 2nd, 3rd, 6th
   
   // Determine which team is currently picking based on the current pick index
-  const currentPickTeam = currentPickIndex < 3 ? 'blue' : 'red';
+  const currentPickTeam = useMemo(() => {
+    return findTeamByIndex(currentPickIndex);
+  }, [currentPickIndex]);
+
+  const findTeamByIndex = (index: number) => {
+    return index < 3 ? 'blue' : 'red';
+  };
 
   // Get current draft phase
   const getCurrentDraftPhase = (): number => {
@@ -95,34 +104,56 @@ const DraftSimulator: React.FC = () => {
     // Filter to show only the next expected picks based on the filled count
     const filledCount = filledPositions.length;
     
-    if (filledCount === 0) return "Select the first pick";
+    if (filledCount === 0) return t('select_first_pick');
     if (filledCount === 1) {
-      if (filledPositions[0] !== pickOrder[0]) return `Select the brawler for the 1st pick`;
-      return `Select the brawler for the 2nd pick`;
+      if (filledPositions[0] !== pickOrder[0]) return t('select_first_pick_brawler');
+      return t('select_second_pick_brawler');
     }
     if (filledCount === 2) {
       if (!filledPositions.includes(pickOrder[0]) || 
           !filledPositions.includes(pickOrder[1])) {
-        return `Select the brawlers for the picks 1st and 2nd`;
+        return t('select_first_second_pick_brawlers');
       }
-      return `Select the brawler for the 3rd pick`;
+      return t('select_third_pick_brawler');
     }
     if (filledCount === 3) {
-      if (!isValidPhase) return `Incorrect pick order. Missing picks ${missingPicks.slice(0, 3).join('º, ')}º`;
-      return `Select the brawler for the 4th pick`;
+      if (!isValidPhase) return t('incorrect_pick_order', { missingPicks: missingPicks.slice(0, 3).join('º, ') });
+      return t('select_fourth_pick_brawler');
     }
     if (filledCount === 4) {
       if (!filledPositions.includes(pickOrder[0]) || 
           !filledPositions.includes(pickOrder[1]) ||
           !filledPositions.includes(pickOrder[2]) ||
           !filledPositions.includes(pickOrder[3])) {
-        return `Incorrect pick order. Missing picks ${missingPicks.slice(0, 4).join('º, ')}º`;
+        return t('incorrect_pick_order', { missingPicks: missingPicks.slice(0, 4).join('º, ') });
       }
-      return `Select the brawler for the 5th pick`;
+      return t('select_fifth_pick_brawler');
+    }
+    if (filledCount === 6) {
+      return t('remove_sixth_pick');
     }
     
-    return `Incorrect pick order. Missing picks ${missingPicks.join('º, ')}º`;
+    return t('incorrect_pick_order', { missingPicks: missingPicks.join('º, ') });
   };
+
+  // Find the next empty slot for picking
+  const findNextPickSlot = () => {
+    for (let i = 0; i < pickOrder.length; i++) {
+      const slotIndex = pickOrder[i];
+      if (selectedBrawlers[slotIndex] === null) {
+        return slotIndex;
+      }
+    }
+    return -1; // All slots filled
+  };
+
+  // Update the active slot
+  useEffect(() => {
+    const nextSlot = findNextPickSlot();
+    if (nextSlot !== -1) {
+      setCurrentPickIndex(nextSlot);
+    }
+  }, [selectedBrawlers]);
 
   // Generate button state and text
   const generateButtonConfig = useMemo(() => {
@@ -131,15 +162,15 @@ const DraftSimulator: React.FC = () => {
     if (!selectedMap) {
       return {
         enabled: false,
-        text: "Generate Best Option",
-        disabledReason: "Select a map first"
+        text: t('generate_best_option'),
+        disabledReason: t('select_map_first')
       };
     }
     
     if (!isValidPhase) {
       return {
         enabled: false,
-        text: "Generate Best Option",
+        text: t('generate_best_option'),
         disabledReason: getMissingPicksMessage()
       };
     }
@@ -148,35 +179,35 @@ const DraftSimulator: React.FC = () => {
       case 1:
         return {
           enabled: true,
-          text: "Generate the best option for the first phase",
+          text: t('generate_phase_1'),
           disabledReason: ""
         };
       case 2:
         return {
           enabled: true,
-          text: "Generate the best option for the second phase",
+          text: t('generate_phase_2'),
           disabledReason: ""
         };
       case 3:
         return {
           enabled: true,
-          text: "Generate the best option for the third phase",
+          text: t('generate_phase_3'),
           disabledReason: ""
         };
       case 4:
         return {
           enabled: true,
-          text: "Generate the best option for the last phase",
+          text: t('generate_phase_4'),
           disabledReason: ""
         };
       default:
         return {
           enabled: false,
-          text: "Generate Best Option",
-          disabledReason: "Configure the draft correctly"
+          text: t('generate_best_option'),
+          disabledReason: t('configure_draft_correctly')
         };
     }
-  }, [selectedMap, isValidPhase, getCurrentDraftPhase, getMissingPicksMessage]);
+  }, [selectedMap, isValidPhase, getMissingPicksMessage, t]);
   
   // Handle brawler selection
   const handleSelectBrawler = (brawler: Brawler) => {
@@ -201,16 +232,9 @@ const DraftSimulator: React.FC = () => {
     newSelectedBrawlers[nextAvailableIndex] = brawler.id;
     setSelectedBrawlers(newSelectedBrawlers);
     
-    // Update current pick index to the next available slot
-    const nextIndex = pickOrder.findIndex(i => i === nextAvailableIndex);
-    const followingIndex = nextIndex < pickOrder.length - 1 ? pickOrder[nextIndex + 1] : -1;
-    if (followingIndex !== -1 && newSelectedBrawlers[followingIndex] === null) {
-      setCurrentPickIndex(followingIndex);
-    }
-    
     // Show success toast
-    const team = nextAvailableIndex < 3 ? 'Blue' : 'Red';
-    toast.success(`${brawler.name} selected for the ${team} team`);
+    const team = nextAvailableIndex < 3 ? t('blue_team') : t('red_team');
+    toast.success(t('brawler_selected', { name: brawler.name, team }));
   };
   
   // Handle brawler removal
@@ -222,75 +246,50 @@ const DraftSimulator: React.FC = () => {
     if (removedBrawlerId !== null) {
       const brawler = brawlers.find(b => b.id === removedBrawlerId);
       if (brawler) {
-        toast.info(`${brawler.name} removed from the draft`);
+        toast.info(t('brawler_removed', { name: brawler.name }));
       }
       
       newSelectedBrawlers[index] = null;
       setSelectedBrawlers(newSelectedBrawlers);
-      
-      // Set current pick index to the removed slot
-      setCurrentPickIndex(index);
+    }
+  };
+
+  // Handle removing a brawler from draft by ID
+  const handleRemoveBrawlerById = (brawlerId: number) => {
+    const index = selectedBrawlers.indexOf(brawlerId);
+    if (index !== -1) {
+      handleRemoveBrawler(index);
     }
   };
   
-  // Handle moving brawlers (drag and drop)
+  // Handle moving brawlers (drag and drop) - swap implementation
   const handleMoveBrawler = (fromIndex: number, toIndex: number) => {
     // Don't do anything if source and destination are the same
     if (fromIndex === toIndex) return;
     
     const newSelectedBrawlers = [...selectedBrawlers];
     const fromBrawlerId = newSelectedBrawlers[fromIndex];
+    const toBrawlerId = newSelectedBrawlers[toIndex];
     
     // Only proceed if there's a source brawler
     if (fromBrawlerId !== null) {
-      // Store the brawler being moved
-      const movingBrawler = brawlers.find(b => b.id === fromBrawlerId);
-      
-      // Start by creating a new array without the source brawler
-      newSelectedBrawlers[fromIndex] = null;
-      
-      // Determine which team we're working with to create the right shift effect
-      const isBlueTeam = fromIndex < 3 && toIndex < 3;
-      const isRedTeam = fromIndex >= 3 && toIndex >= 3;
-      const sameTeam = isBlueTeam || isRedTeam;
-      
-      if (sameTeam) {
-        // If shifting within the same team, we need to shift brawlers
-        const teamOffset = isBlueTeam ? 0 : 3;
-        const teamSize = 3;
-        
-        // Convert to team-relative indices
-        const relativeFromIndex = fromIndex - teamOffset;
-        const relativeToIndex = toIndex - teamOffset;
-        
-        if (relativeFromIndex < relativeToIndex) {
-          // Moving right - shift brawlers left
-          for (let i = relativeFromIndex; i < relativeToIndex; i++) {
-            newSelectedBrawlers[i + teamOffset] = newSelectedBrawlers[i + teamOffset + 1];
-          }
-        } else {
-          // Moving left - shift brawlers right
-          for (let i = relativeFromIndex; i > relativeToIndex; i--) {
-            newSelectedBrawlers[i + teamOffset] = newSelectedBrawlers[i + teamOffset - 1];
-          }
-        }
-        
-        // Place the moved brawler in the destination
-        newSelectedBrawlers[toIndex] = fromBrawlerId;
-      } else {
-        // If moving between teams, simply place the brawler in the new spot
-        // If destination already has a brawler, it will be replaced
-        newSelectedBrawlers[toIndex] = fromBrawlerId;
-      }
+      // Simply swap the positions
+      newSelectedBrawlers[fromIndex] = toBrawlerId;
+      newSelectedBrawlers[toIndex] = fromBrawlerId;
       
       setSelectedBrawlers(newSelectedBrawlers);
       
-      if (movingBrawler) {
-        toast.info(`${movingBrawler.name} moved to a new position`);
-      }
+      // Get brawler names for toast
+      const fromBrawler = brawlers.find(b => b.id === fromBrawlerId);
+      const toBrawler = toBrawlerId !== null ? brawlers.find(b => b.id === toBrawlerId) : null;
       
-      // Set current pick index to the source slot
-      setCurrentPickIndex(fromIndex);
+      if (fromBrawler) {
+        if (toBrawler) {
+          toast.info(t('brawlers_swapped', { from: fromBrawler.name, to: toBrawler.name }));
+        } else {
+          toast.info(t('brawler_moved_position', { name: fromBrawler.name }));
+        }
+      }
     }
   };
   
@@ -302,13 +301,13 @@ const DraftSimulator: React.FC = () => {
     }
     
     if (bannedBrawlers.length >= 6) {
-      toast.error("You can't ban more than 6 brawlers");
+      toast.error(t('max_bans_error'));
       return;
     }
     
     const brawler = brawlers.find(b => b.id === brawlerId);
     if (brawler) {
-      toast.info(`${brawler.name} banned`);
+      toast.info(t('brawler_banned', { name: brawler.name }));
       setBannedBrawlers([...bannedBrawlers, brawlerId]);
     }
   };
@@ -317,7 +316,7 @@ const DraftSimulator: React.FC = () => {
   const handleUnbanBrawler = (brawlerId: number) => {
     const brawler = brawlers.find(b => b.id === brawlerId);
     if (brawler) {
-      toast.info(`Ban of ${brawler.name} removed`);
+      toast.info(t('brawler_unbanned', { name: brawler.name }));
     }
     
     setBannedBrawlers(bannedBrawlers.filter(id => id !== brawlerId));
@@ -327,7 +326,7 @@ const DraftSimulator: React.FC = () => {
   const handleGenerateRecommendation = async () => {
     // Validate requirements
     if (!selectedMap) {
-      toast.error('You must select a map');
+      toast.error(t('must_select_map'));
       return;
     }
     
@@ -358,7 +357,7 @@ const DraftSimulator: React.FC = () => {
       setShowResultModal(true);
     } catch (error) {
       console.error('Error generating recommendation:', error);
-      toast.error('Error generating the recommendation. Try again.');
+      toast.error(t('error_generating_recommendation'));
     } finally {
       setIsGenerating(false);
     }
@@ -366,10 +365,10 @@ const DraftSimulator: React.FC = () => {
   
   // Reset draft
   const handleResetDraft = () => {
-    if (window.confirm('Are you sure you want to reset the draft? You will lose all current selections.')) {
+    if (window.confirm(t('confirm_reset_draft'))) {
       setSelectedBrawlers([null, null, null, null, null, null]);
-      setCurrentPickIndex(0);
-      toast.info('Draft reset');
+      setCurrentPickIndex(firstPick === 'blue' ? 0 : 3);
+      toast.info(t('draft_reset'));
     }
   };
   
@@ -426,12 +425,12 @@ const DraftSimulator: React.FC = () => {
         <div className="glass-panel mb-6 overflow-hidden">
           <div className="p-4">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-bold">Current Draft</h2>
+              <h2 className="text-xl font-bold font-brawl">{t('current_draft')}</h2>
               <button
                 onClick={handleResetDraft}
-                className="flex items-center text-sm text-gray-600 hover:text-red-500 transition-colors"
+                className="flex items-center text-sm text-gray-600 hover:text-red-500 transition-colors font-brawl"
               >
-                <ArrowLeft size={16} className="mr-1" /> Reset
+                <ArrowLeft size={16} className="mr-1" /> {t('reset')}
               </button>
             </div>
             
@@ -464,7 +463,7 @@ const DraftSimulator: React.FC = () => {
             <button
               onClick={handleGenerateRecommendation}
               disabled={!generateButtonConfig.enabled || isGenerating}
-              className={`w-full flex items-center justify-center ${
+              className={`w-full flex items-center justify-center font-brawl ${
                 generateButtonConfig.enabled 
                   ? 'btn-success' 
                   : 'bg-gradient-to-r from-green-300 to-green-400 text-white font-bold py-3 px-6 rounded-xl opacity-60 cursor-not-allowed'
@@ -473,7 +472,7 @@ const DraftSimulator: React.FC = () => {
               {isGenerating ? (
                 <>
                   <Loader2 size={20} className="mr-2 animate-spin" />
-                  Generating...
+                  {t('generating')}
                 </>
               ) : (
                 <>
@@ -484,7 +483,7 @@ const DraftSimulator: React.FC = () => {
             </button>
             
             {!generateButtonConfig.enabled && generateButtonConfig.disabledReason && (
-              <div className="mt-2 flex items-center justify-center text-sm text-red-500">
+              <div className="mt-2 flex items-center justify-center text-sm text-red-500 font-brawl">
                 <Info size={14} className="mr-1" />
                 {generateButtonConfig.disabledReason}
               </div>
@@ -508,6 +507,8 @@ const DraftSimulator: React.FC = () => {
               bannedBrawlers={bannedBrawlers}
               onSelectBrawler={handleSelectBrawler}
               onBanBrawler={handleBanBrawler}
+              onUnbanBrawler={handleUnbanBrawler}
+              onRemoveBrawlerFromDraft={handleRemoveBrawlerById}
             />
           </div>
         </div>

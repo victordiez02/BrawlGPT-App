@@ -3,6 +3,7 @@ import React from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import BrawlerCard from './BrawlerCard';
 import { Brawler, brawlers } from '@/lib/brawlers';
+import { useTranslation } from 'react-i18next';
 
 type DraftItemType = {
   id: number;
@@ -28,6 +29,7 @@ const DraftSlot: React.FC<DraftSlotProps> = ({
   onRemoveBrawler,
   onMoveBrawler
 }) => {
+  const { t } = useTranslation();
   const teamColorClass = team === 'blue' ? 'draft-slot-blue' : 'draft-slot-red';
   
   // Find brawler by id
@@ -93,12 +95,12 @@ const DraftSlot: React.FC<DraftSlotProps> = ({
         ) : (
           <div className="w-full h-full flex items-center justify-center">
             {isActiveSlot && (
-              <span className="text-sm font-medium opacity-70 animate-pulse">Select</span>
+              <span className="text-sm font-medium opacity-70 animate-pulse font-brawl">{t('select')}</span>
             )}
           </div>
         )}
       </div>
-      <span className="text-xs font-medium text-gray-600 dark:text-gray-400">
+      <span className="text-xs font-medium text-gray-600 dark:text-gray-400 font-brawl">
         {pickLabel}
       </span>
     </div>

@@ -33,8 +33,8 @@ const BrawlerCard: React.FC<BrawlerCardProps> = ({
       
   const teamBorderClass = team 
     ? team === 'blue' 
-      ? 'ring-3 ring-brawl-blue' 
-      : 'ring-3 ring-brawl-red'
+      ? 'ring-4 ring-brawl-blue' 
+      : 'ring-4 ring-brawl-red'
     : '';
 
   return (
@@ -62,11 +62,19 @@ const BrawlerCard: React.FC<BrawlerCardProps> = ({
           </div>
         )}
         
-        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-1">
-          <p className="text-xs text-white font-semibold text-center truncate">
-            {brawler.name}
-          </p>
-        </div>
+        {size === 'lg' ? (
+          <div className="absolute bottom-0 left-0 right-0 bg-black py-1 px-2">
+            <p className="text-white font-brawl text-center uppercase tracking-wider">
+              {brawler.name}
+            </p>
+          </div>
+        ) : (
+          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-1">
+            <p className="text-xs text-white font-brawl text-center truncate">
+              {brawler.name}
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );
