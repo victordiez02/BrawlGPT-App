@@ -67,7 +67,9 @@ const enTranslations = {
   'error_generating_recommendation': 'Error generating the recommendation. Try again.',
   'confirm_reset_draft': 'Are you sure you want to reset the draft? You will lose all current selections.',
   'draft_reset': 'Draft reset',
-  'who_picks_first': 'Who picks first?'
+  'who_picks_first': 'Who picks first?',
+  'select_map': 'Select map',
+  'search_maps': 'Search maps...'
 };
 
 // Spanish translations
@@ -135,7 +137,9 @@ const esTranslations = {
   'error_generating_recommendation': 'Error al generar la recomendación. Inténtalo de nuevo.',
   'confirm_reset_draft': '¿Estás seguro de que quieres reiniciar el draft? Perderás todas las selecciones actuales.',
   'draft_reset': 'Draft reiniciado',
-  'who_picks_first': '¿Quién empieza eligiendo?'
+  'who_picks_first': '¿Quién empieza eligiendo?',
+  'select_map': 'Seleccionar mapa',
+  'search_maps': 'Buscar mapas...'
 };
 
 // Initialize i18next

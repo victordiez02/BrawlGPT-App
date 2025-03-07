@@ -11,7 +11,7 @@ interface MapSelectionPageProps {
 const MapSelectionPage: React.FC<MapSelectionPageProps> = ({ onSelectMap }) => {
   const [filterMode, setFilterMode] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   
   // Get unique modes for filtering
   const modes = Array.from(new Set(gameMaps.map(map => map.mode)));
@@ -31,24 +31,41 @@ const MapSelectionPage: React.FC<MapSelectionPageProps> = ({ onSelectMap }) => {
 
   // Get mode icon based on map mode
   const getModeIcon = (mode: string) => {
-    switch (mode.toLowerCase()) {
-      case 'gem grab':
-        return '💎';
-      case 'brawl ball':
-        return '⚽';
-      case 'showdown':
-        return '🏆';
-      case 'heist':
-        return '💰';
-      case 'bounty':
-        return '⭐';
-      case 'hot zone':
-        return '🔥';
-      case 'siege':
-        return '🤖';
-      default:
-        return '🎮';
-    }
+    const lowerMode = mode.toLowerCase();
+    if (lowerMode === 'gem grab' || lowerMode === 'atrapagemas') 
+      return 'https://cdn.brawlify.com/game-modes/regular/48000000.png';
+    if (lowerMode === 'brawl ball' || lowerMode === 'balón brawl') 
+      return 'https://cdn.brawlify.com/game-modes/regular/48000005.png';
+    if (lowerMode === 'heist' || lowerMode === 'atraco') 
+      return 'https://cdn.brawlify.com/game-modes/regular/48000002.png';
+    if (lowerMode === 'hot zone' || lowerMode === 'zona restringida') 
+      return 'https://cdn.brawlify.com/game-modes/regular/48000017.png';
+    if (lowerMode === 'bounty' || lowerMode === 'caza estelar') 
+      return 'https://cdn.brawlify.com/game-modes/regular/48000003.png';
+    if (lowerMode === 'knockout' || lowerMode === 'noqueo') 
+      return 'https://cdn.brawlify.com/game-modes/regular/48000020.png';
+    if (lowerMode === 'brawl hockey' || lowerMode === 'hockey brawl') 
+      return 'https://cdn.brawlify.com/game-modes/regular/48000045.png';
+    return 'https://cdn.brawlify.com/placeholder.png';
+  };
+
+  // Get translated mode name
+  const getTranslatedMode = (mode: string) => {
+    if (i18n.language !== 'es') return mode;
+    
+    const modeMap: Record<string, string> = {
+      'Gem Grab': 'Atrapagemas',
+      'Brawl Ball': 'Balón Brawl',
+      'Heist': 'Atraco',
+      'Hot Zone': 'Zona Restringida',
+      'Bounty': 'Caza Estelar',
+      'Knockout': 'Noqueo',
+      'Brawl Hockey': 'Hockey Brawl',
+      'Showdown': 'Supervivencia',
+      'Siege': 'Asedio'
+    };
+    
+    return modeMap[mode] || mode;
   };
 
   return (
@@ -59,7 +76,7 @@ const MapSelectionPage: React.FC<MapSelectionPageProps> = ({ onSelectMap }) => {
           <img 
             src="/lovable-uploads/73ba99c9-265c-40aa-92f7-016afd79fabb.png" 
             alt="Brawl Stars Logo" 
-            className="w-10 h-10"
+            className="w-16 h-16 hover:scale-110 transition-transform cursor-pointer animate-pulse-soft"
           />
         </div>
         
@@ -99,7 +116,8 @@ const MapSelectionPage: React.FC<MapSelectionPageProps> = ({ onSelectMap }) => {
                   : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
               }`}
             >
-              <span className="mr-1">{getModeIcon(mode)}</span> {mode}
+              <img src={getModeIcon(mode)} alt={mode} className="w-5 h-5 mr-1" /> 
+              {getTranslatedMode(mode)}
             </button>
           ))}
         </div>
@@ -117,17 +135,17 @@ const MapSelectionPage: React.FC<MapSelectionPageProps> = ({ onSelectMap }) => {
                 <img
                   src={map.image}
                   alt={map.name}
-                  className="w-full h-full object-contain"
+                  className="w-full h-full object-cover"
                   onError={(e) => handleImageError(e, map.name)}
                 />
               </div>
-              <div className="absolute top-2 right-2 w-8 h-8 rounded-full bg-black/60 flex items-center justify-center text-xl">
-                {getModeIcon(map.mode)}
+              <div className="absolute top-2 right-2 w-8 h-8 rounded-full bg-black/60 flex items-center justify-center">
+                <img src={getModeIcon(map.mode)} alt={map.mode} className="w-6 h-6" />
               </div>
             </div>
             <div className="p-3 bg-gray-800/80">
-              <p className="font-medium text-lg font-brawl">{map.name}</p>
-              <p className="text-sm text-gray-300">{map.mode}</p>
+              <p className="font-medium text-lg font-brawl">{i18n.language === 'es' && map.translatedName ? map.translatedName : map.name}</p>
+              <p className="text-sm text-gray-300">{getTranslatedMode(map.mode)}</p>
             </div>
           </div>
         ))}

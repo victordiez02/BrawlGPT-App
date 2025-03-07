@@ -12,7 +12,7 @@ const LanguageSelector: React.FC = () => {
   return (
     <div className="language-selector flex items-center space-x-2">
       <button
-        className={`language-btn rounded-md overflow-hidden w-8 h-6 transition-all ${i18n.language === 'en' ? 'ring-2 ring-white scale-110' : 'opacity-70 hover:opacity-100'}`}
+        className={`language-btn rounded-md overflow-hidden w-8 h-6 transition-all hover:scale-110 ${i18n.language === 'en' ? 'ring-2 ring-white scale-110' : 'opacity-70 hover:opacity-100'}`}
         onClick={() => changeLanguage('en')}
         title="English"
       >
@@ -24,7 +24,7 @@ const LanguageSelector: React.FC = () => {
       </button>
       
       <button
-        className={`language-btn rounded-md overflow-hidden w-8 h-6 transition-all ${i18n.language === 'es' ? 'ring-2 ring-white scale-110' : 'opacity-70 hover:opacity-100'}`}
+        className={`language-btn rounded-md overflow-hidden w-8 h-6 transition-all hover:scale-110 ${i18n.language === 'es' ? 'ring-2 ring-white scale-110' : 'opacity-70 hover:opacity-100'}`}
         onClick={() => changeLanguage('es')}
         title="Español"
       >

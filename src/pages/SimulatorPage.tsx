@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next';
 const SimulatorPage: React.FC = () => {
   const [selectedMap, setSelectedMap] = useState<GameMap | null>(null);
   const { t } = useTranslation();
+  const [logoHover, setLogoHover] = useState(false);
 
   return (
     <div className="min-h-screen pb-12 bg-cybernetic text-white">
@@ -26,11 +27,20 @@ const SimulatorPage: React.FC = () => {
         )}
       </main>
       
-      <div className="fixed bottom-4 right-4 opacity-70 hover:opacity-100 transition-opacity">
+      <div 
+        className="fixed bottom-4 right-4 transition-all duration-300"
+        style={{ 
+          transform: logoHover ? 'scale(1.3) rotate(10deg)' : 'scale(1) rotate(0deg)',
+          opacity: logoHover ? 1 : 0.8
+        }}
+        onMouseEnter={() => setLogoHover(true)}
+        onMouseLeave={() => setLogoHover(false)}
+        onClick={() => window.open('https://brawlstars.com', '_blank')}
+      >
         <img 
           src="/lovable-uploads/73ba99c9-265c-40aa-92f7-016afd79fabb.png" 
           alt="Brawl Stars Logo" 
-          className="w-12 h-12"
+          className="w-16 h-16 cursor-pointer"
         />
       </div>
     </div>

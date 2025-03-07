@@ -14,7 +14,7 @@ const MapSelector: React.FC<MapSelectorProps> = ({ selectedMap, onSelectMap }) =
   const [filterMode, setFilterMode] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [isExpandedView, setIsExpandedView] = useState(false);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   
   // Get unique modes for filtering
   const modes = Array.from(new Set(gameMaps.map(map => map.mode)));
@@ -34,24 +34,41 @@ const MapSelector: React.FC<MapSelectorProps> = ({ selectedMap, onSelectMap }) =
 
   // Get mode icon based on map mode
   const getModeIcon = (mode: string) => {
-    switch (mode.toLowerCase()) {
-      case 'gem grab':
-        return '💎';
-      case 'brawl ball':
-        return '⚽';
-      case 'showdown':
-        return '🏆';
-      case 'heist':
-        return '💰';
-      case 'bounty':
-        return '⭐';
-      case 'hot zone':
-        return '🔥';
-      case 'siege':
-        return '🤖';
-      default:
-        return '🎮';
-    }
+    const lowerMode = mode.toLowerCase();
+    if (lowerMode === 'gem grab' || lowerMode === 'atrapagemas') 
+      return 'https://cdn.brawlify.com/game-modes/regular/48000000.png';
+    if (lowerMode === 'brawl ball' || lowerMode === 'balón brawl') 
+      return 'https://cdn.brawlify.com/game-modes/regular/48000005.png';
+    if (lowerMode === 'heist' || lowerMode === 'atraco') 
+      return 'https://cdn.brawlify.com/game-modes/regular/48000002.png';
+    if (lowerMode === 'hot zone' || lowerMode === 'zona restringida') 
+      return 'https://cdn.brawlify.com/game-modes/regular/48000017.png';
+    if (lowerMode === 'bounty' || lowerMode === 'caza estelar') 
+      return 'https://cdn.brawlify.com/game-modes/regular/48000003.png';
+    if (lowerMode === 'knockout' || lowerMode === 'noqueo') 
+      return 'https://cdn.brawlify.com/game-modes/regular/48000020.png';
+    if (lowerMode === 'brawl hockey' || lowerMode === 'hockey brawl') 
+      return 'https://cdn.brawlify.com/game-modes/regular/48000045.png';
+    return 'https://cdn.brawlify.com/placeholder.png';
+  };
+
+  // Get translated mode name
+  const getTranslatedMode = (mode: string) => {
+    if (i18n.language !== 'es') return mode;
+    
+    const modeMap: Record<string, string> = {
+      'Gem Grab': 'Atrapagemas',
+      'Brawl Ball': 'Balón Brawl',
+      'Heist': 'Atraco',
+      'Hot Zone': 'Zona Restringida',
+      'Bounty': 'Caza Estelar',
+      'Knockout': 'Noqueo',
+      'Brawl Hockey': 'Hockey Brawl',
+      'Showdown': 'Supervivencia',
+      'Siege': 'Asedio'
+    };
+    
+    return modeMap[mode] || mode;
   };
 
   return (
@@ -77,9 +94,10 @@ const MapSelector: React.FC<MapSelectorProps> = ({ selectedMap, onSelectMap }) =
                   />
                 </div>
                 <div>
-                  <p className="font-medium">{selectedMap.name}</p>
+                  <p className="font-medium">{i18n.language === 'es' && selectedMap.translatedName ? selectedMap.translatedName : selectedMap.name}</p>
                   <p className="text-xs text-gray-400 flex items-center">
-                    <span className="mr-1">{getModeIcon(selectedMap.mode)}</span> {selectedMap.mode}
+                    <img src={getModeIcon(selectedMap.mode)} alt={selectedMap.mode} className="w-4 h-4 mr-1" /> 
+                    {getTranslatedMode(selectedMap.mode)}
                   </p>
                 </div>
               </div>
@@ -115,7 +133,7 @@ const MapSelector: React.FC<MapSelectorProps> = ({ selectedMap, onSelectMap }) =
                     type="text"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    placeholder={t('search_maps')}
+                    placeholder={t('search')}
                     className="pl-10 pr-4 py-1.5 w-full rounded-lg border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-brawl-blue text-sm"
                   />
                 </div>
@@ -143,7 +161,8 @@ const MapSelector: React.FC<MapSelectorProps> = ({ selectedMap, onSelectMap }) =
                           : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'
                       }`}
                     >
-                      <span className="mr-1">{getModeIcon(mode)}</span> {mode}
+                      <img src={getModeIcon(mode)} alt={mode} className="w-4 h-4 mr-1" /> 
+                      {getTranslatedMode(mode)}
                     </button>
                   ))}
                 </div>
@@ -172,9 +191,10 @@ const MapSelector: React.FC<MapSelectorProps> = ({ selectedMap, onSelectMap }) =
                         />
                       </div>
                       <div className="flex-1">
-                        <p className="font-medium text-sm">{map.name}</p>
+                        <p className="font-medium text-sm">{i18n.language === 'es' && map.translatedName ? map.translatedName : map.name}</p>
                         <p className="text-xs text-gray-500 flex items-center">
-                          <span className="mr-1">{getModeIcon(map.mode)}</span> {map.mode}
+                          <img src={getModeIcon(map.mode)} alt={map.mode} className="w-4 h-4 mr-1" /> 
+                          {getTranslatedMode(map.mode)}
                         </p>
                       </div>
                       {selectedMap?.id === map.id && (
@@ -209,7 +229,7 @@ const MapSelector: React.FC<MapSelectorProps> = ({ selectedMap, onSelectMap }) =
                 <img 
                   src="/lovable-uploads/73ba99c9-265c-40aa-92f7-016afd79fabb.png" 
                   alt="Brawl Stars Logo" 
-                  className="w-8 h-8"
+                  className="w-12 h-12 hover:scale-110 transition-transform cursor-pointer animate-pulse-soft"
                 />
               </h3>
               
@@ -221,7 +241,7 @@ const MapSelector: React.FC<MapSelectorProps> = ({ selectedMap, onSelectMap }) =
                   type="text"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  placeholder={t('search_maps')}
+                  placeholder={t('search')}
                   className="pl-10 pr-4 py-2 w-full rounded-lg border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-brawl-blue"
                 />
               </div>
@@ -249,7 +269,8 @@ const MapSelector: React.FC<MapSelectorProps> = ({ selectedMap, onSelectMap }) =
                         : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'
                     }`}
                   >
-                    <span className="mr-1">{getModeIcon(mode)}</span> {mode}
+                    <img src={getModeIcon(mode)} alt={mode} className="w-5 h-5 mr-1" /> 
+                    {getTranslatedMode(mode)}
                   </button>
                 ))}
               </div>
@@ -277,9 +298,10 @@ const MapSelector: React.FC<MapSelectorProps> = ({ selectedMap, onSelectMap }) =
                       />
                     </div>
                     <div className="p-2 bg-white/10 dark:bg-gray-800/80">
-                      <p className="font-medium text-sm truncate">{map.name}</p>
+                      <p className="font-medium text-sm truncate">{i18n.language === 'es' && map.translatedName ? map.translatedName : map.name}</p>
                       <p className="text-xs text-gray-400 flex items-center">
-                        <span className="mr-1">{getModeIcon(map.mode)}</span> {map.mode}
+                        <img src={getModeIcon(map.mode)} alt={map.mode} className="w-4 h-4 mr-1" /> 
+                        {getTranslatedMode(map.mode)}
                       </p>
                     </div>
                   </div>
@@ -300,13 +322,14 @@ const MapSelector: React.FC<MapSelectorProps> = ({ selectedMap, onSelectMap }) =
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
           <div className="absolute bottom-0 left-0 right-0 p-2 text-white">
-            <p className="font-bold">{selectedMap.name}</p>
+            <p className="font-bold">{i18n.language === 'es' && selectedMap.translatedName ? selectedMap.translatedName : selectedMap.name}</p>
             <p className="text-sm opacity-80 flex items-center">
-              <span className="mr-1">{getModeIcon(selectedMap.mode)}</span> {selectedMap.mode}
+              <img src={getModeIcon(selectedMap.mode)} alt={selectedMap.mode} className="w-4 h-4 mr-1" /> 
+              {getTranslatedMode(selectedMap.mode)}
             </p>
           </div>
-          <div className="absolute top-2 right-2 w-8 h-8 rounded-full bg-black/60 flex items-center justify-center text-xl">
-            {getModeIcon(selectedMap.mode)}
+          <div className="absolute top-2 right-2 w-8 h-8 rounded-full bg-black/60 flex items-center justify-center">
+            <img src={getModeIcon(selectedMap.mode)} alt={selectedMap.mode} className="w-6 h-6" />
           </div>
         </div>
       )}

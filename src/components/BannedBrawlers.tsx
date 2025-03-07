@@ -50,15 +50,15 @@ const BannedBrawlers: React.FC<BannedBrawlersProps> = ({
         {t('banned_brawlers')} ({bannedBrawlers.length}/{MAX_BANNED_BRAWLERS})
       </h3>
       
-      <div className="relative mb-4">
-        <div className="flex">
+      <div className="relative mb-4 w-full">
+        <div className="flex w-full">
           <input
             type="text"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             onFocus={() => setShowDropdown(true)}
-            placeholder={t('search_ban')}
-            className="flex-1 p-2 rounded-l-lg border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-brawl-red text-sm"
+            placeholder={t('search_to_ban')}
+            className="flex-1 p-2 rounded-l-lg border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-brawl-red text-sm w-full"
           />
           <button
             onClick={() => setShowDropdown(!showDropdown)}
