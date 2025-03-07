@@ -55,6 +55,14 @@ const DraftSlot: React.FC<DraftSlotProps> = ({
       isOver: !!monitor.isOver()
     })
   }), [index, onMoveBrawler]);
+
+  // Handle right-click to remove
+  const handleContextMenu = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (brawlerId !== null) {
+      onRemoveBrawler(index);
+    }
+  };
   
   return (
     <div className="flex flex-col items-center space-y-2">
@@ -68,6 +76,7 @@ const DraftSlot: React.FC<DraftSlotProps> = ({
           <div 
             ref={drag}
             className={`relative w-full h-full ${isDragging ? 'opacity-50' : ''}`}
+            onContextMenu={handleContextMenu}
           >
             <BrawlerCard
               brawler={brawler}
@@ -76,7 +85,7 @@ const DraftSlot: React.FC<DraftSlotProps> = ({
             />
             <button
               onClick={() => onRemoveBrawler(index)}
-              className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-600 transition-colors"
+              className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-600 transition-colors z-10"
             >
               ×
             </button>
@@ -84,7 +93,7 @@ const DraftSlot: React.FC<DraftSlotProps> = ({
         ) : (
           <div className="w-full h-full flex items-center justify-center">
             {isActiveSlot && (
-              <span className="text-sm font-medium opacity-70 animate-pulse">Selecciona</span>
+              <span className="text-sm font-medium opacity-70 animate-pulse">Select</span>
             )}
           </div>
         )}

@@ -95,33 +95,33 @@ const DraftSimulator: React.FC = () => {
     // Filter to show only the next expected picks based on the filled count
     const filledCount = filledPositions.length;
     
-    if (filledCount === 0) return "Selecciona el primer pick";
+    if (filledCount === 0) return "Select the first pick";
     if (filledCount === 1) {
-      if (filledPositions[0] !== pickOrder[0]) return `Falta el brawler para el 1º pick`;
-      return `Falta el brawler para el 2º pick`;
+      if (filledPositions[0] !== pickOrder[0]) return `Select the brawler for the 1st pick`;
+      return `Select the brawler for the 2nd pick`;
     }
     if (filledCount === 2) {
       if (!filledPositions.includes(pickOrder[0]) || 
           !filledPositions.includes(pickOrder[1])) {
-        return `Faltan brawlers para los picks 1º y 2º`;
+        return `Select the brawlers for the picks 1st and 2nd`;
       }
-      return `Falta el brawler para el 3º pick`;
+      return `Select the brawler for the 3rd pick`;
     }
     if (filledCount === 3) {
-      if (!isValidPhase) return `Orden de picks incorrecto. Faltan los picks ${missingPicks.slice(0, 3).join('º, ')}º`;
-      return `Falta el brawler para el 4º pick`;
+      if (!isValidPhase) return `Incorrect pick order. Missing picks ${missingPicks.slice(0, 3).join('º, ')}º`;
+      return `Select the brawler for the 4th pick`;
     }
     if (filledCount === 4) {
       if (!filledPositions.includes(pickOrder[0]) || 
           !filledPositions.includes(pickOrder[1]) ||
           !filledPositions.includes(pickOrder[2]) ||
           !filledPositions.includes(pickOrder[3])) {
-        return `Orden de picks incorrecto. Faltan los picks ${missingPicks.slice(0, 4).join('º, ')}º`;
+        return `Incorrect pick order. Missing picks ${missingPicks.slice(0, 4).join('º, ')}º`;
       }
-      return `Falta el brawler para el 5º pick`;
+      return `Select the brawler for the 5th pick`;
     }
     
-    return `Orden de picks incorrecto. Faltan los picks ${missingPicks.join('º, ')}º`;
+    return `Incorrect pick order. Missing picks ${missingPicks.join('º, ')}º`;
   };
 
   // Generate button state and text
@@ -131,15 +131,15 @@ const DraftSimulator: React.FC = () => {
     if (!selectedMap) {
       return {
         enabled: false,
-        text: "Generar Mejor Opción",
-        disabledReason: "Selecciona un mapa primero"
+        text: "Generate Best Option",
+        disabledReason: "Select a map first"
       };
     }
     
     if (!isValidPhase) {
       return {
         enabled: false,
-        text: "Generar Mejor Opción",
+        text: "Generate Best Option",
         disabledReason: getMissingPicksMessage()
       };
     }
@@ -148,32 +148,32 @@ const DraftSimulator: React.FC = () => {
       case 1:
         return {
           enabled: true,
-          text: "Genera la mejor opción para la primera fase",
+          text: "Generate the best option for the first phase",
           disabledReason: ""
         };
       case 2:
         return {
           enabled: true,
-          text: "Genera la mejor opción para la segunda fase",
+          text: "Generate the best option for the second phase",
           disabledReason: ""
         };
       case 3:
         return {
           enabled: true,
-          text: "Genera la mejor opción para la tercera fase",
+          text: "Generate the best option for the third phase",
           disabledReason: ""
         };
       case 4:
         return {
           enabled: true,
-          text: "Genera la mejor opción para la última fase",
+          text: "Generate the best option for the last phase",
           disabledReason: ""
         };
       default:
         return {
           enabled: false,
-          text: "Generar Mejor Opción",
-          disabledReason: "Configura el draft correctamente"
+          text: "Generate Best Option",
+          disabledReason: "Configure the draft correctly"
         };
     }
   }, [selectedMap, isValidPhase, getCurrentDraftPhase, getMissingPicksMessage]);
@@ -209,8 +209,8 @@ const DraftSimulator: React.FC = () => {
     }
     
     // Show success toast
-    const team = nextAvailableIndex < 3 ? 'Azul' : 'Rojo';
-    toast.success(`${brawler.name} seleccionado para el equipo ${team}`);
+    const team = nextAvailableIndex < 3 ? 'Blue' : 'Red';
+    toast.success(`${brawler.name} selected for the ${team} team`);
   };
   
   // Handle brawler removal
@@ -222,7 +222,7 @@ const DraftSimulator: React.FC = () => {
     if (removedBrawlerId !== null) {
       const brawler = brawlers.find(b => b.id === removedBrawlerId);
       if (brawler) {
-        toast.info(`${brawler.name} eliminado del draft`);
+        toast.info(`${brawler.name} removed from the draft`);
       }
       
       newSelectedBrawlers[index] = null;
@@ -286,7 +286,7 @@ const DraftSimulator: React.FC = () => {
       setSelectedBrawlers(newSelectedBrawlers);
       
       if (movingBrawler) {
-        toast.info(`${movingBrawler.name} movido a nueva posición`);
+        toast.info(`${movingBrawler.name} moved to a new position`);
       }
       
       // Set current pick index to the source slot
@@ -302,13 +302,13 @@ const DraftSimulator: React.FC = () => {
     }
     
     if (bannedBrawlers.length >= 6) {
-      toast.error("No puedes banear más de 6 brawlers");
+      toast.error("You can't ban more than 6 brawlers");
       return;
     }
     
     const brawler = brawlers.find(b => b.id === brawlerId);
     if (brawler) {
-      toast.info(`${brawler.name} baneado`);
+      toast.info(`${brawler.name} banned`);
       setBannedBrawlers([...bannedBrawlers, brawlerId]);
     }
   };
@@ -317,7 +317,7 @@ const DraftSimulator: React.FC = () => {
   const handleUnbanBrawler = (brawlerId: number) => {
     const brawler = brawlers.find(b => b.id === brawlerId);
     if (brawler) {
-      toast.info(`Ban de ${brawler.name} eliminado`);
+      toast.info(`Ban of ${brawler.name} removed`);
     }
     
     setBannedBrawlers(bannedBrawlers.filter(id => id !== brawlerId));
@@ -327,7 +327,7 @@ const DraftSimulator: React.FC = () => {
   const handleGenerateRecommendation = async () => {
     // Validate requirements
     if (!selectedMap) {
-      toast.error('Debes seleccionar un mapa');
+      toast.error('You must select a map');
       return;
     }
     
@@ -358,7 +358,7 @@ const DraftSimulator: React.FC = () => {
       setShowResultModal(true);
     } catch (error) {
       console.error('Error generating recommendation:', error);
-      toast.error('Error al generar la recomendación. Inténtalo de nuevo.');
+      toast.error('Error generating the recommendation. Try again.');
     } finally {
       setIsGenerating(false);
     }
@@ -366,10 +366,10 @@ const DraftSimulator: React.FC = () => {
   
   // Reset draft
   const handleResetDraft = () => {
-    if (window.confirm('¿Estás seguro de querer reiniciar el draft? Perderás todas las selecciones actuales.')) {
+    if (window.confirm('Are you sure you want to reset the draft? You will lose all current selections.')) {
       setSelectedBrawlers([null, null, null, null, null, null]);
       setCurrentPickIndex(0);
-      toast.info('Draft reiniciado');
+      toast.info('Draft reset');
     }
   };
   
@@ -378,6 +378,33 @@ const DraftSimulator: React.FC = () => {
     setCurrentPickIndex(firstPick === 'blue' ? 0 : 3);
   }, [firstPick]);
   
+  // Listen for custom events to remove brawlers from draft
+  useEffect(() => {
+    const handleRemoveBrawlerEvent = (event: Event) => {
+      const customEvent = event as CustomEvent<{index: number, shouldBan: boolean}>;
+      const { index, shouldBan } = customEvent.detail;
+      
+      // Get the brawler ID before removing it
+      const brawlerId = selectedBrawlers[index];
+      
+      if (brawlerId !== null) {
+        // Remove from draft
+        handleRemoveBrawler(index);
+        
+        // Ban the brawler if requested
+        if (shouldBan) {
+          handleBanBrawler(brawlerId);
+        }
+      }
+    };
+    
+    window.addEventListener('removeBrawlerFromDraft', handleRemoveBrawlerEvent);
+    
+    return () => {
+      window.removeEventListener('removeBrawlerFromDraft', handleRemoveBrawlerEvent);
+    };
+  }, [selectedBrawlers, bannedBrawlers]);
+
   return (
     <DndProvider backend={HTML5Backend}>
       <div className="w-full max-w-6xl mx-auto px-4 animate-fade-in">
@@ -399,12 +426,12 @@ const DraftSimulator: React.FC = () => {
         <div className="glass-panel mb-6 overflow-hidden">
           <div className="p-4">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-bold">Draft en Curso</h2>
+              <h2 className="text-xl font-bold">Current Draft</h2>
               <button
                 onClick={handleResetDraft}
                 className="flex items-center text-sm text-gray-600 hover:text-red-500 transition-colors"
               >
-                <ArrowLeft size={16} className="mr-1" /> Reiniciar
+                <ArrowLeft size={16} className="mr-1" /> Reset
               </button>
             </div>
             
@@ -446,7 +473,7 @@ const DraftSimulator: React.FC = () => {
               {isGenerating ? (
                 <>
                   <Loader2 size={20} className="mr-2 animate-spin" />
-                  Generando...
+                  Generating...
                 </>
               ) : (
                 <>

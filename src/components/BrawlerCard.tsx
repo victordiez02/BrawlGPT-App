@@ -22,7 +22,7 @@ const BrawlerCard: React.FC<BrawlerCardProps> = ({
   const sizeClasses = {
     sm: 'w-16 h-16',
     md: 'w-20 h-20',
-    lg: 'w-full h-full' // Changed to fill the container
+    lg: 'w-full h-full' // Fill the container
   };
   
   const statusClass = banned 
@@ -33,8 +33,8 @@ const BrawlerCard: React.FC<BrawlerCardProps> = ({
       
   const teamBorderClass = team 
     ? team === 'blue' 
-      ? 'ring-2 ring-brawl-blue' 
-      : 'ring-2 ring-brawl-red'
+      ? 'ring-3 ring-brawl-blue' 
+      : 'ring-3 ring-brawl-red'
     : '';
 
   return (

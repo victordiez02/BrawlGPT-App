@@ -1,4 +1,3 @@
-
 import React, { useMemo, useState, useCallback } from 'react';
 import { Brawler } from '@/lib/brawlers';
 import BrawlerCard from './BrawlerCard';
@@ -34,22 +33,72 @@ const BrawlerGrid: React.FC<BrawlerGridProps> = ({
     if (redTeamIds.includes(brawlerId)) return 'red';
     return null;
   };
+
+  // Get background color for rarity
+  const getRarityBackground = (rarity: string) => {
+    switch (rarity) {
+      case 'Common':
+        return 'bg-blue-100 dark:bg-blue-900/20';
+      case 'Rare':
+        return 'bg-green-100 dark:bg-green-900/20';
+      case 'Super Rare':
+        return 'bg-blue-200 dark:bg-blue-800/30';
+      case 'Epic':
+        return 'bg-purple-100 dark:bg-purple-900/20';
+      case 'Mythic':
+        return 'bg-red-100 dark:bg-red-900/20';
+      case 'Legendary':
+        return 'bg-yellow-100 dark:bg-yellow-900/20';
+      default:
+        return '';
+    }
+  };
   
   // Handle right-click to ban
   const handleBrawlerContextMenu = useCallback((e: React.MouseEvent, brawler: Brawler) => {
     e.preventDefault();
-    if (!selectedBrawlers.includes(brawler.id) && !bannedBrawlers.includes(brawler.id)) {
+    if (selectedBrawlers.includes(brawler.id)) {
+      // If brawler is in draft, remove from draft and ban it
+      const team = getBrawlerTeam(brawler.id);
+      const indexInDraft = selectedBrawlers.indexOf(brawler.id);
+      if (indexInDraft !== -1) {
+        // Remove from draft first, then ban
+        // This is handled outside by dispatching a simulated click event
+        const event = new CustomEvent('removeBrawlerFromDraft', { 
+          detail: { index: indexInDraft, shouldBan: true }
+        });
+        window.dispatchEvent(event);
+      }
+    } else if (!bannedBrawlers.includes(brawler.id)) {
       if (bannedBrawlers.length >= 6) {
-        toast.error("No puedes banear más de 6 brawlers");
+        toast.error("You cannot ban more than 6 brawlers");
         return;
       }
       onBanBrawler(brawler.id);
     }
   }, [selectedBrawlers, bannedBrawlers, onBanBrawler]);
   
+  // Handle click on selected brawler to remove from draft
+  const handleBrawlerClick = useCallback((brawler: Brawler) => {
+    if (selectedBrawlers.includes(brawler.id)) {
+      // If brawler is in draft, remove it
+      const indexInDraft = selectedBrawlers.indexOf(brawler.id);
+      if (indexInDraft !== -1) {
+        const event = new CustomEvent('removeBrawlerFromDraft', { 
+          detail: { index: indexInDraft, shouldBan: false }
+        });
+        window.dispatchEvent(event);
+      }
+      return;
+    }
+    
+    // Otherwise, select the brawler
+    onSelectBrawler(brawler);
+  }, [selectedBrawlers, onSelectBrawler]);
+  
   // Sort and filter brawlers
   const filteredAndSortedBrawlers = useMemo(() => {
-    const rarityOrder = ['Common', 'Rare', 'Super Rare', 'Epic', 'Mythic', 'Legendary', 'Chromatic'];
+    const rarityOrder = ['Common', 'Rare', 'Super Rare', 'Epic', 'Mythic', 'Legendary'];
     
     // Filter by search term
     const filtered = brawlers.filter(brawler => 
@@ -90,10 +139,10 @@ const BrawlerGrid: React.FC<BrawlerGridProps> = ({
   // Group by rarity (only for rarity sort)
   const brawlersByRarity = useMemo(() => {
     if (sortOrder !== 'rarity') {
-      return [{ rarity: 'Todos', brawlers: filteredAndSortedBrawlers }];
+      return [{ rarity: 'All', brawlers: filteredAndSortedBrawlers }];
     }
     
-    const rarityOrder = ['Common', 'Rare', 'Super Rare', 'Epic', 'Mythic', 'Legendary', 'Chromatic'];
+    const rarityOrder = ['Common', 'Rare', 'Super Rare', 'Epic', 'Mythic', 'Legendary'];
     const filtered = brawlers.filter(brawler => 
       brawler.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
@@ -120,7 +169,7 @@ const BrawlerGrid: React.FC<BrawlerGridProps> = ({
   return (
     <div className="glass-panel p-4 animate-fade-in">
       <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
-        <h3 className="text-lg font-bold">Selecciona Brawlers</h3>
+        <h3 className="text-lg font-bold">Select Brawlers</h3>
         
         <div className="flex items-center space-x-2">
           <div className="relative">
@@ -129,7 +178,7 @@ const BrawlerGrid: React.FC<BrawlerGridProps> = ({
               className="flex items-center space-x-1 p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
             >
               <Filter size={16} />
-              <span className="text-sm">Ordenar por</span>
+              <span className="text-sm">Sort by</span>
             </button>
             
             {showSortDropdown && (
@@ -142,7 +191,7 @@ const BrawlerGrid: React.FC<BrawlerGridProps> = ({
                   }}
                 >
                   <LayoutGrid size={16} />
-                  <span className="text-sm">Por rareza</span>
+                  <span className="text-sm">By rarity</span>
                   {sortOrder === 'rarity' && <span className="ml-auto text-green-500">✓</span>}
                 </div>
                 <div 
@@ -153,7 +202,7 @@ const BrawlerGrid: React.FC<BrawlerGridProps> = ({
                   }}
                 >
                   <ArrowDownAZ size={16} />
-                  <span className="text-sm">Nombre (A-Z)</span>
+                  <span className="text-sm">Name (A-Z)</span>
                   {sortOrder === 'nameAsc' && <span className="ml-auto text-green-500">✓</span>}
                 </div>
                 <div 
@@ -164,7 +213,7 @@ const BrawlerGrid: React.FC<BrawlerGridProps> = ({
                   }}
                 >
                   <ArrowUpAZ size={16} />
-                  <span className="text-sm">Nombre (Z-A)</span>
+                  <span className="text-sm">Name (Z-A)</span>
                   {sortOrder === 'nameDesc' && <span className="ml-auto text-green-500">✓</span>}
                 </div>
               </div>
@@ -179,9 +228,11 @@ const BrawlerGrid: React.FC<BrawlerGridProps> = ({
         {brawlersByRarity.map(({ rarity, brawlers }) => (
           <div key={rarity} className="transition-all duration-300">
             {sortOrder === 'rarity' && (
-              <h4 className="text-sm font-semibold mb-2 text-gray-700 dark:text-gray-300">
-                {rarity}
-              </h4>
+              <div className={`p-2 rounded-lg mb-2 ${getRarityBackground(rarity)}`}>
+                <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                  {rarity}
+                </h4>
+              </div>
             )}
             <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-2 transition-all duration-300">
               {brawlers.map(brawler => {
@@ -199,7 +250,7 @@ const BrawlerGrid: React.FC<BrawlerGridProps> = ({
                       disabled={isSelected}
                       banned={isBanned}
                       team={team}
-                      onClick={() => onSelectBrawler(brawler)}
+                      onClick={() => handleBrawlerClick(brawler)}
                       size="sm"
                     />
                   </div>
@@ -211,7 +262,7 @@ const BrawlerGrid: React.FC<BrawlerGridProps> = ({
         
         {filteredAndSortedBrawlers.length === 0 && (
           <div className="text-center py-8 text-gray-500">
-            No se encontraron brawlers
+            No brawlers found
           </div>
         )}
       </div>
