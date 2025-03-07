@@ -87,11 +87,11 @@ const DraftSlot: React.FC<DraftSlotProps> = ({
             />
             <button
               onClick={() => onRemoveBrawler(index)}
-              className="absolute -top-2 -right-2 z-10 bg-red-500 text-white rounded-none flex items-center justify-center hover:bg-red-600 transition-colors shadow-lg"
+              className="absolute -top-2 -right-2 z-10 bg-red-500/80 text-white rounded-full flex items-center justify-center hover:bg-red-600 transition-colors shadow-lg"
               aria-label="Remove brawler"
-              style={{ width: '28px', height: '28px' }}
+              style={{ width: '24px', height: '24px' }}
             >
-              <span className="text-white font-bold text-xl">✕</span>
+              <span className="text-white font-bold text-sm">✕</span>
             </button>
           </div>
         ) : (
