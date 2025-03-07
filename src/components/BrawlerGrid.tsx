@@ -179,10 +179,10 @@ const BrawlerGrid: React.FC<BrawlerGridProps> = ({
             </button>
             
             {showSortDropdown && <div className="absolute right-0 z-10 mt-1 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700">
-                <div className="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer font-brawl" onClick={() => {
+                <div onClick={() => {
               setSortOrder('rarity');
               setShowSortDropdown(false);
-            }}>
+            }} className="flex items-center space-x-2 p-2 cursor-pointer font-brawl bg-slate-500">
                   <LayoutGrid size={16} />
                   <span className="text-sm">{t('by_rarity')}</span>
                   {sortOrder === 'rarity' && <span className="ml-auto text-green-500">✓</span>}
