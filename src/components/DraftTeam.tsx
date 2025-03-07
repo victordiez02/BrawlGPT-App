@@ -48,8 +48,9 @@ const DraftTeam: React.FC<DraftTeamProps> = ({
           const globalIndex = team === 'blue' ? index : index + 3;
           const brawlerId = brawlerIds[index];
           
-          // Fix: properly calculate isActiveSlot for both teams
-          const isActiveSlot = currentPickTeam === team && activeSlot === index;
+          // Corregir el cálculo de isActiveSlot para que funcione correctamente en ambos equipos
+          const isActiveSlot = currentPickTeam === team && 
+            (activeSlot === (team === 'blue' ? index : index));
           
           return (
             <DraftSlot
