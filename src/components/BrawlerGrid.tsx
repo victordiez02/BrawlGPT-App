@@ -179,26 +179,26 @@ const BrawlerGrid: React.FC<BrawlerGridProps> = ({
             </button>
             
             {showSortDropdown && <div className="absolute right-0 z-10 mt-1 w-48 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 bg-slate-500">
-                <div className="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer font-brawl" onClick={() => {
+                <div onClick={() => {
               setSortOrder('rarity');
               setShowSortDropdown(false);
-            }}>
+            }} className="flex items-center space-x-2 p-2 cursor-pointer font-brawl bg-slate-600">
                   <LayoutGrid size={16} />
                   <span className="text-sm">{t('by_rarity')}</span>
                   {sortOrder === 'rarity' && <span className="ml-auto text-green-500">✓</span>}
                 </div>
-                <div className="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer font-brawl" onClick={() => {
+                <div onClick={() => {
               setSortOrder('nameAsc');
               setShowSortDropdown(false);
-            }}>
+            }} className="flex items-center space-x-2 p-2 cursor-pointer font-brawl bg-slate-600">
                   <ArrowDownAZ size={16} />
                   <span className="text-sm">{t('name_az')}</span>
                   {sortOrder === 'nameAsc' && <span className="ml-auto text-green-500">✓</span>}
                 </div>
-                <div className="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer font-brawl" onClick={() => {
+                <div onClick={() => {
               setSortOrder('nameDesc');
               setShowSortDropdown(false);
-            }}>
+            }} className="flex items-center space-x-2 p-2 cursor-pointer font-brawl bg-slate-600">
                   <ArrowUpAZ size={16} />
                   <span className="text-sm">{t('name_za')}</span>
                   {sortOrder === 'nameDesc' && <span className="ml-auto text-green-500">✓</span>}
