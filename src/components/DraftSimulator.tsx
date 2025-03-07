@@ -424,6 +424,15 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({ initialMap = null }) =>
               firstPick={firstPick}
               onSelectFirstPick={setFirstPick}
             />
+            
+            {/* Moved BannedBrawlers component here */}
+            <div className="mt-4">
+              <BannedBrawlers
+                bannedBrawlers={bannedBrawlers}
+                onBanBrawler={handleBanBrawler}
+                onUnbanBrawler={handleUnbanBrawler}
+              />
+            </div>
           </div>
         </div>
         
@@ -466,7 +475,7 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({ initialMap = null }) =>
               
               <div className="bg-gradient-to-r from-brawl-blue via-brawl-purple to-brawl-red h-1"></div>
               
-              <div className="p-4 bg-gray-50 dark:bg-gray-800/50">
+              <div className="p-4 bg-gray-800/30">
                 <button
                   onClick={handleGenerateRecommendation}
                   disabled={!generateButtonConfig.enabled || isGenerating}
@@ -498,26 +507,16 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({ initialMap = null }) =>
               </div>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-              <div className="md:col-span-1 order-2 md:order-1">
-                <BannedBrawlers
-                  bannedBrawlers={bannedBrawlers}
-                  onBanBrawler={handleBanBrawler}
-                  onUnbanBrawler={handleUnbanBrawler}
-                />
-              </div>
-              
-              <div className="md:col-span-2 order-1 md:order-2">
-                <BrawlerGrid
-                  brawlers={brawlers}
-                  selectedBrawlers={selectedBrawlers}
-                  bannedBrawlers={bannedBrawlers}
-                  onSelectBrawler={handleSelectBrawler}
-                  onBanBrawler={handleBanBrawler}
-                  onUnbanBrawler={handleUnbanBrawler}
-                  onRemoveBrawlerFromDraft={handleRemoveBrawlerById}
-                />
-              </div>
+            <div className="md:col-span-2 order-1 md:order-2">
+              <BrawlerGrid
+                brawlers={brawlers}
+                selectedBrawlers={selectedBrawlers}
+                bannedBrawlers={bannedBrawlers}
+                onSelectBrawler={handleSelectBrawler}
+                onBanBrawler={handleBanBrawler}
+                onUnbanBrawler={handleUnbanBrawler}
+                onRemoveBrawlerFromDraft={handleRemoveBrawlerById}
+              />
             </div>
             
             <ResultModal

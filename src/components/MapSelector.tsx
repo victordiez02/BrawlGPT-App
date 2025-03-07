@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { GameMap, gameMaps } from '@/lib/maps';
 import { Check, ChevronDown, ChevronUp, Map, Search, Maximize2 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 interface MapSelectorProps {
   selectedMap: GameMap | null;
@@ -13,6 +14,7 @@ const MapSelector: React.FC<MapSelectorProps> = ({ selectedMap, onSelectMap }) =
   const [filterMode, setFilterMode] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [isExpandedView, setIsExpandedView] = useState(false);
+  const { t } = useTranslation();
   
   // Get unique modes for filtering
   const modes = Array.from(new Set(gameMaps.map(map => map.mode)));
@@ -30,11 +32,33 @@ const MapSelector: React.FC<MapSelectorProps> = ({ selectedMap, onSelectMap }) =
     e.currentTarget.src = 'https://cdn.brawlify.com/placeholder.png';
   };
 
+  // Get mode icon based on map mode
+  const getModeIcon = (mode: string) => {
+    switch (mode.toLowerCase()) {
+      case 'gem grab':
+        return '💎';
+      case 'brawl ball':
+        return '⚽';
+      case 'showdown':
+        return '🏆';
+      case 'heist':
+        return '💰';
+      case 'bounty':
+        return '⭐';
+      case 'hot zone':
+        return '🔥';
+      case 'siege':
+        return '🤖';
+      default:
+        return '🎮';
+    }
+  };
+
   return (
     <div className="w-full animate-slide-in">
       <div className="mb-2">
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-          Selecciona un mapa
+        <label className="block text-sm font-medium text-white mb-1 font-brawl">
+          {t('select_map')}
         </label>
         
         <div className="relative">
@@ -54,13 +78,15 @@ const MapSelector: React.FC<MapSelectorProps> = ({ selectedMap, onSelectMap }) =
                 </div>
                 <div>
                   <p className="font-medium">{selectedMap.name}</p>
-                  <p className="text-xs text-gray-500">{selectedMap.mode}</p>
+                  <p className="text-xs text-gray-400 flex items-center">
+                    <span className="mr-1">{getModeIcon(selectedMap.mode)}</span> {selectedMap.mode}
+                  </p>
                 </div>
               </div>
             ) : (
               <div className="flex items-center space-x-2 text-gray-500">
                 <Map size={18} />
-                <span>Selecciona un mapa</span>
+                <span>{t('select_map')}</span>
               </div>
             )}
             <div className="flex items-center">
@@ -89,7 +115,7 @@ const MapSelector: React.FC<MapSelectorProps> = ({ selectedMap, onSelectMap }) =
                     type="text"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    placeholder="Buscar por nombre o modo..."
+                    placeholder={t('search_maps')}
                     className="pl-10 pr-4 py-1.5 w-full rounded-lg border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-brawl-blue text-sm"
                   />
                 </div>
@@ -104,20 +130,20 @@ const MapSelector: React.FC<MapSelectorProps> = ({ selectedMap, onSelectMap }) =
                         : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'
                     }`}
                   >
-                    Todos
+                    {t('all_modes')}
                   </button>
                   {modes.map(mode => (
                     <button
                       type="button"
                       key={mode}
                       onClick={() => setFilterMode(mode)}
-                      className={`px-2 py-1 text-xs rounded-full transition-colors ${
+                      className={`px-2 py-1 text-xs rounded-full transition-colors flex items-center ${
                         filterMode === mode 
                           ? 'bg-brawl-blue text-white' 
                           : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'
                       }`}
                     >
-                      {mode}
+                      <span className="mr-1">{getModeIcon(mode)}</span> {mode}
                     </button>
                   ))}
                 </div>
@@ -147,7 +173,9 @@ const MapSelector: React.FC<MapSelectorProps> = ({ selectedMap, onSelectMap }) =
                       </div>
                       <div className="flex-1">
                         <p className="font-medium text-sm">{map.name}</p>
-                        <p className="text-xs text-gray-500">{map.mode}</p>
+                        <p className="text-xs text-gray-500 flex items-center">
+                          <span className="mr-1">{getModeIcon(map.mode)}</span> {map.mode}
+                        </p>
                       </div>
                       {selectedMap?.id === map.id && (
                         <Check size={16} className="text-brawl-blue" />
@@ -156,7 +184,7 @@ const MapSelector: React.FC<MapSelectorProps> = ({ selectedMap, onSelectMap }) =
                   ))
                 ) : (
                   <div className="p-4 text-center text-gray-500">
-                    No se encontraron mapas
+                    {t('no_maps_found')}
                   </div>
                 )}
               </div>
@@ -176,7 +204,14 @@ const MapSelector: React.FC<MapSelectorProps> = ({ selectedMap, onSelectMap }) =
               ×
             </button>
             <div className="glass-panel p-4">
-              <h3 className="text-lg font-bold mb-4">Selecciona un mapa</h3>
+              <h3 className="text-lg font-bold mb-4 font-brawl flex items-center justify-between">
+                {t('select_map')}
+                <img 
+                  src="/lovable-uploads/73ba99c9-265c-40aa-92f7-016afd79fabb.png" 
+                  alt="Brawl Stars Logo" 
+                  className="w-8 h-8"
+                />
+              </h3>
               
               <div className="relative mb-4">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -186,7 +221,7 @@ const MapSelector: React.FC<MapSelectorProps> = ({ selectedMap, onSelectMap }) =
                   type="text"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  placeholder="Buscar por nombre o modo..."
+                  placeholder={t('search_maps')}
                   className="pl-10 pr-4 py-2 w-full rounded-lg border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-brawl-blue"
                 />
               </div>
@@ -201,25 +236,25 @@ const MapSelector: React.FC<MapSelectorProps> = ({ selectedMap, onSelectMap }) =
                       : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'
                   }`}
                 >
-                  Todos
+                  {t('all_modes')}
                 </button>
                 {modes.map(mode => (
                   <button
                     type="button"
                     key={mode}
                     onClick={() => setFilterMode(mode)}
-                    className={`px-3 py-1.5 text-sm rounded-full transition-colors ${
+                    className={`px-3 py-1.5 text-sm rounded-full transition-colors flex items-center ${
                       filterMode === mode 
                         ? 'bg-brawl-blue text-white' 
                         : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'
                     }`}
                   >
-                    {mode}
+                    <span className="mr-1">{getModeIcon(mode)}</span> {mode}
                   </button>
                 ))}
               </div>
               
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 max-h-[50vh] overflow-y-auto p-2">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-4 max-h-[50vh] overflow-y-auto p-2">
                 {filteredMaps.map(map => (
                   <div
                     key={map.id}
@@ -233,17 +268,19 @@ const MapSelector: React.FC<MapSelectorProps> = ({ selectedMap, onSelectMap }) =
                       setIsExpandedView(false);
                     }}
                   >
-                    <div className="aspect-video overflow-hidden">
+                    <div className="aspect-square overflow-hidden bg-black flex items-center justify-center">
                       <img
                         src={map.image}
                         alt={map.name}
-                        className="w-full h-full object-cover transition-transform hover:scale-110"
+                        className="w-full h-full object-contain"
                         onError={(e) => handleImageError(e, map.name)}
                       />
                     </div>
-                    <div className="p-2 bg-white/80 dark:bg-gray-800/80">
+                    <div className="p-2 bg-white/10 dark:bg-gray-800/80">
                       <p className="font-medium text-sm truncate">{map.name}</p>
-                      <p className="text-xs text-gray-500">{map.mode}</p>
+                      <p className="text-xs text-gray-400 flex items-center">
+                        <span className="mr-1">{getModeIcon(map.mode)}</span> {map.mode}
+                      </p>
                     </div>
                   </div>
                 ))}
@@ -254,17 +291,22 @@ const MapSelector: React.FC<MapSelectorProps> = ({ selectedMap, onSelectMap }) =
       )}
       
       {selectedMap && (
-        <div className="mt-2 relative rounded-lg overflow-hidden aspect-video">
+        <div className="mt-2 relative rounded-lg overflow-hidden bg-black flex items-center justify-center">
           <img
             src={selectedMap.image}
             alt={selectedMap.name}
-            className="w-full h-full object-cover"
+            className="w-full object-contain h-48"
             onError={(e) => handleImageError(e, selectedMap.name)}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
           <div className="absolute bottom-0 left-0 right-0 p-2 text-white">
             <p className="font-bold">{selectedMap.name}</p>
-            <p className="text-sm opacity-80">{selectedMap.mode}</p>
+            <p className="text-sm opacity-80 flex items-center">
+              <span className="mr-1">{getModeIcon(selectedMap.mode)}</span> {selectedMap.mode}
+            </p>
+          </div>
+          <div className="absolute top-2 right-2 w-8 h-8 rounded-full bg-black/60 flex items-center justify-center text-xl">
+            {getModeIcon(selectedMap.mode)}
           </div>
         </div>
       )}

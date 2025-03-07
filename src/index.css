@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Bungee&display=swap');
 
 @tailwind base;
@@ -104,11 +105,11 @@
   }
   
   .draft-slot-blue {
-    @apply bg-blue-500/20 dark:bg-blue-900/40 border-4 border-brawl-blue/70 rounded-xl overflow-hidden flex items-center justify-center cursor-pointer transition-all hover:border-brawl-blue;
+    @apply bg-blue-500/20 dark:bg-blue-900/40 border-[6px] border-brawl-blue/80 rounded-xl overflow-hidden flex items-center justify-center cursor-pointer transition-all hover:border-brawl-blue;
   }
   
   .draft-slot-red {
-    @apply bg-red-500/20 dark:bg-red-900/40 border-4 border-brawl-red/70 rounded-xl overflow-hidden flex items-center justify-center cursor-pointer transition-all hover:border-brawl-red;
+    @apply bg-red-500/20 dark:bg-red-900/40 border-[6px] border-brawl-red/80 rounded-xl overflow-hidden flex items-center justify-center cursor-pointer transition-all hover:border-brawl-red;
   }
   
   .brawler-card {
@@ -135,29 +136,34 @@
     @apply ring-2 ring-blue-500 bg-blue-500/30;
   }
 
-  /* Rarity background colors */
+  /* Rarity background colors - more vibrant */
   .rarity-common {
-    @apply bg-blue-300/50;
+    @apply bg-blue-400/70;
   }
   
   .rarity-rare {
-    @apply bg-green-500/50;
+    @apply bg-green-500/70;
   }
   
   .rarity-super-rare {
-    @apply bg-blue-600/50;
+    @apply bg-blue-600/70;
   }
   
   .rarity-epic {
-    @apply bg-purple-600/50;
+    @apply bg-purple-600/70;
   }
   
   .rarity-mythic {
-    @apply bg-red-600/50;
+    @apply bg-red-600/70;
   }
   
   .rarity-legendary {
-    @apply bg-yellow-500/50;
+    @apply bg-yellow-500/70;
+  }
+  
+  /* Brawler name on draft */
+  .brawler-name {
+    @apply text-center text-sm font-brawl text-white/90 absolute bottom-0 left-0 right-0 bg-black/50 py-1 truncate;
   }
 }
 

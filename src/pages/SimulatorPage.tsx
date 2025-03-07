@@ -25,6 +25,14 @@ const SimulatorPage: React.FC = () => {
           <MapSelectionPage onSelectMap={setSelectedMap} />
         )}
       </main>
+      
+      <div className="fixed bottom-4 right-4 opacity-70 hover:opacity-100 transition-opacity">
+        <img 
+          src="/lovable-uploads/73ba99c9-265c-40aa-92f7-016afd79fabb.png" 
+          alt="Brawl Stars Logo" 
+          className="w-12 h-12"
+        />
+      </div>
     </div>
   );
 };

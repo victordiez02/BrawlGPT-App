@@ -44,7 +44,7 @@ const BannedBrawlers: React.FC<BannedBrawlersProps> = ({
   };
   
   return (
-    <div className="glass-panel p-4 animate-fade-in">
+    <div className="animate-fade-in">
       <h3 className="flex items-center text-lg font-bold mb-4 font-brawl">
         <Ban size={20} className="mr-2 text-red-500" />
         {t('banned_brawlers')} ({bannedBrawlers.length}/{MAX_BANNED_BRAWLERS})
@@ -57,8 +57,8 @@ const BannedBrawlers: React.FC<BannedBrawlersProps> = ({
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             onFocus={() => setShowDropdown(true)}
-            placeholder={t('search_to_ban')}
-            className="flex-1 p-2 rounded-l-lg border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-brawl-red"
+            placeholder={t('search_ban')}
+            className="flex-1 p-2 rounded-l-lg border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-brawl-red text-sm"
           />
           <button
             onClick={() => setShowDropdown(!showDropdown)}

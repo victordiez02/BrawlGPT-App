@@ -29,10 +29,39 @@ const MapSelectionPage: React.FC<MapSelectionPageProps> = ({ onSelectMap }) => {
     e.currentTarget.src = 'https://cdn.brawlify.com/placeholder.png';
   };
 
+  // Get mode icon based on map mode
+  const getModeIcon = (mode: string) => {
+    switch (mode.toLowerCase()) {
+      case 'gem grab':
+        return '💎';
+      case 'brawl ball':
+        return '⚽';
+      case 'showdown':
+        return '🏆';
+      case 'heist':
+        return '💰';
+      case 'bounty':
+        return '⭐';
+      case 'hot zone':
+        return '🔥';
+      case 'siege':
+        return '🤖';
+      default:
+        return '🎮';
+    }
+  };
+
   return (
     <div className="animate-fade-in max-w-5xl mx-auto">
       <div className="glass-panel p-6 mb-6">
-        <h2 className="text-2xl font-bold font-brawl mb-6 text-center">{t('select_map_first')}</h2>
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-2xl font-bold font-brawl text-center">{t('select_map_first')}</h2>
+          <img 
+            src="/lovable-uploads/73ba99c9-265c-40aa-92f7-016afd79fabb.png" 
+            alt="Brawl Stars Logo" 
+            className="w-10 h-10"
+          />
+        </div>
         
         <div className="relative mb-6">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -64,32 +93,37 @@ const MapSelectionPage: React.FC<MapSelectionPageProps> = ({ onSelectMap }) => {
               type="button"
               key={mode}
               onClick={() => setFilterMode(mode)}
-              className={`px-4 py-2 text-sm rounded-full transition-colors ${
+              className={`px-4 py-2 text-sm rounded-full transition-colors flex items-center ${
                 filterMode === mode 
                   ? 'bg-brawl-blue text-white' 
                   : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
               }`}
             >
-              {mode}
+              <span className="mr-1">{getModeIcon(mode)}</span> {mode}
             </button>
           ))}
         </div>
       </div>
       
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
         {filteredMaps.map(map => (
           <div
             key={map.id}
             className="glass-panel overflow-hidden rounded-lg cursor-pointer transition-all hover:scale-105 hover:shadow-xl hover:shadow-brawl-blue/20"
             onClick={() => onSelectMap(map)}
           >
-            <div className="aspect-video overflow-hidden">
-              <img
-                src={map.image}
-                alt={map.name}
-                className="w-full h-full object-cover transition-transform hover:scale-110"
-                onError={(e) => handleImageError(e, map.name)}
-              />
+            <div className="relative">
+              <div className="h-48 overflow-hidden bg-black flex items-center justify-center">
+                <img
+                  src={map.image}
+                  alt={map.name}
+                  className="w-full h-full object-contain"
+                  onError={(e) => handleImageError(e, map.name)}
+                />
+              </div>
+              <div className="absolute top-2 right-2 w-8 h-8 rounded-full bg-black/60 flex items-center justify-center text-xl">
+                {getModeIcon(map.mode)}
+              </div>
             </div>
             <div className="p-3 bg-gray-800/80">
               <p className="font-medium text-lg font-brawl">{map.name}</p>

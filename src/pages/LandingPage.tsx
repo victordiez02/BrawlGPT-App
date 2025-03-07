@@ -16,9 +16,16 @@ const LandingPage: React.FC = () => {
       <div className="flex-1 flex flex-col items-center justify-center w-full max-w-7xl mx-auto px-4 py-12 md:py-24 relative z-10 overflow-hidden">
         <div className="w-full max-w-6xl">
           <div className="mb-16 text-center">
-            <h1 className="text-5xl md:text-7xl font-bold mb-4 font-brawl text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-red-500 text-glow animate-fade-in">
-              {t('landing_title')}
-            </h1>
+            <div className="flex items-center justify-center mb-4">
+              <img 
+                src="/lovable-uploads/73ba99c9-265c-40aa-92f7-016afd79fabb.png" 
+                alt="Brawl Stars Logo" 
+                className="w-16 h-16 mr-3"
+              />
+              <h1 className="text-5xl md:text-7xl font-bold font-brawl text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-red-500 text-glow animate-fade-in">
+                {t('landing_title')}
+              </h1>
+            </div>
             
             <div className="h-1 w-48 mx-auto bg-gradient-to-r from-brawl-blue via-brawl-purple to-brawl-red rounded-full mb-8"></div>
             
@@ -31,14 +38,20 @@ const LandingPage: React.FC = () => {
               </p>
               
               {/* Moved Generate Optimal Pick Button */}
-              <Link 
-                to="/simulator" 
-                className="btn-primary group flex items-center px-12 py-4 text-xl font-medium rounded-xl transition-all transform hover:scale-105 hover:shadow-lg hover:shadow-blue-500/20 animate-float mx-auto max-w-fit"
-              >
-                <Zap size={24} className="mr-2" />
-                {t('cta_button')}
-                <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-              </Link>
+              <div className="space-y-8">
+                <p className="text-lg opacity-80 animate-fade-in delay-200">
+                  {t('landing_subtitle_3')}
+                </p>
+                
+                <Link 
+                  to="/simulator" 
+                  className="btn-primary group flex items-center px-12 py-4 text-xl font-medium rounded-xl transition-all transform hover:scale-105 hover:shadow-lg hover:shadow-blue-500/20 animate-float mx-auto max-w-fit"
+                >
+                  <Zap size={24} className="mr-2" />
+                  {t('cta_button')}
+                  <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </div>
             </div>
           </div>
           
@@ -81,7 +94,7 @@ const LandingPage: React.FC = () => {
               {[...Array(6)].map((_, i) => (
                 <div 
                   key={i} 
-                  className={`aspect-square rounded-xl ${i < 3 ? 'bg-blue-500/30 border-4 border-blue-500/50' : 'bg-red-500/30 border-4 border-red-500/50'} 
+                  className={`aspect-square rounded-xl ${i < 3 ? 'bg-blue-500/30 border-[6px] border-blue-500/50' : 'bg-red-500/30 border-[6px] border-red-500/50'} 
                   ${[0, 3].includes(i) ? 'animate-pulse-soft' : ''}`}
                 >
                   {[0, 3].includes(i) && (
