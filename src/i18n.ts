@@ -69,7 +69,25 @@ const enTranslations = {
   'draft_reset': 'Draft reset',
   'who_picks_first': 'Who picks first?',
   'select_map': 'Select map',
-  'search_maps': 'Search maps...'
+  'search_maps': 'Search maps...',
+  
+  // Game modes
+  'gem_grab': 'Gem Grab',
+  'brawl_ball': 'Brawl Ball',
+  'heist': 'Heist',
+  'hot_zone': 'Hot Zone',
+  'bounty': 'Bounty',
+  'knockout': 'Knockout',
+  'basket_brawl': 'Basket Brawl',
+  
+  // Rarities
+  'common': 'Common',
+  'rare': 'Rare',
+  'super_rare': 'Super Rare',
+  'epic': 'Epic',
+  'mythic': 'Mythic',
+  'legendary': 'Legendary',
+  'chromatic': 'Chromatic'
 };
 
 // Spanish translations
@@ -139,7 +157,25 @@ const esTranslations = {
   'draft_reset': 'Draft reiniciado',
   'who_picks_first': '¿Quién empieza eligiendo?',
   'select_map': 'Seleccionar mapa',
-  'search_maps': 'Buscar mapas...'
+  'search_maps': 'Buscar mapas...',
+  
+  // Game modes
+  'gem_grab': 'Atrapagemas',
+  'brawl_ball': 'Balón Brawl',
+  'heist': 'Atraco',
+  'hot_zone': 'Zona Restringida',
+  'bounty': 'Caza Estelar',
+  'knockout': 'Noqueo',
+  'basket_brawl': 'Hockey Brawl',
+  
+  // Rarities
+  'common': 'Común',
+  'rare': 'Raro',
+  'super_rare': 'Super Raro',
+  'epic': 'Épico',
+  'mythic': 'Mítico',
+  'legendary': 'Legendario',
+  'chromatic': 'Cromático'
 };
 
 // Initialize i18next

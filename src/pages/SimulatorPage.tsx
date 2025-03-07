@@ -28,10 +28,10 @@ const SimulatorPage: React.FC = () => {
       </main>
       
       <div 
-        className="fixed bottom-4 right-4 transition-all duration-300"
+        className="fixed bottom-4 right-4 transition-all duration-300 z-20"
         style={{ 
-          transform: logoHover ? 'scale(1.3) rotate(10deg)' : 'scale(1) rotate(0deg)',
-          opacity: logoHover ? 1 : 0.8
+          transform: logoHover ? 'scale(1.5) rotate(10deg)' : 'scale(1.2) rotate(0deg)',
+          opacity: logoHover ? 1 : 0.9
         }}
         onMouseEnter={() => setLogoHover(true)}
         onMouseLeave={() => setLogoHover(false)}
@@ -40,7 +40,7 @@ const SimulatorPage: React.FC = () => {
         <img 
           src="/lovable-uploads/73ba99c9-265c-40aa-92f7-016afd79fabb.png" 
           alt="Brawl Stars Logo" 
-          className="w-16 h-16 cursor-pointer"
+          className="w-24 h-24 cursor-pointer drop-shadow-lg"
         />
       </div>
     </div>

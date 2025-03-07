@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Bungee&display=swap');
 
 @tailwind base;
@@ -129,7 +128,7 @@
   }
   
   .language-btn {
-    @apply flex items-center justify-center w-8 h-8 rounded-md transition-all hover:scale-110 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500;
+    @apply flex items-center justify-center rounded-md transition-all hover:scale-110 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500;
   }
   
   .language-btn.active {
@@ -163,7 +162,7 @@
   
   /* Brawler name on draft */
   .brawler-name {
-    @apply text-center text-sm font-brawl text-white/90 absolute bottom-0 left-0 right-0 bg-black/50 py-1 truncate;
+    @apply text-center text-sm font-brawl text-white/90 absolute bottom-0 left-0 right-0 bg-black/40 py-1 truncate;
   }
 }
 

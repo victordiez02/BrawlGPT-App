@@ -12,24 +12,24 @@ const LanguageSelector: React.FC = () => {
   return (
     <div className="language-selector flex items-center space-x-2">
       <button
-        className={`language-btn rounded-md overflow-hidden w-8 h-6 transition-all hover:scale-110 ${i18n.language === 'en' ? 'ring-2 ring-white scale-110' : 'opacity-70 hover:opacity-100'}`}
+        className={`language-btn rounded-xl overflow-hidden w-10 h-7 transition-all hover:scale-110 ${i18n.language === 'en' ? 'ring-2 ring-white scale-110' : 'opacity-70 hover:opacity-100'}`}
         onClick={() => changeLanguage('en')}
         title="English"
       >
         <img 
-          src="/lovable-uploads/934fb0e9-1943-41f9-819a-94d7cbbf027d.png" 
+          src="/lovable-uploads/e3fc2912-d0fa-4dab-a69b-24b2c9c5e742.png" 
           alt="English" 
           className="w-full h-full object-cover"
         />
       </button>
       
       <button
-        className={`language-btn rounded-md overflow-hidden w-8 h-6 transition-all hover:scale-110 ${i18n.language === 'es' ? 'ring-2 ring-white scale-110' : 'opacity-70 hover:opacity-100'}`}
+        className={`language-btn rounded-xl overflow-hidden w-10 h-7 transition-all hover:scale-110 ${i18n.language === 'es' ? 'ring-2 ring-white scale-110' : 'opacity-70 hover:opacity-100'}`}
         onClick={() => changeLanguage('es')}
         title="Español"
       >
         <img 
-          src="/lovable-uploads/1efb5e95-dc69-4eed-8530-c71db784db73.png" 
+          src="/lovable-uploads/39d7e2ca-f838-45b3-a243-e1adea00c090.png" 
           alt="Español" 
           className="w-full h-full object-cover"
         />

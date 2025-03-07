@@ -15,17 +15,24 @@ const LandingPage: React.FC = () => {
       {/* Hero Section */}
       <div className="flex-1 flex flex-col items-center justify-center w-full max-w-7xl mx-auto px-4 py-12 md:py-24 relative z-10 overflow-hidden">
         <div className="w-full max-w-6xl">
-          <div className="mb-16 text-center">
-            <div className="flex items-center justify-center mb-4">
+          <div className="mb-16 text-center relative">
+            {/* Logo Background */}
+            <div className="absolute inset-0 flex justify-center items-center opacity-10 transform scale-150 pointer-events-none">
               <img 
                 src="/lovable-uploads/73ba99c9-265c-40aa-92f7-016afd79fabb.png" 
-                alt="Brawl Stars Logo" 
-                className="w-16 h-16 mr-3"
+                alt="Brawl Stars Logo Background" 
+                className="w-96 h-96"
               />
-              <h1 className="text-5xl md:text-7xl font-bold font-brawl text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-red-500 text-glow animate-fade-in">
-                {t('landing_title')}
-              </h1>
             </div>
+            
+            {/* Title with BrawlGPT */}
+            <h1 className="text-5xl md:text-7xl font-bold font-brawl text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-red-500 text-glow animate-fade-in mb-3">
+              BrawlGPT
+            </h1>
+            
+            <h2 className="text-4xl md:text-5xl font-bold font-brawl text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-red-500 text-glow animate-fade-in">
+              {t('landing_title')}
+            </h2>
             
             <div className="h-1 w-48 mx-auto bg-gradient-to-r from-brawl-blue via-brawl-purple to-brawl-red rounded-full mb-8"></div>
             
@@ -39,10 +46,6 @@ const LandingPage: React.FC = () => {
               
               {/* Moved Generate Optimal Pick Button */}
               <div className="space-y-8">
-                <p className="text-lg opacity-80 animate-fade-in delay-200">
-                  {t('landing_subtitle_3')}
-                </p>
-                
                 <Link 
                   to="/simulator" 
                   className="btn-primary group flex items-center px-12 py-4 text-xl font-medium rounded-xl transition-all transform hover:scale-105 hover:shadow-lg hover:shadow-blue-500/20 animate-float mx-auto max-w-fit"
