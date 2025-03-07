@@ -63,7 +63,7 @@ const BrawlerCard: React.FC<BrawlerCardProps> = ({
         )}
         
         {size === 'lg' ? (
-          <div className="absolute bottom-0 left-0 right-0 bg-black/60 backdrop-blur-none py-2 px-2">
+          <div className="absolute bottom-0 left-0 right-0 bg-black/60 py-2 px-2">
             <p className="text-white font-brawl text-center uppercase tracking-wider">
               {brawler.name}
             </p>

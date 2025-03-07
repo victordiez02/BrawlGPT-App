@@ -135,6 +135,11 @@
     @apply ring-2 ring-blue-500 bg-blue-500/30;
   }
 
+  /* Sort by button */
+  .sort-by-button {
+    @apply bg-gray-800 text-white px-3 py-1 rounded-md text-sm flex items-center gap-1 hover:bg-gray-700 transition-colors;
+  }
+
   /* Rarity background colors - more vibrant */
   .rarity-common {
     @apply bg-blue-400/70;
