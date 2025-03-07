@@ -182,7 +182,7 @@ const BrawlerGrid: React.FC<BrawlerGridProps> = ({
                 <div onClick={() => {
               setSortOrder('rarity');
               setShowSortDropdown(false);
-            }} className="flex items-center space-x-2 p-2 cursor-pointer font-brawl bg-slate-600">
+            }} className="flex items-center space-x-2 p-2 cursor-pointer font-brawl bg-slate-500">
                   <LayoutGrid size={16} />
                   <span className="text-sm">{t('by_rarity')}</span>
                   {sortOrder === 'rarity' && <span className="ml-auto text-green-500">✓</span>}
@@ -190,7 +190,7 @@ const BrawlerGrid: React.FC<BrawlerGridProps> = ({
                 <div onClick={() => {
               setSortOrder('nameAsc');
               setShowSortDropdown(false);
-            }} className="flex items-center space-x-2 p-2 cursor-pointer font-brawl bg-slate-600">
+            }} className="flex items-center space-x-2 p-2 cursor-pointer font-brawl bg-slate-500">
                   <ArrowDownAZ size={16} />
                   <span className="text-sm">{t('name_az')}</span>
                   {sortOrder === 'nameAsc' && <span className="ml-auto text-green-500">✓</span>}
@@ -198,7 +198,7 @@ const BrawlerGrid: React.FC<BrawlerGridProps> = ({
                 <div onClick={() => {
               setSortOrder('nameDesc');
               setShowSortDropdown(false);
-            }} className="flex items-center space-x-2 p-2 cursor-pointer font-brawl bg-slate-600">
+            }} className="flex items-center space-x-2 p-2 cursor-pointer font-brawl bg-slate-500">
                   <ArrowUpAZ size={16} />
                   <span className="text-sm">{t('name_za')}</span>
                   {sortOrder === 'nameDesc' && <span className="ml-auto text-green-500">✓</span>}
