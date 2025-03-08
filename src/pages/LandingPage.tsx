@@ -4,6 +4,7 @@ import { ArrowRight, Zap, Map, Ban, Target, Cpu, SparkleIcon } from 'lucide-reac
 import { useTranslation } from 'react-i18next';
 import LanguageSelector from '@/components/LanguageSelector';
 import { Button } from '@/components/ui/button';
+
 const LandingPage: React.FC = () => {
   const {
     t
@@ -25,7 +26,7 @@ const LandingPage: React.FC = () => {
               BrawlGPT
             </h1>
             
-            <h2 className="text-4xl font-bold font-brawl text-brawl-blue mb-3 relative z-10 animate-fade-in md:text-3xl">
+            <h2 className="text-4xl font-bold font-brawl mb-3 relative z-10 animate-fade-in md:text-3xl bg-gradient-to-r from-brawl-blue to-brawl-red bg-clip-text text-transparent">
               {t('landing_title')}
             </h2>
             
@@ -150,4 +151,5 @@ const LandingPage: React.FC = () => {
       </footer>
     </div>;
 };
+
 export default LandingPage;
