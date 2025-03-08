@@ -25,8 +25,8 @@ const Header = () => {
           </div>
           
           <h1 className="text-4xl md:text-5xl font-bold mb-2 font-brawl">
-            <span className="bg-gradient-to-r from-yellow-300 to-yellow-400 bg-clip-text text-transparent drop-shadow-[0_0_5px_rgba(253,224,71,0.4)]">Brawl</span>
-            <span className="bg-gradient-to-r from-green-300 to-green-400 bg-clip-text text-transparent drop-shadow-[0_0_5px_rgba(74,222,128,0.4)]">GPT</span>
+            <span className="text-yellow-300 text-glow-yellow">Brawl</span>
+            <span className="text-green-300 text-glow-green">GPT</span>
           </h1>
           
           <div className="h-1 w-40 bg-gradient-to-r from-brawl-blue to-brawl-red rounded-full mx-auto mb-3"></div>
