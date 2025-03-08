@@ -1,11 +1,9 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Zap, Map, Ban, Target, Cpu, SparkleIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import LanguageSelector from '@/components/LanguageSelector';
 import { Button } from '@/components/ui/button';
-
 const LandingPage: React.FC = () => {
   const {
     t
@@ -41,16 +39,47 @@ const LandingPage: React.FC = () => {
                 {t('landing_subtitle_2')}
               </p>
               
-              {/* Botón con diseño AI turquesa */}
+              {/* Botón con diseño de circuitos digitales */}
               <div className="space-y-8">
-                <Link to="/simulator" className="inline-block">
-                  <Button 
-                    variant="cyberpunk"
-                    size="lg" 
-                    className="group relative px-8 py-6 text-xl font-brawl transition-all duration-300 rounded-xl"
-                  >
+                <Link to="/simulator" className="inline-block relative">
+                  <Button variant="ai" size="lg" className="group relative px-12 py-8 text-xl font-medium font-brawl rounded-xl transition-all hover:scale-105 mx-auto">
+                    <div className="absolute inset-0 bg-[#00E5FF]/10 rounded-xl animate-pulse opacity-100"></div>
+                    
+                    {/* Circuit nodes and lines - top */}
+                    <div className="circuit-node top-0 left-1/2 -translate-x-1/2 -translate-y-full"></div>
+                    <div className="circuit-line h-1 w-8 top-0 left-1/2 -translate-x-1/2 -translate-y-1/2"></div>
+                    <div className="circuit-node top-0 left-1/4 -translate-y-full"></div>
+                    <div className="circuit-line h-1 w-8 top-0 left-1/4 -translate-y-1/2"></div>
+                    <div className="circuit-node top-0 right-1/4 -translate-y-full"></div>
+                    <div className="circuit-line h-1 w-8 top-0 right-1/4 -translate-y-1/2"></div>
+                    
+                    {/* Circuit nodes and lines - bottom */}
+                    <div className="circuit-node bottom-0 left-1/2 -translate-x-1/2 translate-y-full"></div>
+                    <div className="circuit-line h-1 w-8 bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2"></div>
+                    <div className="circuit-node bottom-0 left-1/4 translate-y-full"></div>
+                    <div className="circuit-line h-1 w-8 bottom-0 left-1/4 translate-y-1/2"></div>
+                    <div className="circuit-node bottom-0 right-1/4 translate-y-full"></div>
+                    <div className="circuit-line h-1 w-8 bottom-0 right-1/4 translate-y-1/2"></div>
+                    
+                    {/* Circuit nodes and lines - left */}
+                    <div className="circuit-node left-0 top-1/2 -translate-x-full -translate-y-1/2"></div>
+                    <div className="circuit-line w-1 h-8 left-0 top-1/2 -translate-x-1/2 -translate-y-1/2"></div>
+                    <div className="circuit-node left-0 top-1/4 -translate-x-full"></div>
+                    <div className="circuit-line w-1 h-8 left-0 top-1/4 -translate-x-1/2"></div>
+                    <div className="circuit-node left-0 bottom-1/4 -translate-x-full"></div>
+                    <div className="circuit-line w-1 h-8 left-0 bottom-1/4 -translate-x-1/2"></div>
+                    
+                    {/* Circuit nodes and lines - right */}
+                    <div className="circuit-node right-0 top-1/2 translate-x-full -translate-y-1/2"></div>
+                    <div className="circuit-line w-1 h-8 right-0 top-1/2 translate-x-1/2 -translate-y-1/2"></div>
+                    <div className="circuit-node right-0 top-1/4 translate-x-full"></div>
+                    <div className="circuit-line w-1 h-8 right-0 top-1/4 translate-x-1/2"></div>
+                    <div className="circuit-node right-0 bottom-1/4 translate-x-full"></div>
+                    <div className="circuit-line w-1 h-8 right-0 bottom-1/4 translate-x-1/2"></div>
+                    
                     <div className="flex items-center relative z-10">
-                      <Cpu size={24} className="mr-2" />
+                      <Cpu size={24} className="mr-2 animate-spin-slow" />
+                      <SparkleIcon size={16} className="absolute -top-2 -left-1 text-[#00E5FF] animate-pulse" />
                       {t('cta_button')}
                       <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
                     </div>
