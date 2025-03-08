@@ -30,7 +30,7 @@ const BrawlerCard: React.FC<BrawlerCardProps> = ({
   const statusClass = banned 
     ? 'brawler-card-banned' 
     : disabled 
-      ? 'brawler-card-disabled' 
+      ? 'brawler-card-disabled opacity-70' 
       : 'hover:scale-105 hover:shadow-xl cursor-pointer';
       
   const teamBorderClass = team 
@@ -73,7 +73,7 @@ const BrawlerCard: React.FC<BrawlerCardProps> = ({
       className={`brawler-card ${sizeClasses[size]} ${statusClass} ${teamBorderClass} ${draggingClass} animate-scale-in transition-all duration-200`}
       onClick={!disabled && !banned ? onClick : undefined}
     >
-      <div className={`relative w-full h-full overflow-hidden rounded-xl ${isDragging ? 'shadow-lg' : ''}`}>
+      <div className={`relative w-full h-full overflow-hidden rounded-xl ${isDragging ? 'shadow-lg' : ''} ${disabled ? 'filter grayscale' : ''}`}>
         <img 
           src={imgSrc} 
           alt={brawler.name}

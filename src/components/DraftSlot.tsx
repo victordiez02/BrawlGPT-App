@@ -4,6 +4,7 @@ import { useDrag, useDrop } from 'react-dnd';
 import BrawlerCard from './BrawlerCard';
 import { Brawler, brawlers } from '@/lib/brawlers';
 import { useTranslation } from 'react-i18next';
+import { Lock } from 'lucide-react';
 
 type DraftItemType = {
   id: number;
@@ -16,6 +17,7 @@ interface DraftSlotProps {
   brawlerId: number | null;
   isActiveSlot: boolean;
   pickLabel: string;
+  isLocked: boolean;
   onRemoveBrawler: (index: number) => void;
   onMoveBrawler: (fromIndex: number, toIndex: number) => void;
 }
@@ -26,6 +28,7 @@ const DraftSlot: React.FC<DraftSlotProps> = ({
   brawlerId,
   isActiveSlot,
   pickLabel,
+  isLocked,
   onRemoveBrawler,
   onMoveBrawler
 }) => {
@@ -53,12 +56,12 @@ const DraftSlot: React.FC<DraftSlotProps> = ({
     collect: monitor => ({
       isDragging: !!monitor.isDragging()
     }),
-    canDrag: currentBrawlerId !== null,
+    canDrag: currentBrawlerId !== null && !isLocked,
     // Dispatch a custom event when dragging ends
     end: (item, monitor) => {
       document.dispatchEvent(new CustomEvent('brawlerDragEnd'));
     }
-  }), [currentBrawlerId, index]);
+  }), [currentBrawlerId, index, isLocked]);
 
   // Set up drop
   const [{ isOver }, drop] = useDrop(() => ({
@@ -70,19 +73,23 @@ const DraftSlot: React.FC<DraftSlotProps> = ({
     },
     collect: monitor => ({
       isOver: !!monitor.isOver()
-    })
-  }), [index, onMoveBrawler]);
+    }),
+    // Don't allow dropping on locked slots
+    canDrop: () => !isLocked
+  }), [index, onMoveBrawler, isLocked]);
 
   // Handle right-click to remove
   const handleContextMenu = (e: React.MouseEvent) => {
     e.preventDefault();
-    if (currentBrawlerId !== null) {
+    if (currentBrawlerId !== null && !isLocked) {
       onRemoveBrawler(index);
     }
   };
 
   // Handle scrolling to brawler grid when clicking empty slot
   const scrollToBrawlerGrid = () => {
+    if (isLocked) return; // Don't scroll if slot is locked
+    
     const brawlerGridElement = document.querySelector('.brawler-grid');
     if (brawlerGridElement) {
       brawlerGridElement.scrollIntoView({ behavior: 'smooth' });
@@ -93,7 +100,7 @@ const DraftSlot: React.FC<DraftSlotProps> = ({
     <div className="flex flex-col items-center space-y-2">
       <div 
         ref={drop} 
-        className={`w-full aspect-square relative ${teamColorClass} ${isActiveSlot ? 'ring-2 ring-yellow-400 animate-pulse-soft' : ''} ${isOver ? 'ring-2 ring-white' : ''}`}
+        className={`w-full aspect-square relative ${teamColorClass} ${isActiveSlot && !isLocked ? 'ring-2 ring-yellow-400 animate-pulse-soft' : ''} ${isOver ? 'ring-2 ring-white' : ''} ${isLocked ? 'opacity-70' : ''}`}
       >
         {brawler ? (
           <div 
@@ -105,18 +112,32 @@ const DraftSlot: React.FC<DraftSlotProps> = ({
               brawler={brawler} 
               size="lg" 
               team={team}
-              isDragging={isDragging} 
+              isDragging={isDragging}
+              disabled={isLocked}
             />
+            {isLocked && (
+              <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+                <Lock size={24} className="text-white" />
+              </div>
+            )}
           </div>
         ) : (
           <div 
             className="w-full h-full flex items-center justify-center cursor-pointer"
             onClick={scrollToBrawlerGrid}
           >
-            {isActiveSlot && (
+            {isActiveSlot && !isLocked && (
               <span className="text-sm font-medium opacity-80 animate-pulse font-brawl text-white hover:text-yellow-300 transition-colors">
                 {t('select')}
               </span>
+            )}
+            {isLocked && (
+              <div className="flex flex-col items-center justify-center">
+                <Lock size={24} className="text-white/70 mb-1" />
+                <span className="text-xs font-medium text-white/70 font-brawl">
+                  {t('locked')}
+                </span>
+              </div>
             )}
           </div>
         )}

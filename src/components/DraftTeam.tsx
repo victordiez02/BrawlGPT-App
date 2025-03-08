@@ -31,6 +31,13 @@ const DraftTeam: React.FC<DraftTeamProps> = ({
     const pickNumber = pickOrder.indexOf(globalIndex) + 1;
     return `${pickNumber}° Pick`;
   };
+
+  // Check if this slot is the 6th pick (last pick)
+  const isLastPickSlot = (index: number): boolean => {
+    const globalIndex = team === 'blue' ? index : index + 3;
+    const pickNumber = pickOrder.indexOf(globalIndex) + 1;
+    return pickNumber === 6; // 6th pick
+  };
   
   return (
     <div className={`w-full ${team === 'blue' ? 'order-1' : 'order-2'}`}>
@@ -51,6 +58,9 @@ const DraftTeam: React.FC<DraftTeamProps> = ({
           // Fix: properly calculate isActiveSlot for both teams
           const isActiveSlot = currentPickTeam === team && activeSlot === index;
           
+          // Check if this slot is the 6th pick
+          const isLocked = isLastPickSlot(index);
+          
           return (
             <DraftSlot
               key={index}
@@ -59,6 +69,7 @@ const DraftTeam: React.FC<DraftTeamProps> = ({
               brawlerId={brawlerId}
               isActiveSlot={isActiveSlot}
               pickLabel={getPickLabel(index)}
+              isLocked={isLocked}
               onRemoveBrawler={onRemoveBrawler}
               onMoveBrawler={onMoveBrawler}
             />
