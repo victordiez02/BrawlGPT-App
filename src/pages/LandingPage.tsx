@@ -1,8 +1,10 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Zap, Map, Ban, Target } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import LanguageSelector from '@/components/LanguageSelector';
+
 const LandingPage: React.FC = () => {
   const {
     t
@@ -20,9 +22,16 @@ const LandingPage: React.FC = () => {
             </div>
             
             {/* Title with BrawlGPT */}
-            <h1 className="text-5xl md:text-7xl font-bold font-brawl text-transparent bg-clip-text bg-gradient-to-r from-brawl-yellow to-brawl-green text-glow animate-fade-in mb-3 relative z-10">
-              BrawlGPT
-            </h1>
+            <div className="flex items-center justify-center mb-2">
+              <h1 className="text-5xl md:text-7xl font-bold font-brawl text-transparent bg-clip-text bg-gradient-to-r from-brawl-yellow to-brawl-green text-glow animate-fade-in relative z-10">
+                BrawlGPT
+              </h1>
+              <img 
+                src="https://cdn-icons-png.flaticon.com/512/4529/4529980.png" 
+                alt="AI Icon" 
+                className="w-10 h-10 md:w-12 md:h-12 ml-3 animate-pulse-soft" 
+              />
+            </div>
             
             <h2 className="text-4xl md:text-5xl font-bold font-brawl text-transparent bg-clip-text bg-gradient-to-r from-brawl-blue to-brawl-red text-glow animate-fade-in relative z-10">
               {t('landing_title')}
@@ -51,10 +60,15 @@ const LandingPage: React.FC = () => {
           
           {/* Features Section */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            {/* AI Assistant Feature - Added AI icon here too */}
             <div className="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/20 transform transition-all duration-300 hover:translate-y-[-5px] hover:shadow-lg">
               <div className="flex items-center mb-4">
                 <div className="w-12 h-12 rounded-lg bg-blue-500/20 flex items-center justify-center mr-4">
-                  <Map size={24} className="text-blue-400" />
+                  <img 
+                    src="https://cdn-icons-png.flaticon.com/512/4529/4529980.png" 
+                    alt="AI Icon" 
+                    className="w-6 h-6" 
+                  />
                 </div>
                 <h3 className="font-bold text-xl font-brawl">{t('step_1_title')}</h3>
               </div>
