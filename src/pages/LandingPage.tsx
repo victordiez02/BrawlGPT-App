@@ -4,7 +4,6 @@ import { ArrowRight, Zap, Map, Ban, Target, Cpu, SparkleIcon } from 'lucide-reac
 import { useTranslation } from 'react-i18next';
 import LanguageSelector from '@/components/LanguageSelector';
 import { Button } from '@/components/ui/button';
-
 const LandingPage: React.FC = () => {
   const {
     t
@@ -43,12 +42,8 @@ const LandingPage: React.FC = () => {
               {/* Botón con diseño de circuitos digitales */}
               <div className="space-y-8">
                 <Link to="/simulator" className="inline-block relative">
-                  <Button 
-                    variant="ai" 
-                    size="lg" 
-                    className="group relative px-12 py-8 text-xl font-medium font-brawl rounded-xl transition-all hover:scale-105 mx-auto"
-                  >
-                    <div className="absolute inset-0 bg-[#00E5FF]/10 rounded-xl animate-pulse opacity-50"></div>
+                  <Button variant="ai" size="lg" className="group relative px-12 py-8 text-xl font-medium font-brawl rounded-xl transition-all hover:scale-105 mx-auto">
+                    <div className="absolute inset-0 bg-[#00E5FF]/10 rounded-xl animate-pulse opacity-100"></div>
                     
                     {/* Circuit nodes and lines - top */}
                     <div className="circuit-node top-0 left-1/2 -translate-x-1/2 -translate-y-full"></div>
