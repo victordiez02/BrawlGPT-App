@@ -38,18 +38,17 @@ const DraftSlot: React.FC<DraftSlotProps> = ({
   // Set up drag
   const [{ isDragging }, drag] = useDrag(() => ({
     type: 'DRAFT_BRAWLER',
-    item: { id: brawlerId, slotIndex: index } as DraftItemType,
+    item: () => {
+      document.dispatchEvent(new CustomEvent('brawlerDragStart'));
+      return { id: brawlerId, slotIndex: index };
+    },
     collect: monitor => ({
       isDragging: !!monitor.isDragging()
     }),
     canDrag: brawlerId !== null,
-    // Dispatch a custom event when dragging starts or ends
+    // Dispatch a custom event when dragging ends
     end: (item, monitor) => {
       document.dispatchEvent(new CustomEvent('brawlerDragEnd'));
-    },
-    begin: (monitor) => {
-      document.dispatchEvent(new CustomEvent('brawlerDragStart'));
-      return { id: brawlerId, slotIndex: index };
     }
   }), [brawlerId, index]);
 
