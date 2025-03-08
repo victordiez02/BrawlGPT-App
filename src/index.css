@@ -165,9 +165,9 @@
     @apply bg-yellow-500/70;
   }
   
-  /* Brawler name on draft */
+  /* Brawler name on draft - Adaptado para móvil */
   .brawler-name {
-    @apply text-center text-sm font-brawl text-white/90 absolute bottom-0 left-0 right-0 bg-black/40 py-1 truncate;
+    @apply text-center text-xs md:text-sm font-brawl text-white/90 absolute bottom-0 left-0 right-0 bg-black/40 py-0.5 md:py-1 truncate;
   }
   
   /* Neural button styles */
@@ -358,6 +358,24 @@
       radial-gradient(circle at 100% 0%, rgba(242, 61, 61, 0.2) 0%, transparent 50%),
       radial-gradient(circle at 50% 100%, rgba(168, 84, 242, 0.2) 0%, transparent 50%);
   }
+  
+  .animate-spin-slow {
+    animation: spin 3s linear infinite;
+  }
+  
+  @media (max-width: 768px) {
+    .language-selector {
+      @apply scale-75 top-2 right-2;
+    }
+    
+    .draft-slot-blue, .draft-slot-red {
+      @apply border-[4px];
+    }
+    
+    .back-to-home-btn {
+      @apply hidden;
+    }
+  }
 }
 
 @keyframes pulse-soft {
@@ -417,5 +435,14 @@
   }
   50% {
     filter: drop-shadow(0 0 8px rgba(0, 229, 255, 0.9));
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }

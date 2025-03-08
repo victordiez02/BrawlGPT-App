@@ -1,33 +1,32 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { Search } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 interface BrawlerSearchProps {
-  onSearch: (term: string) => void;
+  searchTerm: string;
+  onSearchChange: (term: string) => void;
+  placeholder?: string;
 }
 
-const BrawlerSearch: React.FC<BrawlerSearchProps> = ({ onSearch }) => {
-  const [searchTerm, setSearchTerm] = useState('');
+const BrawlerSearch: React.FC<BrawlerSearchProps> = ({ 
+  searchTerm, 
+  onSearchChange,
+  placeholder
+}) => {
   const { t } = useTranslation();
   
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setSearchTerm(value);
-    onSearch(value);
-  };
-  
   return (
-    <div className="relative mb-4">
+    <div className="relative">
       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
         <Search size={16} className="text-gray-400" />
       </div>
       <input
         type="text"
-        className="pl-10 pr-4 py-2 w-full rounded-lg border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-brawl-blue text-gray-800 dark:text-white"
-        placeholder={t('search_brawlers')}
         value={searchTerm}
-        onChange={handleSearch}
+        onChange={(e) => onSearchChange(e.target.value)}
+        className="block w-full pl-10 pr-3 py-2 border border-gray-300 dark:border-gray-700 rounded-md leading-5 bg-white/10 backdrop-blur-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+        placeholder={placeholder || t('search_brawlers')}
       />
     </div>
   );

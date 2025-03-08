@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useMemo } from 'react';
 import { brawlers, Brawler } from '@/lib/brawlers';
 import { GameMap } from '@/lib/maps';
@@ -10,11 +9,12 @@ import BrawlerGrid from './BrawlerGrid';
 import ResultModal from './ResultModal';
 import TrashCan from './TrashCan';
 import { ApiResponse, DraftData, submitDraft } from '@/lib/api';
-import { ArrowLeft, Info, Loader2, Zap } from 'lucide-react';
+import { ArrowLeft, Cpu, Info, Loader2, SparkleIcon, Zap } from 'lucide-react';
 import { toast } from 'sonner';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useTranslation } from 'react-i18next';
+import { Button } from '@/components/ui/button';
 
 interface DraftSimulatorProps {
   initialMap?: GameMap | null;
@@ -49,7 +49,6 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({
     return findTeamByIndex(currentPickIndex);
   }, [currentPickIndex]);
 
-  // Count the total number of selected brawlers
   const selectedBrawlersCount = useMemo(() => {
     return selectedBrawlers.filter(id => id !== null).length;
   }, [selectedBrawlers]);
@@ -98,7 +97,7 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({
       .map(item => item.index);
     
     const missingPicks = [];
-    for (let i = 0; i < 5; i++) { // Changed from 6 to 5
+    for (let i = 0; i < 5; i++) {
       const pickPosition = pickOrder[i];
       if (!filledPositions.includes(pickPosition)) {
         missingPicks.push(i + 1);
@@ -131,7 +130,6 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({
       return t('select_fifth_pick_brawler');
     }
     if (filledPositions.length === 5) {
-      // This is the correct maximum number - don't show any error
       return '';
     }
     
@@ -139,8 +137,7 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({
   };
 
   const findNextPickSlot = () => {
-    // Only consider the first 5 picks in the order
-    for (let i = 0; i < 5; i++) { // Changed from pickOrder.length to 5
+    for (let i = 0; i < 5; i++) {
       const slotIndex = pickOrder[i];
       if (selectedBrawlers[slotIndex] === null) {
         return slotIndex;
@@ -209,20 +206,25 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({
     }
   }, [selectedMap, isValidPhase, getMissingPicksMessage, t]);
   
+  useEffect(() => {
+    const elPrimo = brawlers.find(b => b.name === "El-Primo");
+    if (elPrimo) {
+      elPrimo.name = "El Primo";
+    }
+  }, []);
+
   const handleSelectBrawler = (brawler: Brawler) => {
     if (selectedBrawlers.includes(brawler.id) || bannedBrawlers.includes(brawler.id)) {
       return;
     }
     
-    // Check if we already have 5 brawlers selected
     if (selectedBrawlersCount >= 5) {
       toast.error(t('max_picks_error', { max: 5 }));
       return;
     }
     
     let nextAvailableIndex = -1;
-    // Only consider the first 5 picks in the order
-    for (let i = 0; i < 5; i++) { // Changed from pickOrder.length to 5
+    for (let i = 0; i < 5; i++) {
       if (selectedBrawlers[pickOrder[i]] === null) {
         nextAvailableIndex = pickOrder[i];
         break;
@@ -268,11 +270,9 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({
     const fromBrawlerId = newSelectedBrawlers[fromIndex];
     const toBrawlerId = newSelectedBrawlers[toIndex];
     
-    // Swap the brawler IDs
     newSelectedBrawlers[fromIndex] = toBrawlerId;
     newSelectedBrawlers[toIndex] = fromBrawlerId;
     
-    // Update state with the new brawler arrangement
     setSelectedBrawlers(newSelectedBrawlers);
     
     const fromBrawler = brawlers.find(b => b.id === fromBrawlerId);
@@ -450,27 +450,44 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({
               <div className="bg-gradient-to-r from-brawl-blue via-brawl-purple to-brawl-red h-1"></div>
               
               <div className="p-4 bg-gray-800/30">
-                <button
+                <Button
                   onClick={handleGenerateRecommendation}
                   disabled={!generateButtonConfig.enabled || isGenerating}
-                  className={`w-full flex items-center justify-center font-brawl ${
-                    generateButtonConfig.enabled 
-                      ? 'btn-success' 
-                      : 'bg-gradient-to-r from-green-300 to-green-400 text-white font-bold py-3 px-6 rounded-xl opacity-60 cursor-not-allowed'
-                  }`}
+                  variant="ai"
+                  size="lg"
+                  className="w-full group transition-all duration-300 font-brawl"
                 >
-                  {isGenerating ? (
-                    <>
-                      <Loader2 size={20} className="mr-2 animate-spin" />
-                      {t('generating')}
-                    </>
-                  ) : (
-                    <>
-                      <Zap size={20} className="mr-2" />
-                      {generateButtonConfig.text}
-                    </>
-                  )}
-                </button>
+                  <div className="absolute inset-0 bg-[#00E5FF] rounded-xl opacity-100"></div>
+                  
+                  <div className="circuit-node top-0 left-1/2 -translate-x-1/2 -translate-y-full"></div>
+                  <div className="circuit-line h-1 w-8 top-0 left-1/2 -translate-x-1/2 -translate-y-1/2"></div>
+                  <div className="circuit-node top-0 left-1/4 -translate-y-full"></div>
+                  <div className="circuit-line h-1 w-8 top-0 left-1/4 -translate-y-1/2"></div>
+                  <div className="circuit-node top-0 right-1/4 -translate-y-full"></div>
+                  <div className="circuit-line h-1 w-8 top-0 right-1/4 -translate-y-1/2"></div>
+                  
+                  <div className="circuit-node bottom-0 left-1/2 -translate-x-1/2 translate-y-full"></div>
+                  <div className="circuit-line h-1 w-8 bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2"></div>
+                  <div className="circuit-node bottom-0 left-1/4 translate-y-full"></div>
+                  <div className="circuit-line h-1 w-8 bottom-0 left-1/4 translate-y-1/2"></div>
+                  <div className="circuit-node bottom-0 right-1/4 translate-y-full"></div>
+                  <div className="circuit-line h-1 w-8 bottom-0 right-1/4 translate-y-1/2"></div>
+                  
+                  <div className="flex items-center justify-center relative z-10">
+                    {isGenerating ? (
+                      <>
+                        <Loader2 size={20} className="mr-2 animate-spin" />
+                        {t('generating')}
+                      </>
+                    ) : (
+                      <>
+                        <Cpu size={20} className="mr-2 animate-spin-slow" />
+                        <SparkleIcon size={16} className="absolute -top-2 -left-1 text-[#00E5FF] animate-pulse" />
+                        {generateButtonConfig.text}
+                      </>
+                    )}
+                  </div>
+                </Button>
                 
                 {!generateButtonConfig.enabled && generateButtonConfig.disabledReason && (
                   <div className="mt-2 flex items-center justify-center text-sm text-red-500 font-brawl">

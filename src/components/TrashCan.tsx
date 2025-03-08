@@ -82,11 +82,7 @@ const TrashCan: React.FC<TrashCanProps> = ({ onResetDraft, onRemoveBrawler }) =>
           onError={handleImageError}
         />
       </div>
-      {isOver && (
-        <span className="text-xs font-brawl text-red-400 animate-pulse-soft mt-1">
-          {t('delete')}
-        </span>
-      )}
+      {/* Eliminado el texto "delete" que aparecía al arrastrar un brawler */}
     </div>
   );
 };

@@ -21,11 +21,13 @@ const enTranslations = {
   // Common
   'back_to_home': 'Back to Home',
   'search': 'Search...',
+  'search_brawlers': 'Search brawlers...',
   'all_modes': 'All Modes',
   'no_maps_found': 'No maps found',
   'banned_brawlers': 'Banned Brawlers',
   'search_to_ban': 'Search to ban...',
   'no_banned_brawlers': 'No banned brawlers',
+  'locked': 'Locked',
   
   // Simulator page
   'select_brawlers': 'Select Brawlers',
@@ -63,6 +65,7 @@ const enTranslations = {
   'brawler_banned': '{{name}} banned',
   'brawler_unbanned': 'Ban of {{name}} removed',
   'max_bans_error': 'You can\'t ban more than 6 brawlers',
+  'max_picks_error': 'You can\'t select more than 5 brawlers',
   'must_select_map': 'You must select a map',
   'error_generating_recommendation': 'Error generating the recommendation. Try again.',
   'confirm_reset_draft': 'Are you sure you want to reset the draft? You will lose all current selections.',
@@ -117,11 +120,13 @@ const esTranslations = {
   // Common
   'back_to_home': 'Volver al inicio',
   'search': 'Buscar...',
+  'search_brawlers': 'Buscar brawlers...',
   'all_modes': 'Todos los modos',
   'no_maps_found': 'No se encontraron mapas',
   'banned_brawlers': 'Brawlers Baneados',
   'search_to_ban': 'Buscar para banear...',
   'no_banned_brawlers': 'No hay brawlers baneados',
+  'locked': 'Bloqueado',
   
   // Simulator page
   'select_brawlers': 'Seleccionar Brawlers',
@@ -159,6 +164,7 @@ const esTranslations = {
   'brawler_banned': '{{name}} baneado',
   'brawler_unbanned': 'Baneo de {{name}} eliminado',
   'max_bans_error': 'No puedes banear más de 6 brawlers',
+  'max_picks_error': 'No puedes seleccionar más de 5 brawlers',
   'must_select_map': 'Debes seleccionar un mapa',
   'error_generating_recommendation': 'Error al generar la recomendación. Inténtalo de nuevo.',
   'confirm_reset_draft': '¿Estás seguro de que quieres reiniciar el draft? Perderás todas las selecciones actuales.',

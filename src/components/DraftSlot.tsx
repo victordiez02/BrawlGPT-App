@@ -142,7 +142,7 @@ const DraftSlot: React.FC<DraftSlotProps> = ({
           </div>
         )}
       </div>
-      <span className="text-xs font-medium text-white dark:text-gray-200 font-brawl text-glow">
+      <span className="text-xs font-medium text-white dark:text-gray-200 font-brawl text-glow truncate w-full text-center">
         {pickLabel}
       </span>
     </div>

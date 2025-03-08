@@ -5,13 +5,16 @@ import { ArrowRight, Zap, Map, Ban, Target, Cpu, SparkleIcon } from 'lucide-reac
 import { useTranslation } from 'react-i18next';
 import LanguageSelector from '@/components/LanguageSelector';
 import { Button } from '@/components/ui/button';
+import Footer from '@/components/Footer';
 
 const LandingPage: React.FC = () => {
-  const {
-    t
-  } = useTranslation();
-  return <div className="min-h-screen flex flex-col relative bg-cybernetic text-white">
-      <LanguageSelector />
+  const { t } = useTranslation();
+  
+  return (
+    <div className="min-h-screen flex flex-col relative bg-cybernetic text-white">
+      <div className="absolute top-6 right-6 z-10 scale-75 md:scale-100 origin-top-right">
+        <LanguageSelector />
+      </div>
       
       {/* Hero Section */}
       <div className="flex-1 flex flex-col items-center justify-center w-full max-w-7xl mx-auto px-4 py-12 md:py-24 relative z-10 overflow-hidden">
@@ -157,10 +160,10 @@ const LandingPage: React.FC = () => {
         <div className="absolute bottom-0 left-1/3 w-96 h-96 bg-purple-600 rounded-full filter blur-[120px] opacity-20"></div>
       </div>
       
-      {/* Footer */}
-      <footer className="relative z-10 py-6 text-center text-sm opacity-70 font-brawl">
-        &copy; 2025 BrawlGPT - {t('footer_text')}
-      </footer>
-    </div>;
+      {/* Footer - Reemplazado con el componente Footer completo */}
+      <Footer />
+    </div>
+  );
 };
+
 export default LandingPage;
