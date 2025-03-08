@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Zap, Map, Ban, Target } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -7,7 +6,20 @@ import LanguageSelector from '@/components/LanguageSelector';
 
 const LandingPage: React.FC = () => {
   const { t } = useTranslation();
+  const logoRef = useRef<HTMLDivElement>(null);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isHovering, setIsHovering] = useState(false);
   
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (logoRef.current) {
+      const rect = logoRef.current.getBoundingClientRect();
+      setMousePosition({
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top
+      });
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col relative bg-cybernetic text-white">
       <LanguageSelector />
@@ -16,13 +28,34 @@ const LandingPage: React.FC = () => {
       <div className="flex-1 flex flex-col items-center justify-center w-full max-w-7xl mx-auto px-4 py-12 md:py-24 relative z-10 overflow-hidden">
         <div className="w-full max-w-6xl">
           <div className="mb-16 text-center relative">
-            {/* Logo Background */}
-            <div className="absolute inset-0 flex justify-center items-center opacity-10 transform scale-150 pointer-events-none">
-              <img 
-                src="/lovable-uploads/73ba99c9-265c-40aa-92f7-016afd79fabb.png" 
-                alt="Brawl Stars Logo Background" 
-                className="w-96 h-96"
-              />
+            {/* Logo Background with dynamic illumination */}
+            <div 
+              ref={logoRef}
+              className="absolute inset-0 flex justify-center items-center pointer-events-none"
+              onMouseEnter={() => setIsHovering(true)}
+              onMouseLeave={() => setIsHovering(false)}
+              onMouseMove={handleMouseMove}
+              style={{ pointerEvents: 'all', cursor: 'default' }}
+            >
+              <div 
+                className="w-96 h-96 relative overflow-hidden"
+              >
+                <img 
+                  src="/lovable-uploads/73ba99c9-265c-40aa-92f7-016afd79fabb.png" 
+                  alt="Brawl Stars Logo Background" 
+                  className="w-full h-full opacity-10 transform scale-150"
+                />
+                {isHovering && (
+                  <div 
+                    className="absolute w-40 h-40 rounded-full pointer-events-none transition-opacity duration-200"
+                    style={{
+                      background: 'radial-gradient(circle, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 70%)',
+                      left: mousePosition.x - 80,
+                      top: mousePosition.y - 80,
+                    }}
+                  />
+                )}
+              </div>
             </div>
             
             {/* Title with BrawlGPT */}
