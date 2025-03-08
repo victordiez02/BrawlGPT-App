@@ -22,10 +22,14 @@ const LandingPage: React.FC = () => {
               <img src="/lovable-uploads/73ba99c9-265c-40aa-92f7-016afd79fabb.png" alt="Brawl Stars Logo Background" className="w-96 h-96" />
             </div>
             
-            {/* Title with BrawlGPT - CHANGED FROM NEON TO FLAT COLORS WITH DIFFERENT COLORS FOR BRAWL AND GPT */}
-            <h1 className="text-5xl md:text-7xl font-bold font-brawl mb-3 relative z-10 animate-fade-in text-shadow">
-              <span className="text-[#FEBE20]">Brawl</span><span className="text-[#10A37F]">GPT</span>
-            </h1>
+            {/* Logo image instead of text title */}
+            <div className="flex justify-center mb-3 relative z-10 animate-fade-in">
+              <img 
+                src="/lovable-uploads/dcf0aba8-0227-4216-a7c2-faba072fd4ad.png" 
+                alt="BrawlGPT Logo" 
+                className="w-auto h-28 md:h-36"
+              />
+            </div>
             
             <h2 className="text-4xl font-bold font-brawl mb-3 relative z-10 animate-fade-in md:text-3xl bg-gradient-to-r from-brawl-blue to-brawl-red bg-clip-text text-transparent">
               {t('landing_title')}
