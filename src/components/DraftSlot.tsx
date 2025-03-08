@@ -66,7 +66,7 @@ const DraftSlot: React.FC<DraftSlotProps> = ({
     }
   };
 
-  // Handle scrolling to brawler grid when clicking select
+  // Handle scrolling to brawler grid when clicking empty slot
   const scrollToBrawlerGrid = () => {
     const brawlerGridElement = document.querySelector('.brawler-grid');
     if (brawlerGridElement) {
@@ -89,14 +89,14 @@ const DraftSlot: React.FC<DraftSlotProps> = ({
             <BrawlerCard brawler={brawler} size="lg" team={team} />
           </div>
         ) : (
-          <div className="w-full h-full flex items-center justify-center">
+          <div 
+            className="w-full h-full flex items-center justify-center cursor-pointer"
+            onClick={scrollToBrawlerGrid}
+          >
             {isActiveSlot && (
-              <button 
-                onClick={scrollToBrawlerGrid}
-                className="text-sm font-medium opacity-80 animate-pulse font-brawl text-white hover:text-yellow-300 transition-colors focus:outline-none"
-              >
+              <span className="text-sm font-medium opacity-80 animate-pulse font-brawl text-white hover:text-yellow-300 transition-colors">
                 {t('select')}
-              </button>
+              </span>
             )}
           </div>
         )}
