@@ -12,15 +12,15 @@ const TeamSelector: React.FC<TeamSelectorProps> = ({ firstPick, onSelectFirstPic
   const { t } = useTranslation();
   
   return (
-    <div className="animate-slide-in">
-      <label className="block text-sm font-medium text-white mb-3 font-brawl text-center">
+    <div className="animate-slide-in w-full">
+      <label className="block text-sm font-medium text-white mb-4 font-brawl text-center">
         {t('who_picks_first')}
       </label>
       
-      <div className="flex flex-col space-y-4 items-center">
+      <div className="flex flex-col space-y-4 items-center w-full">
         <button
           onClick={() => onSelectFirstPick('blue')}
-          className={`glass-card py-3 px-6 w-full max-w-[200px] transition-all duration-300 rounded-xl ${
+          className={`glass-card py-4 px-6 w-full max-w-xs transition-all duration-300 rounded-xl ${
             firstPick === 'blue' 
               ? 'ring-3 ring-brawl-blue shadow-lg shadow-blue-500/30' 
               : 'opacity-80 hover:opacity-100 hover:shadow-md hover:shadow-blue-500/10'
@@ -34,7 +34,7 @@ const TeamSelector: React.FC<TeamSelectorProps> = ({ firstPick, onSelectFirstPic
         
         <button
           onClick={() => onSelectFirstPick('red')}
-          className={`glass-card py-3 px-6 w-full max-w-[200px] transition-all duration-300 rounded-xl ${
+          className={`glass-card py-4 px-6 w-full max-w-xs transition-all duration-300 rounded-xl ${
             firstPick === 'red' 
               ? 'ring-3 ring-brawl-red shadow-lg shadow-red-500/30' 
               : 'opacity-80 hover:opacity-100 hover:shadow-md hover:shadow-red-500/10'
