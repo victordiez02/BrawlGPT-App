@@ -22,22 +22,26 @@ const LandingPage: React.FC = () => {
               <img src="/lovable-uploads/73ba99c9-265c-40aa-92f7-016afd79fabb.png" alt="Brawl Stars Logo Background" className="w-96 h-96" />
             </div>
             
-            {/* Title with BrawlGPT - CHANGED FROM NEON TO FLAT COLORS WITH DIFFERENT COLORS FOR BRAWL AND GPT */}
-            <h1 className="text-5xl md:text-7xl font-bold font-brawl mb-3 relative z-10 animate-fade-in text-shadow">
-              <span className="text-[#FEBE20]">Brawl</span><span className="text-[#10A37F]">GPT</span>
-            </h1>
+            {/* Replacing text title with the new logo image */}
+            <div className="flex justify-center mb-6">
+              <img 
+                src="/lovable-uploads/1286b4d1-2aa3-4368-97f8-b400fe1acb91.png" 
+                alt="BrawlGPT Logo" 
+                className="w-72 md:w-96 h-auto relative z-10 animate-fade-in"
+              />
+            </div>
             
-            <h2 className="text-4xl font-bold font-brawl mb-3 relative z-10 animate-fade-in md:text-3xl bg-gradient-to-r from-brawl-blue to-brawl-red bg-clip-text text-transparent">
+            <h2 className="text-4xl font-bold font-brawl mb-3 relative z-10 animate-fade-in md:text-3xl bg-gradient-to-r from-brawl-blue to-brawl-red bg-clip-text text-transparent text-shadow">
               {t('landing_title')}
             </h2>
             
             <div className="h-1 w-48 mx-auto bg-gradient-to-r from-brawl-blue to-brawl-red rounded-full mb-8 relative z-10"></div>
             
             <div className="max-w-3xl mx-auto">
-              <p className="text-xl md:text-2xl opacity-90 mb-4 animate-fade-in delay-200 font-brawl">
+              <p className="text-xl md:text-2xl opacity-90 mb-4 animate-fade-in delay-200 font-brawl text-shadow">
                 {t('landing_subtitle_1')}
               </p>
-              <p className="text-lg opacity-80 animate-fade-in delay-200 mb-6">
+              <p className="text-lg opacity-80 animate-fade-in delay-200 mb-6 text-shadow">
                 {t('landing_subtitle_2')}
               </p>
               
