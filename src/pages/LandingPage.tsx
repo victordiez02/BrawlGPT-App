@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Zap, Map, Ban, Target } from 'lucide-react';
@@ -31,27 +32,26 @@ const LandingPage: React.FC = () => {
             {/* Logo Background with dynamic illumination */}
             <div 
               ref={logoRef}
-              className="absolute inset-0 flex justify-center items-center pointer-events-none"
               onMouseEnter={() => setIsHovering(true)}
               onMouseLeave={() => setIsHovering(false)}
               onMouseMove={handleMouseMove}
+              className="absolute inset-0 flex justify-center items-center"
               style={{ pointerEvents: 'all', cursor: 'default' }}
             >
-              <div 
-                className="w-96 h-96 relative overflow-hidden"
-              >
+              <div className="w-full h-full relative flex items-center justify-center">
                 <img 
                   src="/lovable-uploads/73ba99c9-265c-40aa-92f7-016afd79fabb.png" 
                   alt="Brawl Stars Logo Background" 
-                  className="w-full h-full opacity-10 transform scale-150"
+                  className="opacity-10"
+                  style={{ width: '450px', height: 'auto' }}
                 />
                 {isHovering && (
                   <div 
-                    className="absolute w-40 h-40 rounded-full pointer-events-none transition-opacity duration-200"
+                    className="absolute w-60 h-60 rounded-full pointer-events-none transition-opacity duration-200"
                     style={{
                       background: 'radial-gradient(circle, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 70%)',
-                      left: mousePosition.x - 80,
-                      top: mousePosition.y - 80,
+                      left: `${mousePosition.x - 30}px`,
+                      top: `${mousePosition.y - 30}px`,
                     }}
                   />
                 )}
