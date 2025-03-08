@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useMemo } from 'react';
 import { brawlers, Brawler } from '@/lib/brawlers';
 import { GameMap } from '@/lib/maps';
@@ -17,9 +18,13 @@ import { useTranslation } from 'react-i18next';
 
 interface DraftSimulatorProps {
   initialMap?: GameMap | null;
+  onReturnToMapSelection?: () => void;
 }
 
-const DraftSimulator: React.FC<DraftSimulatorProps> = ({ initialMap = null }) => {
+const DraftSimulator: React.FC<DraftSimulatorProps> = ({ 
+  initialMap = null,
+  onReturnToMapSelection 
+}) => {
   const { t } = useTranslation();
   
   const [selectedMap, setSelectedMap] = useState<GameMap | null>(initialMap);
@@ -374,6 +379,7 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({ initialMap = null }) =>
             <MapSelector 
               selectedMap={selectedMap} 
               onSelectMap={setSelectedMap} 
+              onReturnToMapSelection={onReturnToMapSelection}
             />
           </div>
           <div className="glass-panel p-4">

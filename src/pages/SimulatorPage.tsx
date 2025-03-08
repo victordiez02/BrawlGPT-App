@@ -23,6 +23,11 @@ const SimulatorPage: React.FC = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  // Function to return to map selection
+  const returnToMapSelection = () => {
+    setSelectedMap(null);
+  };
+
   return (
     <div className="min-h-screen pb-12 bg-cybernetic text-white">
       <Header />
@@ -38,7 +43,7 @@ const SimulatorPage: React.FC = () => {
         )}
         
         {selectedMap ? (
-          <DraftSimulator initialMap={selectedMap} />
+          <DraftSimulator initialMap={selectedMap} onReturnToMapSelection={returnToMapSelection} />
         ) : (
           <MapSelectionPage onSelectMap={setSelectedMap} />
         )}
