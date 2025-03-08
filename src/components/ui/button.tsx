@@ -19,7 +19,7 @@ const buttonVariants = cva(
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
-        ai: "bg-gradient-to-r from-brawl-yellow to-brawl-green text-black font-semibold shadow-lg hover:shadow-brawl-yellow/50 border border-brawl-yellow/30 backdrop-blur-sm transition-all duration-300 overflow-hidden neural-btn",
+        ai: "bg-gradient-to-r from-brawl-yellow to-brawl-green text-black font-semibold shadow-lg hover:shadow-brawl-yellow/50 border border-brawl-yellow/30 backdrop-blur-sm transition-all duration-300 overflow-hidden",
       },
       size: {
         default: "h-10 px-4 py-2",

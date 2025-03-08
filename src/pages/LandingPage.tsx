@@ -41,7 +41,7 @@ const LandingPage: React.FC = () => {
                 {t('landing_subtitle_2')}
               </p>
               
-              {/* Botón principal con aspecto de IA y ramas neuronales */}
+              {/* Modificado: Botón principal con aspecto de IA */}
               <div className="space-y-8">
                 <Link to="/simulator" className="inline-block relative">
                   <Button 
@@ -50,43 +50,6 @@ const LandingPage: React.FC = () => {
                     className="group relative px-12 py-8 text-xl font-medium font-brawl rounded-xl transition-all hover:scale-105 mx-auto animate-pulse-soft"
                   >
                     <div className="absolute inset-0 bg-gradient-to-r from-brawl-yellow/30 to-brawl-green/30 rounded-xl animate-pulse opacity-50"></div>
-                    
-                    {/* Neural network branches - top left */}
-                    <div className="absolute -top-1 -left-1 w-16 h-16 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                      <div className="absolute top-5 left-5 w-1 h-10 bg-brawl-yellow transform rotate-45 origin-top-left scale-0 group-hover:scale-100 transition-transform duration-500 delay-100 rounded-full"></div>
-                      <div className="absolute top-5 left-5 w-1 h-6 bg-brawl-green transform rotate-[70deg] origin-top-left scale-0 group-hover:scale-100 transition-transform duration-500 delay-150 rounded-full"></div>
-                      <div className="absolute top-5 left-10 w-1 h-8 bg-brawl-yellow transform -rotate-[20deg] origin-top-left scale-0 group-hover:scale-100 transition-transform duration-500 delay-200 rounded-full"></div>
-                      <div className="absolute top-2 left-2 w-2 h-2 bg-brawl-green rounded-full scale-0 group-hover:scale-100 transition-transform duration-500 delay-100"></div>
-                      <div className="absolute top-8 left-12 w-1.5 h-1.5 bg-brawl-yellow rounded-full scale-0 group-hover:scale-100 transition-transform duration-500 delay-300"></div>
-                    </div>
-                    
-                    {/* Neural network branches - top right */}
-                    <div className="absolute -top-1 -right-1 w-16 h-16 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                      <div className="absolute top-5 right-5 w-1 h-10 bg-brawl-yellow transform -rotate-45 origin-top-right scale-0 group-hover:scale-100 transition-transform duration-500 delay-100 rounded-full"></div>
-                      <div className="absolute top-5 right-5 w-1 h-6 bg-brawl-green transform -rotate-[70deg] origin-top-right scale-0 group-hover:scale-100 transition-transform duration-500 delay-150 rounded-full"></div>
-                      <div className="absolute top-5 right-10 w-1 h-8 bg-brawl-yellow transform rotate-[20deg] origin-top-right scale-0 group-hover:scale-100 transition-transform duration-500 delay-200 rounded-full"></div>
-                      <div className="absolute top-2 right-2 w-2 h-2 bg-brawl-green rounded-full scale-0 group-hover:scale-100 transition-transform duration-500 delay-100"></div>
-                      <div className="absolute top-8 right-12 w-1.5 h-1.5 bg-brawl-yellow rounded-full scale-0 group-hover:scale-100 transition-transform duration-500 delay-300"></div>
-                    </div>
-                    
-                    {/* Neural network branches - bottom left */}
-                    <div className="absolute -bottom-1 -left-1 w-16 h-16 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                      <div className="absolute bottom-5 left-5 w-1 h-10 bg-brawl-yellow transform -rotate-45 origin-bottom-left scale-0 group-hover:scale-100 transition-transform duration-500 delay-100 rounded-full"></div>
-                      <div className="absolute bottom-5 left-5 w-1 h-6 bg-brawl-green transform -rotate-[70deg] origin-bottom-left scale-0 group-hover:scale-100 transition-transform duration-500 delay-150 rounded-full"></div>
-                      <div className="absolute bottom-5 left-10 w-1 h-8 bg-brawl-yellow transform rotate-[20deg] origin-bottom-left scale-0 group-hover:scale-100 transition-transform duration-500 delay-200 rounded-full"></div>
-                      <div className="absolute bottom-2 left-2 w-2 h-2 bg-brawl-green rounded-full scale-0 group-hover:scale-100 transition-transform duration-500 delay-100"></div>
-                      <div className="absolute bottom-8 left-12 w-1.5 h-1.5 bg-brawl-yellow rounded-full scale-0 group-hover:scale-100 transition-transform duration-500 delay-300"></div>
-                    </div>
-                    
-                    {/* Neural network branches - bottom right */}
-                    <div className="absolute -bottom-1 -right-1 w-16 h-16 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                      <div className="absolute bottom-5 right-5 w-1 h-10 bg-brawl-yellow transform rotate-45 origin-bottom-right scale-0 group-hover:scale-100 transition-transform duration-500 delay-100 rounded-full"></div>
-                      <div className="absolute bottom-5 right-5 w-1 h-6 bg-brawl-green transform rotate-[70deg] origin-bottom-right scale-0 group-hover:scale-100 transition-transform duration-500 delay-150 rounded-full"></div>
-                      <div className="absolute bottom-5 right-10 w-1 h-8 bg-brawl-yellow transform -rotate-[20deg] origin-bottom-right scale-0 group-hover:scale-100 transition-transform duration-500 delay-200 rounded-full"></div>
-                      <div className="absolute bottom-2 right-2 w-2 h-2 bg-brawl-green rounded-full scale-0 group-hover:scale-100 transition-transform duration-500 delay-100"></div>
-                      <div className="absolute bottom-8 right-12 w-1.5 h-1.5 bg-brawl-yellow rounded-full scale-0 group-hover:scale-100 transition-transform duration-500 delay-300"></div>
-                    </div>
-                    
                     <div className="flex items-center relative z-10">
                       <Cpu size={24} className="mr-2 animate-spin-slow" />
                       <SparkleIcon size={16} className="absolute -top-2 -left-1 text-yellow-300 animate-pulse" />
