@@ -24,17 +24,17 @@ const Header = () => {
             />
           </div>
           
-          <h1 className="text-4xl md:text-5xl font-bold mb-2 bg-gradient-to-r from-brawl-blue via-brawl-purple to-brawl-red bg-clip-text text-transparent font-brawl text-glow">
+          <h1 className="text-4xl md:text-5xl font-bold mb-2 bg-gradient-to-r from-brawl-yellow to-brawl-green bg-clip-text text-transparent font-brawl text-glow relative z-10">
             BrawlGPT
           </h1>
           
-          <div className="h-1 w-40 bg-gradient-to-r from-brawl-blue to-brawl-red rounded-full mx-auto mb-3"></div>
+          <div className="h-1 w-40 bg-gradient-to-r from-brawl-yellow to-brawl-green rounded-full mx-auto mb-3 relative z-10"></div>
           
-          <p className="text-lg md:text-xl text-white/80 font-brawl mb-2">
+          <p className="text-lg md:text-xl text-white/80 font-brawl mb-2 relative z-10">
             {t('current_draft')}
           </p>
           
-          <p className="text-md text-white/60 max-w-2xl mx-auto font-brawl">
+          <p className="text-md text-white/60 max-w-2xl mx-auto font-brawl relative z-10">
             {t('landing_subtitle_2')}
           </p>
         </div>

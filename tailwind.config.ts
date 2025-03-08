@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -56,21 +55,11 @@ export default {
 				brawl: {
 					blue: '#0EA5E9',
 					red: '#F43F5E',
-					yellow: '#F59E0B',
+					yellow: '#FEBE20',
 					purple: '#8B5CF6',
-					green: '#10B981',
+					green: '#10A37F',
 					dark: '#1E293B',
 					light: '#F8FAFC'
-				},
-				sidebar: {
-					DEFAULT: 'hsl(var(--sidebar-background))',
-					foreground: 'hsl(var(--sidebar-foreground))',
-					primary: 'hsl(var(--sidebar-primary))',
-					'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
-					accent: 'hsl(var(--sidebar-accent))',
-					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
-					border: 'hsl(var(--sidebar-border))',
-					ring: 'hsl(var(--sidebar-ring))'
 				}
 			},
 			borderRadius: {

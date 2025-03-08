@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Zap, Map, Ban, Target } from 'lucide-react';
@@ -17,7 +16,7 @@ const LandingPage: React.FC = () => {
         <div className="w-full max-w-6xl">
           <div className="mb-16 text-center relative">
             {/* Logo Background */}
-            <div className="absolute inset-0 flex justify-center items-center opacity-30 transform scale-150 pointer-events-none">
+            <div className="absolute inset-0 flex justify-center items-center opacity-30 transform scale-150 pointer-events-none z-0">
               <img 
                 src="/lovable-uploads/73ba99c9-265c-40aa-92f7-016afd79fabb.png" 
                 alt="Brawl Stars Logo Background" 
@@ -26,15 +25,15 @@ const LandingPage: React.FC = () => {
             </div>
             
             {/* Title with BrawlGPT */}
-            <h1 className="text-5xl md:text-7xl font-bold font-brawl text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-red-500 text-glow animate-fade-in mb-3">
+            <h1 className="text-5xl md:text-7xl font-bold font-brawl text-transparent bg-clip-text bg-gradient-to-r from-brawl-yellow to-brawl-green text-glow animate-fade-in mb-3 relative z-10">
               BrawlGPT
             </h1>
             
-            <h2 className="text-4xl md:text-5xl font-bold font-brawl text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-red-500 text-glow animate-fade-in">
+            <h2 className="text-4xl md:text-5xl font-bold font-brawl text-transparent bg-clip-text bg-gradient-to-r from-brawl-yellow to-brawl-green text-glow animate-fade-in relative z-10">
               {t('landing_title')}
             </h2>
             
-            <div className="h-1 w-48 mx-auto bg-gradient-to-r from-brawl-blue via-brawl-purple to-brawl-red rounded-full mb-8"></div>
+            <div className="h-1 w-48 mx-auto bg-gradient-to-r from-brawl-yellow to-brawl-green rounded-full mb-8 relative z-10"></div>
             
             <div className="max-w-3xl mx-auto">
               <p className="text-xl md:text-2xl opacity-90 mb-4 animate-fade-in delay-200 font-brawl">
