@@ -3,7 +3,7 @@ import React, { useMemo, useState, useCallback } from 'react';
 import { Brawler } from '@/lib/brawlers';
 import BrawlerCard from './BrawlerCard';
 import BrawlerSearch from './BrawlerSearch';
-import { ArrowDownAZ, ArrowUpAZ, Filter, LayoutGrid, ChevronDown, ChevronUp } from 'lucide-react';
+import { ArrowDownAZ, ArrowUpAZ, Filter, LayoutGrid } from 'lucide-react';
 import { toast } from 'sonner';
 import { useTranslation } from 'react-i18next';
 
@@ -30,16 +30,6 @@ const BrawlerGrid: React.FC<BrawlerGridProps> = ({
   const [searchTerm, setSearchTerm] = useState('');
   const [sortOrder, setSortOrder] = useState<'rarity' | 'nameAsc' | 'nameDesc'>('rarity');
   const [showSortDropdown, setShowSortDropdown] = useState(false);
-  const [expandedRarities, setExpandedRarities] = useState<string[]>([]);
-
-  // Toggle rarity section expansion
-  const toggleRarityExpansion = (rarity: string) => {
-    setExpandedRarities(prev => 
-      prev.includes(rarity)
-        ? prev.filter(r => r !== rarity)
-        : [...prev, rarity]
-    );
-  };
 
   // Find which team (if any) the brawler is on
   const getBrawlerTeam = (brawlerId: number) => {
@@ -191,15 +181,6 @@ const BrawlerGrid: React.FC<BrawlerGridProps> = ({
     }));
   }, [brawlers, searchTerm, sortOrder, filteredAndSortedBrawlers]);
 
-  // Count selected and banned brawlers in each rarity
-  const getRarityCounts = (rarity: string, brawlers: Brawler[]) => {
-    const totalCount = brawlers.length;
-    const selectedCount = brawlers.filter(b => selectedBrawlers.includes(b.id)).length;
-    const bannedCount = brawlers.filter(b => bannedBrawlers.includes(b.id)).length;
-    
-    return { totalCount, selectedCount, bannedCount };
-  };
-
   return (
     <div className="glass-panel p-4 animate-fade-in">
       <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
@@ -255,68 +236,37 @@ const BrawlerGrid: React.FC<BrawlerGridProps> = ({
       
       <BrawlerSearch onSearch={setSearchTerm} />
       
-      <div className="space-y-2 max-h-[60vh] overflow-y-auto pr-2">
-        {brawlersByRarity.map(({ rarity, brawlers }) => {
-          const isExpanded = expandedRarities.includes(rarity);
-          const counts = getRarityCounts(rarity, brawlers);
-          
-          return (
-            <div key={rarity} className="transition-all duration-300 border border-slate-600 rounded-lg">
-              {sortOrder === 'rarity' && (
-                <div 
-                  className={`p-3 rounded-lg ${getRarityBackground(rarity)} cursor-pointer`}
-                  onClick={() => toggleRarityExpansion(rarity)}
-                >
-                  <div className="flex items-center justify-between">
-                    <h4 className="text-base font-semibold text-gray-800 dark:text-gray-200 font-brawl flex items-center">
-                      {getTranslatedRarity(rarity)}
-                      <span className="ml-2 text-sm font-normal">({brawlers.length})</span>
-                    </h4>
-                    <div className="flex items-center space-x-4">
-                      <div className="flex items-center space-x-1 text-xs">
-                        {counts.selectedCount > 0 && (
-                          <span className="px-2 py-1 rounded-full bg-blue-500/20 text-xs">
-                            {counts.selectedCount} {t('selected')}
-                          </span>
-                        )}
-                        {counts.bannedCount > 0 && (
-                          <span className="px-2 py-1 rounded-full bg-red-500/20 text-xs">
-                            {counts.bannedCount} {t('banned')}
-                          </span>
-                        )}
-                      </div>
-                      {isExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
-                    </div>
+      <div className="space-y-4">
+        {brawlersByRarity.map(({ rarity, brawlers }) => (
+          <div key={rarity} className="transition-all duration-300">
+            {sortOrder === 'rarity' && (
+              <div className={`p-2 rounded-lg mb-2 ${getRarityBackground(rarity)}`}>
+                <h4 className="text-sm font-semibold text-gray-800 dark:text-gray-200 font-brawl">
+                  {getTranslatedRarity(rarity)}
+                </h4>
+              </div>
+            )}
+            <div className="grid grid-cols-5 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 xl:grid-cols-12 gap-2 transition-all duration-300">
+              {brawlers.map(brawler => {
+                const isSelected = selectedBrawlers.includes(brawler.id);
+                const isBanned = bannedBrawlers.includes(brawler.id);
+                const team = getBrawlerTeam(brawler.id);
+                return (
+                  <div key={brawler.id} onContextMenu={e => handleBrawlerContextMenu(e, brawler)}>
+                    <BrawlerCard 
+                      brawler={brawler} 
+                      disabled={isSelected} 
+                      banned={isBanned} 
+                      team={team} 
+                      onClick={() => handleBrawlerClick(brawler)} 
+                      size="sm" 
+                    />
                   </div>
-                </div>
-              )}
-              
-              {(isExpanded || sortOrder !== 'rarity' || rarity === 'All') && (
-                <div className="p-2 animate-accordion-down">
-                  <div className="grid grid-cols-5 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 xl:grid-cols-12 gap-2 transition-all duration-300">
-                    {brawlers.map(brawler => {
-                      const isSelected = selectedBrawlers.includes(brawler.id);
-                      const isBanned = bannedBrawlers.includes(brawler.id);
-                      const team = getBrawlerTeam(brawler.id);
-                      return (
-                        <div key={brawler.id} onContextMenu={e => handleBrawlerContextMenu(e, brawler)}>
-                          <BrawlerCard 
-                            brawler={brawler} 
-                            disabled={isSelected} 
-                            banned={isBanned} 
-                            team={team} 
-                            onClick={() => handleBrawlerClick(brawler)} 
-                            size="sm" 
-                          />
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              )}
+                );
+              })}
             </div>
-          );
-        })}
+          </div>
+        ))}
         
         {filteredAndSortedBrawlers.length === 0 && (
           <div className="text-center py-8 text-gray-500 font-brawl">
