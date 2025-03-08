@@ -1,11 +1,9 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Zap, Map, Ban, Target, Cpu, SparkleIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import LanguageSelector from '@/components/LanguageSelector';
 import { Button } from '@/components/ui/button';
-
 const LandingPage: React.FC = () => {
   const {
     t
@@ -24,11 +22,7 @@ const LandingPage: React.FC = () => {
             
             {/* Logo image instead of text title */}
             <div className="flex justify-center mb-3 relative z-10 animate-fade-in">
-              <img 
-                src="/lovable-uploads/dcf0aba8-0227-4216-a7c2-faba072fd4ad.png" 
-                alt="BrawlGPT Logo" 
-                className="w-auto h-28 md:h-36"
-              />
+              <img src="/lovable-uploads/dcf0aba8-0227-4216-a7c2-faba072fd4ad.png" alt="BrawlGPT Logo" className="w-auto h-60 md:h-36" />
             </div>
             
             <h2 className="text-4xl font-bold font-brawl mb-3 relative z-10 animate-fade-in md:text-3xl bg-gradient-to-r from-brawl-blue to-brawl-red bg-clip-text text-transparent">
@@ -156,5 +150,4 @@ const LandingPage: React.FC = () => {
       </footer>
     </div>;
 };
-
 export default LandingPage;
