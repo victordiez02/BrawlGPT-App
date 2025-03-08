@@ -24,7 +24,7 @@ const LandingPage: React.FC = () => {
               BrawlGPT
             </h1>
             
-            <h2 className="text-4xl md:text-5xl font-bold font-brawl text-transparent bg-clip-text bg-gradient-to-r from-brawl-blue to-brawl-purple text-glow animate-fade-in relative z-10">
+            <h2 className="text-4xl md:text-5xl font-bold font-brawl text-transparent bg-clip-text bg-gradient-to-r from-brawl-blue to-brawl- red text-glow animate-fade-in relative z-10">
               {t('landing_title')}
             </h2>
             
