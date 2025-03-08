@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import { Search } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 interface BrawlerSearchProps {
   onSearch: (term: string) => void;
@@ -8,6 +9,7 @@ interface BrawlerSearchProps {
 
 const BrawlerSearch: React.FC<BrawlerSearchProps> = ({ onSearch }) => {
   const [searchTerm, setSearchTerm] = useState('');
+  const { t } = useTranslation();
   
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -22,8 +24,8 @@ const BrawlerSearch: React.FC<BrawlerSearchProps> = ({ onSearch }) => {
       </div>
       <input
         type="text"
-        className="pl-10 pr-4 py-2 w-full rounded-lg border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-brawl-blue"
-        placeholder="Buscar brawlers..."
+        className="pl-10 pr-4 py-2 w-full rounded-lg border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-brawl-blue text-gray-800 dark:text-white"
+        placeholder={t('search_brawlers')}
         value={searchTerm}
         onChange={handleSearch}
       />

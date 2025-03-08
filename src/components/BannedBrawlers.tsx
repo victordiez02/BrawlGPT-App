@@ -58,7 +58,7 @@ const BannedBrawlers: React.FC<BannedBrawlersProps> = ({
             onChange={(e) => setSearchTerm(e.target.value)}
             onFocus={() => setShowDropdown(true)}
             placeholder={t('search_to_ban')}
-            className="flex-1 p-2 rounded-l-lg border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-brawl-red text-sm w-full"
+            className="flex-1 p-2 rounded-l-lg border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-brawl-red text-sm w-full text-gray-800 dark:text-white"
           />
           <button
             onClick={() => setShowDropdown(!showDropdown)}
@@ -69,8 +69,8 @@ const BannedBrawlers: React.FC<BannedBrawlersProps> = ({
           </button>
         </div>
         
-        {showDropdown && (
-          <div className="absolute z-10 mt-1 w-full max-h-60 overflow-auto bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700">
+        {showDropdown && searchTerm.length > 0 && (
+          <div className="absolute z-50 mt-1 w-full max-h-60 overflow-auto bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700">
             {filteredBrawlers.length > 0 ? (
               filteredBrawlers.slice(0, 8).map(brawler => (
                 <div
@@ -91,7 +91,7 @@ const BannedBrawlers: React.FC<BannedBrawlersProps> = ({
                     alt={brawler.name}
                     className="w-8 h-8 rounded-md"
                   />
-                  <span>{brawler.name}</span>
+                  <span className="text-gray-800 dark:text-white">{brawler.name}</span>
                 </div>
               ))
             ) : (
