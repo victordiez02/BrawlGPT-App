@@ -1,8 +1,11 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Zap, Map, Ban, Target } from 'lucide-react';
+import { ArrowRight, Zap, Map, Ban, Target, Cpu, SparkleIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import LanguageSelector from '@/components/LanguageSelector';
+import { Button } from '@/components/ui/button';
+
 const LandingPage: React.FC = () => {
   const {
     t
@@ -38,12 +41,22 @@ const LandingPage: React.FC = () => {
                 {t('landing_subtitle_2')}
               </p>
               
-              {/* Moved Generate Optimal Pick Button */}
+              {/* Modificado: Botón principal con aspecto de IA */}
               <div className="space-y-8">
-                <Link to="/simulator" className="btn-primary group flex items-center px-12 py-4 text-xl font-medium rounded-xl transition-all transform hover:scale-105 hover:shadow-lg hover:shadow-blue-500/20 animate-float mx-auto max-w-fit">
-                  <Zap size={24} className="mr-2" />
-                  {t('cta_button')}
-                  <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+                <Link to="/simulator" className="inline-block relative">
+                  <Button 
+                    variant="ai" 
+                    size="lg" 
+                    className="group relative px-12 py-8 text-xl font-medium font-brawl rounded-xl transition-all hover:scale-105 mx-auto animate-pulse-soft"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-brawl-yellow/30 to-brawl-green/30 rounded-xl animate-pulse opacity-50"></div>
+                    <div className="flex items-center relative z-10">
+                      <Cpu size={24} className="mr-2 animate-spin-slow" />
+                      <SparkleIcon size={16} className="absolute -top-2 -left-1 text-yellow-300 animate-pulse" />
+                      {t('cta_button')}
+                      <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+                    </div>
+                  </Button>
                 </Link>
               </div>
             </div>
