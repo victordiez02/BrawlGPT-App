@@ -26,6 +26,8 @@ const enTranslations = {
   'banned_brawlers': 'Banned Brawlers',
   'search_to_ban': 'Search to ban...',
   'no_banned_brawlers': 'No banned brawlers',
+  'selected': 'Selected',
+  'banned': 'Banned',
   
   // Simulator page
   'select_brawlers': 'Select Brawlers',
@@ -122,6 +124,8 @@ const esTranslations = {
   'banned_brawlers': 'Brawlers Baneados',
   'search_to_ban': 'Buscar para banear...',
   'no_banned_brawlers': 'No hay brawlers baneados',
+  'selected': 'Seleccionados',
+  'banned': 'Baneados',
   
   // Simulator page
   'select_brawlers': 'Seleccionar Brawlers',
