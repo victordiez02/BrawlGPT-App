@@ -3,12 +3,11 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Zap, Map, Ban, Target } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import LanguageSelector from '@/components/LanguageSelector';
-
 const LandingPage: React.FC = () => {
-  const { t } = useTranslation();
-  
-  return (
-    <div className="min-h-screen flex flex-col relative bg-cybernetic text-white">
+  const {
+    t
+  } = useTranslation();
+  return <div className="min-h-screen flex flex-col relative bg-cybernetic text-white">
       <LanguageSelector />
       
       {/* Hero Section */}
@@ -17,11 +16,7 @@ const LandingPage: React.FC = () => {
           <div className="mb-16 text-center relative">
             {/* Logo Background */}
             <div className="absolute inset-0 flex justify-center items-center opacity-30 transform scale-150 pointer-events-none z-0">
-              <img 
-                src="/lovable-uploads/73ba99c9-265c-40aa-92f7-016afd79fabb.png" 
-                alt="Brawl Stars Logo Background" 
-                className="w-96 h-96"
-              />
+              <img src="/lovable-uploads/73ba99c9-265c-40aa-92f7-016afd79fabb.png" alt="Brawl Stars Logo Background" className="w-96 h-96" />
             </div>
             
             {/* Title with BrawlGPT */}
@@ -29,7 +24,7 @@ const LandingPage: React.FC = () => {
               BrawlGPT
             </h1>
             
-            <h2 className="text-4xl md:text-5xl font-bold font-brawl text-transparent bg-clip-text bg-gradient-to-r from-brawl-yellow to-brawl-green text-glow animate-fade-in relative z-10">
+            <h2 className="text-4xl md:text-5xl font-bold font-brawl text-transparent bg-clip-text bg-gradient-to-r from-brawl-blue to-brawl-purple text-glow animate-fade-in relative z-10">
               {t('landing_title')}
             </h2>
             
@@ -45,10 +40,7 @@ const LandingPage: React.FC = () => {
               
               {/* Moved Generate Optimal Pick Button */}
               <div className="space-y-8">
-                <Link 
-                  to="/simulator" 
-                  className="btn-primary group flex items-center px-12 py-4 text-xl font-medium rounded-xl transition-all transform hover:scale-105 hover:shadow-lg hover:shadow-blue-500/20 animate-float mx-auto max-w-fit"
-                >
+                <Link to="/simulator" className="btn-primary group flex items-center px-12 py-4 text-xl font-medium rounded-xl transition-all transform hover:scale-105 hover:shadow-lg hover:shadow-blue-500/20 animate-float mx-auto max-w-fit">
                   <Zap size={24} className="mr-2" />
                   {t('cta_button')}
                   <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
@@ -93,19 +85,12 @@ const LandingPage: React.FC = () => {
           {/* Draft Visualization */}
           <div className="glass-panel bg-white/5 backdrop-blur-lg p-8 rounded-2xl border border-white/10 shadow-xl mb-12">
             <div className="grid grid-cols-6 gap-3 mb-6">
-              {[...Array(6)].map((_, i) => (
-                <div 
-                  key={i} 
-                  className={`aspect-square rounded-xl ${i < 3 ? 'bg-blue-500/30 border-[6px] border-blue-500/50' : 'bg-red-500/30 border-[6px] border-red-500/50'} 
-                  ${[0, 3].includes(i) ? 'animate-pulse-soft' : ''}`}
-                >
-                  {[0, 3].includes(i) && (
-                    <div className="w-full h-full flex items-center justify-center">
+              {[...Array(6)].map((_, i) => <div key={i} className={`aspect-square rounded-xl ${i < 3 ? 'bg-blue-500/30 border-[6px] border-blue-500/50' : 'bg-red-500/30 border-[6px] border-red-500/50'} 
+                  ${[0, 3].includes(i) ? 'animate-pulse-soft' : ''}`}>
+                  {[0, 3].includes(i) && <div className="w-full h-full flex items-center justify-center">
                       <Zap size={24} className={i === 0 ? 'text-blue-400' : 'text-red-400'} />
-                    </div>
-                  )}
-                </div>
-              ))}
+                    </div>}
+                </div>)}
             </div>
             <p className="text-center opacity-80 font-brawl">{t('draft_visualization_text')}</p>
           </div>
@@ -123,8 +108,6 @@ const LandingPage: React.FC = () => {
       <footer className="relative z-10 py-6 text-center text-sm opacity-70 font-brawl">
         &copy; 2025 BrawlGPT - {t('footer_text')}
       </footer>
-    </div>
-  );
+    </div>;
 };
-
 export default LandingPage;
