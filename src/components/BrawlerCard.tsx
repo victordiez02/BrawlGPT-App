@@ -39,9 +39,9 @@ const BrawlerCard: React.FC<BrawlerCardProps> = ({
       : 'ring-4 ring-brawl-red shadow-md shadow-red-500/30'
     : '';
     
-  // Add dragging animation classes
+  // Add dragging animation classes - increase the scale reduction to 30%
   const draggingClass = isDragging 
-    ? 'scale-90 rotate-3 animate-sway shadow-2xl z-50' 
+    ? 'scale-70 rotate-3 animate-sway shadow-2xl z-50' 
     : '';
 
   // Imagen de respaldo en caso de que falle la principal

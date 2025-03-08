@@ -82,9 +82,9 @@ const TrashCan: React.FC<TrashCanProps> = ({ onResetDraft, onRemoveBrawler }) =>
           onError={handleImageError}
         />
       </div>
-      {isActive && (
+      {isOver && (
         <span className="text-xs font-brawl text-red-400 animate-pulse-soft mt-1">
-          {isOver ? t('delete') : t('drop_here')}
+          {t('delete')}
         </span>
       )}
     </div>
