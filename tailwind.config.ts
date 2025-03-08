@@ -60,9 +60,7 @@ export default {
 					purple: '#8B5CF6',
 					green: '#10B981',
 					dark: '#1E293B',
-					light: '#F8FAFC',
-					'custom-yellow': '#FEBE20', // Added custom yellow
-					'custom-green': '#10A37F', // Added custom green
+					light: '#F8FAFC'
 				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
