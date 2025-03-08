@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { GameMap, gameMaps, getGameModeByName } from '@/lib/maps';
 import { Search } from 'lucide-react';
@@ -21,7 +20,8 @@ const MapSelectionPage: React.FC<MapSelectionPageProps> = ({ onSelectMap }) => {
     .filter(map => filterMode ? map.mode === filterMode : true)
     .filter(map => 
       map.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      map.mode.toLowerCase().includes(searchTerm.toLowerCase())
+      map.mode.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (map.translatedName && map.translatedName.toLowerCase().includes(searchTerm.toLowerCase()))
     );
 
   const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>, mapName: string) => {
@@ -53,19 +53,7 @@ const MapSelectionPage: React.FC<MapSelectionPageProps> = ({ onSelectMap }) => {
   const getTranslatedMode = (mode: string) => {
     if (i18n.language !== 'es') return mode;
     
-    const modeMap: Record<string, string> = {
-      'Gem Grab': 'Atrapagemas',
-      'Brawl Ball': 'Balón Brawl',
-      'Heist': 'Atraco',
-      'Hot Zone': 'Zona Restringida',
-      'Bounty': 'Caza Estelar',
-      'Knockout': 'Noqueo',
-      'Brawl Hockey': 'Hockey Brawl',
-      'Showdown': 'Supervivencia',
-      'Siege': 'Asedio'
-    };
-    
-    return modeMap[mode] || mode;
+    return t(mode.toLowerCase().replace(' ', '_')) || mode;
   };
 
   // Get current mode banner if a filter is active

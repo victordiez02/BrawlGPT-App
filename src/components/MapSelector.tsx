@@ -1,6 +1,5 @@
-
-import React, { useState } from 'react';
-import { GameMap, gameMaps, getGameModeByName } from '@/lib/maps';
+import React from 'react';
+import { GameMap, getGameModeByName } from '@/lib/maps';
 import { Map, ArrowLeft } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
@@ -46,19 +45,7 @@ const MapSelector: React.FC<MapSelectorProps> = ({
   const getTranslatedMode = (mode: string) => {
     if (i18n.language !== 'es') return mode;
     
-    const modeMap: Record<string, string> = {
-      'Gem Grab': 'Atrapagemas',
-      'Brawl Ball': 'Balón Brawl',
-      'Heist': 'Atraco',
-      'Hot Zone': 'Zona Restringida',
-      'Bounty': 'Caza Estelar',
-      'Knockout': 'Noqueo',
-      'Brawl Hockey': 'Hockey Brawl',
-      'Showdown': 'Supervivencia',
-      'Siege': 'Asedio'
-    };
-    
-    return modeMap[mode] || mode;
+    return t(mode.toLowerCase().replace(' ', '_')) || mode;
   };
 
   return (
