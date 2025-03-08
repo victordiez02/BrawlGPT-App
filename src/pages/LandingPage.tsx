@@ -50,7 +50,7 @@ const LandingPage: React.FC = () => {
                     className="group relative px-8 py-6 text-xl font-brawl transition-all duration-300 rounded-xl"
                   >
                     <div className="flex items-center relative z-10">
-                      <Cpu size={24} className="mr-2" />
+                      <Cpu size={24} className="mr-2 spin-icon" />
                       {t('cta_button')}
                       <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
                     </div>
