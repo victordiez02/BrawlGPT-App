@@ -5,6 +5,7 @@ import BrawlerSearch from './BrawlerSearch';
 import { ArrowDownAZ, ArrowUpAZ, Filter, LayoutGrid } from 'lucide-react';
 import { toast } from 'sonner';
 import { useTranslation } from 'react-i18next';
+
 interface BrawlerGridProps {
   brawlers: Brawler[];
   selectedBrawlers: (number | null)[];
@@ -14,6 +15,7 @@ interface BrawlerGridProps {
   onUnbanBrawler: (brawlerId: number) => void;
   onRemoveBrawlerFromDraft: (brawlerId: number) => void;
 }
+
 const BrawlerGrid: React.FC<BrawlerGridProps> = ({
   brawlers,
   selectedBrawlers,
@@ -26,11 +28,11 @@ const BrawlerGrid: React.FC<BrawlerGridProps> = ({
   const {
     t
   } = useTranslation();
+
   const [searchTerm, setSearchTerm] = useState('');
   const [sortOrder, setSortOrder] = useState<'rarity' | 'nameAsc' | 'nameDesc'>('rarity');
   const [showSortDropdown, setShowSortDropdown] = useState(false);
 
-  // Find which team (if any) the brawler is on
   const getBrawlerTeam = (brawlerId: number) => {
     const blueTeamIds = selectedBrawlers.slice(0, 3);
     const redTeamIds = selectedBrawlers.slice(3, 6);
@@ -39,7 +41,6 @@ const BrawlerGrid: React.FC<BrawlerGridProps> = ({
     return null;
   };
 
-  // Get background color for rarity
   const getRarityBackground = (rarity: string) => {
     switch (rarity) {
       case 'Common':
@@ -59,28 +60,23 @@ const BrawlerGrid: React.FC<BrawlerGridProps> = ({
     }
   };
 
-  // Handle brawler context menu (right-click)
   const handleBrawlerContextMenu = useCallback((e: React.MouseEvent, brawler: Brawler) => {
     e.preventDefault();
 
-    // If already banned, unban it
     if (bannedBrawlers.includes(brawler.id)) {
       onUnbanBrawler(brawler.id);
       return;
     }
 
-    // If brawler is in draft, remove from draft and ban it
     if (selectedBrawlers.includes(brawler.id)) {
       onRemoveBrawlerFromDraft(brawler.id);
 
-      // Check if we can ban (max 6 bans)
       if (bannedBrawlers.length < 6) {
         onBanBrawler(brawler.id);
       }
       return;
     }
 
-    // Otherwise, just ban it if we haven't reached the limit
     if (bannedBrawlers.length >= 6) {
       toast.error(t('max_bans_error'));
       return;
@@ -88,32 +84,25 @@ const BrawlerGrid: React.FC<BrawlerGridProps> = ({
     onBanBrawler(brawler.id);
   }, [selectedBrawlers, bannedBrawlers, onBanBrawler, onUnbanBrawler, onRemoveBrawlerFromDraft, t]);
 
-  // Handle brawler click
   const handleBrawlerClick = useCallback((brawler: Brawler) => {
-    // If banned, unban it
     if (bannedBrawlers.includes(brawler.id)) {
       onUnbanBrawler(brawler.id);
       return;
     }
 
-    // If already selected, remove from draft
     if (selectedBrawlers.includes(brawler.id)) {
       onRemoveBrawlerFromDraft(brawler.id);
       return;
     }
 
-    // Otherwise, select the brawler
     onSelectBrawler(brawler);
   }, [bannedBrawlers, selectedBrawlers, onUnbanBrawler, onRemoveBrawlerFromDraft, onSelectBrawler]);
 
-  // Sort and filter brawlers
   const filteredAndSortedBrawlers = useMemo(() => {
     const rarityOrder = ['Common', 'Rare', 'Super Rare', 'Epic', 'Mythic', 'Legendary'];
 
-    // Filter by search term
     const filtered = brawlers.filter(brawler => brawler.name.toLowerCase().includes(searchTerm.toLowerCase()));
 
-    // Sort based on selected order
     let sorted;
     switch (sortOrder) {
       case 'nameAsc':
@@ -124,7 +113,6 @@ const BrawlerGrid: React.FC<BrawlerGridProps> = ({
         break;
       case 'rarity':
       default:
-        // First group by rarity, then sort groups by rarity order
         const grouped = filtered.reduce((acc, brawler) => {
           if (!acc[brawler.rarity]) {
             acc[brawler.rarity] = [];
@@ -133,7 +121,6 @@ const BrawlerGrid: React.FC<BrawlerGridProps> = ({
           return acc;
         }, {} as Record<string, Brawler[]>);
 
-        // Sort by rarity order
         sorted = Object.entries(grouped).sort((a, b) => {
           return rarityOrder.indexOf(a[0]) - rarityOrder.indexOf(b[0]);
         }).flatMap(([_, brawlers]) => brawlers);
@@ -141,7 +128,6 @@ const BrawlerGrid: React.FC<BrawlerGridProps> = ({
     return sorted;
   }, [brawlers, searchTerm, sortOrder]);
 
-  // Group by rarity (only for rarity sort)
   const brawlersByRarity = useMemo(() => {
     if (sortOrder !== 'rarity') {
       return [{
@@ -159,7 +145,6 @@ const BrawlerGrid: React.FC<BrawlerGridProps> = ({
       return acc;
     }, {} as Record<string, Brawler[]>);
 
-    // Sort by rarity order
     return Object.entries(grouped).sort((a, b) => {
       return rarityOrder.indexOf(a[0]) - rarityOrder.indexOf(b[0]);
     }).map(([rarity, brawlers]) => ({
@@ -167,7 +152,9 @@ const BrawlerGrid: React.FC<BrawlerGridProps> = ({
       brawlers
     }));
   }, [brawlers, searchTerm, sortOrder, filteredAndSortedBrawlers]);
-  return <div className="glass-panel p-4 animate-fade-in">
+
+  return (
+    <div className="glass-panel p-4 brawler-grid">
       <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
         <h3 className="text-lg font-bold font-brawl">{t('select_brawlers')}</h3>
         
@@ -236,6 +223,8 @@ const BrawlerGrid: React.FC<BrawlerGridProps> = ({
             {t('no_brawlers_found')}
           </div>}
       </div>
-    </div>;
+    </div>
+  );
 };
+
 export default BrawlerGrid;
