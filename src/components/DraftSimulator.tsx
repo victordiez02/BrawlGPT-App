@@ -49,12 +49,16 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({
     return findTeamByIndex(currentPickIndex);
   }, [currentPickIndex]);
 
+  // Count the total number of selected brawlers
+  const selectedBrawlersCount = useMemo(() => {
+    return selectedBrawlers.filter(id => id !== null).length;
+  }, [selectedBrawlers]);
+
   const getCurrentDraftPhase = (): number => {
-    const filledPicks = selectedBrawlers.filter(id => id !== null).length;
-    if (filledPicks === 0) return 1; // First phase - no picks
-    if (filledPicks === 1) return 2; // Second phase - only first pick
-    if (filledPicks === 3) return 3; // Third phase - picks 1, 2, 3
-    if (filledPicks === 5) return 4; // Fourth phase - picks 1, 2, 3, 4, 5
+    if (selectedBrawlersCount === 0) return 1; // First phase - no picks
+    if (selectedBrawlersCount === 1) return 2; // Second phase - only first pick
+    if (selectedBrawlersCount === 3) return 3; // Third phase - picks 1, 2, 3
+    if (selectedBrawlersCount === 5) return 4; // Fourth phase - picks 1, 2, 3, 4, 5
     return 0; // Not a valid phase for recommendations
   };
 
@@ -94,7 +98,7 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({
       .map(item => item.index);
     
     const missingPicks = [];
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < 5; i++) { // Changed from 6 to 5
       const pickPosition = pickOrder[i];
       if (!filledPositions.includes(pickPosition)) {
         missingPicks.push(i + 1);
@@ -126,15 +130,17 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({
       }
       return t('select_fifth_pick_brawler');
     }
-    if (filledPositions.length === 6) {
-      return t('remove_sixth_pick');
+    if (filledPositions.length === 5) {
+      // This is the correct maximum number - don't show any error
+      return '';
     }
     
     return t('incorrect_pick_order', { missingPicks: missingPicks.join('º, ') });
   };
 
   const findNextPickSlot = () => {
-    for (let i = 0; i < pickOrder.length; i++) {
+    // Only consider the first 5 picks in the order
+    for (let i = 0; i < 5; i++) { // Changed from pickOrder.length to 5
       const slotIndex = pickOrder[i];
       if (selectedBrawlers[slotIndex] === null) {
         return slotIndex;
@@ -208,8 +214,15 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({
       return;
     }
     
+    // Check if we already have 5 brawlers selected
+    if (selectedBrawlersCount >= 5) {
+      toast.error(t('max_picks_error', { max: 5 }));
+      return;
+    }
+    
     let nextAvailableIndex = -1;
-    for (let i = 0; i < pickOrder.length; i++) {
+    // Only consider the first 5 picks in the order
+    for (let i = 0; i < 5; i++) { // Changed from pickOrder.length to 5
       if (selectedBrawlers[pickOrder[i]] === null) {
         nextAvailableIndex = pickOrder[i];
         break;
