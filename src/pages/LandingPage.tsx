@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Zap, Map, Ban, Target, Cpu, SparkleIcon } from 'lucide-react';
@@ -21,12 +22,12 @@ const LandingPage: React.FC = () => {
               <img src="/lovable-uploads/73ba99c9-265c-40aa-92f7-016afd79fabb.png" alt="Brawl Stars Logo Background" className="w-96 h-96" />
             </div>
             
-            {/* Title with BrawlGPT */}
-            <h1 className="text-5xl md:text-7xl font-bold font-brawl text-transparent bg-clip-text bg-gradient-to-r from-brawl-yellow to-brawl-green text-glow animate-fade-in mb-3 relative z-10">
+            {/* Title with BrawlGPT - CHANGED FROM NEON TO FLAT COLORS */}
+            <h1 className="text-5xl md:text-7xl font-bold font-brawl text-brawl-yellow mb-3 relative z-10 animate-fade-in">
               BrawlGPT
             </h1>
             
-            <h2 className="text-4xl md:text-5xl font-bold font-brawl text-transparent bg-clip-text bg-gradient-to-r from-brawl-blue to-brawl-red text-glow animate-fade-in relative z-10">
+            <h2 className="text-4xl md:text-5xl font-bold font-brawl text-brawl-blue mb-3 relative z-10 animate-fade-in">
               {t('landing_title')}
             </h2>
             
