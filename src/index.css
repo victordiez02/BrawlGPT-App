@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Bungee&display=swap');
 
 @tailwind base;
@@ -167,7 +168,7 @@
   
   /* Brawler name on draft */
   .brawler-name {
-    @apply text-center text-sm font-brawl text-white/90 absolute bottom-0 left-0 right-0 bg-black/40 py-1 truncate;
+    @apply text-center text-xs md:text-sm font-brawl text-white/90 absolute bottom-0 left-0 right-0 bg-black/40 py-1 truncate;
   }
   
   /* Neural button styles */
@@ -266,6 +267,29 @@
   .circuit-btn:hover .circuit-node,
   .circuit-btn:hover .circuit-line {
     opacity: 1;
+  }
+
+  /* Mobile responsiveness improvements */
+  @media (max-width: 768px) {
+    .language-selector {
+      scale: 0.8;
+      transform-origin: top right;
+      top: 2px;
+      right: 2px;
+    }
+
+    .brawler-name {
+      font-size: 0.65rem;
+    }
+
+    .glass-panel {
+      padding: 0.75rem;
+    }
+
+    .draft-slot-blue, .draft-slot-red {
+      border-width: 4px;
+      min-height: 80px;
+    }
   }
 }
 

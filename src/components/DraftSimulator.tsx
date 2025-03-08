@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useMemo } from 'react';
 import { brawlers, Brawler } from '@/lib/brawlers';
 import { GameMap } from '@/lib/maps';
@@ -10,11 +9,12 @@ import BrawlerGrid from './BrawlerGrid';
 import ResultModal from './ResultModal';
 import TrashCan from './TrashCan';
 import { ApiResponse, DraftData, submitDraft } from '@/lib/api';
-import { ArrowLeft, Info, Loader2, Zap } from 'lucide-react';
+import { ArrowLeft, Info, Loader2, Sparkle, Zap } from 'lucide-react';
 import { toast } from 'sonner';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useTranslation } from 'react-i18next';
+import { Button } from './ui/button';
 
 interface DraftSimulatorProps {
   initialMap?: GameMap | null;
@@ -49,7 +49,6 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({
     return findTeamByIndex(currentPickIndex);
   }, [currentPickIndex]);
 
-  // Count the total number of selected brawlers
   const selectedBrawlersCount = useMemo(() => {
     return selectedBrawlers.filter(id => id !== null).length;
   }, [selectedBrawlers]);
@@ -98,7 +97,7 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({
       .map(item => item.index);
     
     const missingPicks = [];
-    for (let i = 0; i < 5; i++) { // Changed from 6 to 5
+    for (let i = 0; i < 5; i++) {
       const pickPosition = pickOrder[i];
       if (!filledPositions.includes(pickPosition)) {
         missingPicks.push(i + 1);
@@ -131,7 +130,6 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({
       return t('select_fifth_pick_brawler');
     }
     if (filledPositions.length === 5) {
-      // This is the correct maximum number - don't show any error
       return '';
     }
     
@@ -139,8 +137,7 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({
   };
 
   const findNextPickSlot = () => {
-    // Only consider the first 5 picks in the order
-    for (let i = 0; i < 5; i++) { // Changed from pickOrder.length to 5
+    for (let i = 0; i < 5; i++) {
       const slotIndex = pickOrder[i];
       if (selectedBrawlers[slotIndex] === null) {
         return slotIndex;
@@ -214,15 +211,13 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({
       return;
     }
     
-    // Check if we already have 5 brawlers selected
     if (selectedBrawlersCount >= 5) {
-      toast.error(t('max_picks_error', { max: 5 }));
+      toast.error(t('max_picks_error'));
       return;
     }
     
     let nextAvailableIndex = -1;
-    // Only consider the first 5 picks in the order
-    for (let i = 0; i < 5; i++) { // Changed from pickOrder.length to 5
+    for (let i = 0; i < 5; i++) {
       if (selectedBrawlers[pickOrder[i]] === null) {
         nextAvailableIndex = pickOrder[i];
         break;
@@ -268,11 +263,9 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({
     const fromBrawlerId = newSelectedBrawlers[fromIndex];
     const toBrawlerId = newSelectedBrawlers[toIndex];
     
-    // Swap the brawler IDs
     newSelectedBrawlers[fromIndex] = toBrawlerId;
     newSelectedBrawlers[toIndex] = fromBrawlerId;
     
-    // Update state with the new brawler arrangement
     setSelectedBrawlers(newSelectedBrawlers);
     
     const fromBrawler = brawlers.find(b => b.id === fromBrawlerId);
@@ -450,14 +443,12 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({
               <div className="bg-gradient-to-r from-brawl-blue via-brawl-purple to-brawl-red h-1"></div>
               
               <div className="p-4 bg-gray-800/30">
-                <button
+                <Button 
                   onClick={handleGenerateRecommendation}
                   disabled={!generateButtonConfig.enabled || isGenerating}
-                  className={`w-full flex items-center justify-center font-brawl ${
-                    generateButtonConfig.enabled 
-                      ? 'btn-success' 
-                      : 'bg-gradient-to-r from-green-300 to-green-400 text-white font-bold py-3 px-6 rounded-xl opacity-60 cursor-not-allowed'
-                  }`}
+                  variant="ai"
+                  size="lg"
+                  className="w-full font-brawl text-lg"
                 >
                   {isGenerating ? (
                     <>
@@ -470,7 +461,17 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({
                       {generateButtonConfig.text}
                     </>
                   )}
-                </button>
+                  
+                  <div className="circuit-node opacity-0" style={{top: '5px', left: '5px'}}></div>
+                  <div className="circuit-node opacity-0" style={{top: '5px', right: '5px'}}></div>
+                  <div className="circuit-node opacity-0" style={{bottom: '5px', left: '5px'}}></div>
+                  <div className="circuit-node opacity-0" style={{bottom: '5px', right: '5px'}}></div>
+                  
+                  <div className="circuit-line opacity-0" style={{height: '2px', top: '9px', left: '15px', right: '15px'}}></div>
+                  <div className="circuit-line opacity-0" style={{height: '2px', bottom: '9px', left: '15px', right: '15px'}}></div>
+                  <div className="circuit-line opacity-0" style={{width: '2px', left: '9px', top: '15px', bottom: '15px'}}></div>
+                  <div className="circuit-line opacity-0" style={{width: '2px', right: '9px', top: '15px', bottom: '15px'}}></div>
+                </Button>
                 
                 {!generateButtonConfig.enabled && generateButtonConfig.disabledReason && (
                   <div className="mt-2 flex items-center justify-center text-sm text-red-500 font-brawl">
