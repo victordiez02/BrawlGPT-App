@@ -1,3 +1,4 @@
+
 import React, { useMemo, useState, useCallback } from 'react';
 import { Brawler } from '@/lib/brawlers';
 import BrawlerCard from './BrawlerCard';
@@ -214,13 +215,19 @@ const BrawlerGrid: React.FC<BrawlerGridProps> = ({
         </div>
       </div>
       
-      <BrawlerSearch onSearch={setSearchTerm} />
+      <div className="mb-6">
+        <BrawlerSearch 
+          searchTerm={searchTerm} 
+          onSearchChange={setSearchTerm} 
+          placeholder={t('search_brawlers')} 
+        />
+      </div>
       
-      <div className="space-y-4">
+      <div className="space-y-6">
         {brawlersByRarity.map(({ rarity, brawlers }) => (
           <div key={rarity} className="transition-all duration-300">
             {sortOrder === 'rarity' && (
-              <div className={`p-2 rounded-lg mb-2 ${getRarityBackground(rarity)}`}>
+              <div className={`p-2 rounded-lg mb-3 ${getRarityBackground(rarity)}`}>
                 <h4 className="text-sm font-semibold text-gray-800 dark:text-gray-200 font-brawl">
                   {getTranslatedRarity(rarity)}
                 </h4>
