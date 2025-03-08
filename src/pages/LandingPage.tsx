@@ -17,7 +17,7 @@ const LandingPage: React.FC = () => {
         <div className="w-full max-w-6xl">
           <div className="mb-16 text-center relative">
             {/* Logo Background */}
-            <div className="absolute inset-0 flex justify-center items-center opacity-10 transform scale-150 pointer-events-none">
+            <div className="absolute inset-0 flex justify-center items-center opacity-30 transform scale-150 pointer-events-none">
               <img 
                 src="/lovable-uploads/73ba99c9-265c-40aa-92f7-016afd79fabb.png" 
                 alt="Brawl Stars Logo Background" 

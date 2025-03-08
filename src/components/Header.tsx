@@ -16,7 +16,7 @@ const Header = () => {
         </Link>
         
         <div className="flex flex-col items-center justify-center relative">
-          <div className="absolute opacity-20 -z-10 transform scale-150">
+          <div className="absolute opacity-30 -z-10 transform scale-150">
             <img 
               src="/lovable-uploads/73ba99c9-265c-40aa-92f7-016afd79fabb.png" 
               alt="Brawl Stars Logo Background" 
