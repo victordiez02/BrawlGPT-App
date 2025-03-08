@@ -189,6 +189,84 @@
   .neural-btn:hover::before {
     box-shadow: 0 0 25px rgba(254, 190, 32, 0.6);
   }
+  
+  /* Circuito digital button styles */
+  .circuit-btn {
+    position: relative;
+    overflow: visible !important;
+    border-radius: 0.75rem;
+    border: 2px solid black;
+    background-color: rgba(0, 229, 255, 0.1);
+  }
+  
+  .circuit-btn::before {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    background: transparent;
+    z-index: -1;
+    border-radius: 1rem;
+    transition: all 0.3s ease;
+  }
+  
+  .circuit-btn:hover::before {
+    box-shadow: 0 0 25px rgba(0, 229, 255, 0.6);
+  }
+  
+  .circuit-btn::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('/lovable-uploads/8ca57b4b-b9ec-4731-a438-a2eca154c699.png') center/contain no-repeat;
+    opacity: 0;
+    transform: scale(1.5);
+    transition: all 0.3s ease;
+    pointer-events: none;
+  }
+  
+  .circuit-btn:hover::after {
+    opacity: 0.15;
+    transform: scale(1);
+  }
+  
+  /* Circuit lines and nodes */
+  .circuit-btn .circuit-node {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: black;
+    border-radius: 50%;
+    opacity: 0;
+    transition: all 0.4s ease;
+    z-index: 5;
+  }
+  
+  .circuit-btn .circuit-node::after {
+    content: '';
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background-color: #00E5FF;
+    border-radius: 50%;
+    top: 2px;
+    left: 2px;
+  }
+  
+  .circuit-btn .circuit-line {
+    position: absolute;
+    background-color: black;
+    opacity: 0;
+    transition: all 0.4s ease;
+    z-index: 5;
+  }
+  
+  .circuit-btn:hover .circuit-node,
+  .circuit-btn:hover .circuit-line {
+    opacity: 1;
+  }
 }
 
 @layer utilities {
@@ -317,4 +395,22 @@
 
 .animate-float {
   animation: float 4s ease-in-out infinite;
+}
+
+@keyframes pulse-circuit {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(0, 229, 255, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 15px rgba(0, 229, 255, 0.8);
+  }
+}
+
+@keyframes glow-circuit {
+  0%, 100% {
+    filter: drop-shadow(0 0 3px rgba(0, 229, 255, 0.6));
+  }
+  50% {
+    filter: drop-shadow(0 0 8px rgba(0, 229, 255, 0.9));
+  }
 }
