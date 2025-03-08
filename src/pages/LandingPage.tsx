@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Zap, Map, Ban, Target, Cpu, SparkleIcon } from 'lucide-react';
@@ -22,7 +23,7 @@ const LandingPage: React.FC = () => {
             
             {/* Logo image instead of text title */}
             <div className="flex justify-center mb-3 relative z-10 animate-fade-in">
-              <img src="/lovable-uploads/dcf0aba8-0227-4216-a7c2-faba072fd4ad.png" alt="BrawlGPT Logo" className="w-auto h-60 md:h-36" />
+              <img src="/lovable-uploads/dcf0aba8-0227-4216-a7c2-faba072fd4ad.png" alt="BrawlGPT Logo" className="w-auto h-80 md:h-56" />
             </div>
             
             <h2 className="text-4xl font-bold font-brawl mb-3 relative z-10 animate-fade-in md:text-3xl bg-gradient-to-r from-brawl-blue to-brawl-red bg-clip-text text-transparent">
