@@ -74,57 +74,28 @@ const DraftSlot: React.FC<DraftSlotProps> = ({
     }
   };
 
-  // Notify TrashCan when dragging starts
-  React.useEffect(() => {
-    if (isDragging) {
-      const event = new CustomEvent('brawlerDragStart', { detail: { id: brawlerId } });
-      window.dispatchEvent(event);
-    } else {
-      const event = new CustomEvent('brawlerDragEnd');
-      window.dispatchEvent(event);
-    }
-  }, [isDragging, brawlerId]);
-
   return (
     <div className="flex flex-col items-center space-y-2">
       <div 
         ref={drop} 
-        className={`w-full aspect-square relative ${teamColorClass} 
-          ${isActiveSlot ? 'ring-2 ring-yellow-400 animate-pulse-soft' : ''} 
-          ${isOver ? 'ring-4 ring-white scale-105 shadow-xl animate-pulse-soft bg-white/20' : ''}
-          transition-all duration-300`}
+        className={`w-full aspect-square relative ${teamColorClass} ${isActiveSlot ? 'ring-2 ring-yellow-400 animate-pulse-soft' : ''} ${isOver ? 'ring-2 ring-white' : ''}`}
       >
         {brawler ? (
           <div 
             ref={drag} 
-            className={`relative w-full h-full transition-all duration-300
-              ${isDragging ? 'opacity-30 scale-90' : 'cursor-grab active:cursor-grabbing'}
-              hover:scale-103`} 
+            className={`relative w-full h-full ${isDragging ? 'opacity-50' : ''}`} 
             onContextMenu={handleContextMenu}
           >
             <BrawlerCard brawler={brawler} size="lg" team={team} />
-            {isDragging && (
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-xs font-bold text-white bg-black/50 px-2 py-1 rounded-md">
-                  {t('moving')}
-                </span>
-              </div>
-            )}
           </div>
         ) : (
           <div 
-            className={`w-full h-full flex items-center justify-center cursor-pointer transition-all duration-300
-              ${isOver ? 'bg-green-500/20' : ''}`}
+            className="w-full h-full flex items-center justify-center cursor-pointer"
             onClick={scrollToBrawlerGrid}
           >
             {isActiveSlot && (
               <span className="text-sm font-medium opacity-80 animate-pulse font-brawl text-white hover:text-yellow-300 transition-colors">
                 {t('select')}
-              </span>
-            )}
-            {isOver && (
-              <span className="text-sm font-medium font-brawl text-white absolute animate-fade-in">
-                {t('place_here')}
               </span>
             )}
           </div>
