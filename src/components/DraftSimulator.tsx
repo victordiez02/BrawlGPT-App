@@ -374,21 +374,22 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({
   return (
     <DndProvider backend={HTML5Backend}>
       <div className="w-full max-w-6xl mx-auto px-4 animate-fade-in">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-          <div className="md:col-span-2 glass-panel p-4">
-            <MapSelector 
-              selectedMap={selectedMap} 
-              onSelectMap={setSelectedMap} 
-              onReturnToMapSelection={onReturnToMapSelection}
-            />
-          </div>
-          <div className="glass-panel p-4">
-            <TeamSelector 
-              firstPick={firstPick}
-              onSelectFirstPick={setFirstPick}
-            />
-            
-            <div className="mt-4">
+        <div className="glass-panel p-4 mb-6">
+          <div className="flex flex-col md:flex-row md:space-x-6 space-y-6 md:space-y-0">
+            <div className="md:w-1/3">
+              <MapSelector 
+                selectedMap={selectedMap} 
+                onSelectMap={setSelectedMap} 
+                onReturnToMapSelection={onReturnToMapSelection}
+              />
+            </div>
+            <div className="md:w-1/3">
+              <TeamSelector 
+                firstPick={firstPick}
+                onSelectFirstPick={setFirstPick}
+              />
+            </div>
+            <div className="md:w-1/3">
               <BannedBrawlers
                 bannedBrawlers={bannedBrawlers}
                 onBanBrawler={handleBanBrawler}
