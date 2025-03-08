@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { GameMap, gameMaps, gameModes } from '@/lib/maps';
+import { GameMap, gameMaps } from '@/lib/maps';
 import { Check, ChevronDown, ChevronUp, Map, Search, Maximize2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
@@ -52,18 +52,23 @@ const MapSelector: React.FC<MapSelectorProps> = ({ selectedMap, onSelectMap }) =
     return 'https://cdn.brawlify.com/placeholder.png';
   };
 
-  // Get mode banner based on map mode
-  const getModeBanner = (mode: string) => {
-    const gameMode = gameModes.find(m => m.name === mode);
-    return gameMode?.banner || '';
-  };
-
   // Get translated mode name
   const getTranslatedMode = (mode: string) => {
     if (i18n.language !== 'es') return mode;
     
-    const gameMode = gameModes.find(m => m.name === mode);
-    return gameMode?.translatedName || mode;
+    const modeMap: Record<string, string> = {
+      'Gem Grab': 'Atrapagemas',
+      'Brawl Ball': 'Balón Brawl',
+      'Heist': 'Atraco',
+      'Hot Zone': 'Zona Restringida',
+      'Bounty': 'Caza Estelar',
+      'Knockout': 'Noqueo',
+      'Brawl Hockey': 'Hockey Brawl',
+      'Showdown': 'Supervivencia',
+      'Siege': 'Asedio'
+    };
+    
+    return modeMap[mode] || mode;
   };
 
   return (
@@ -84,7 +89,7 @@ const MapSelector: React.FC<MapSelectorProps> = ({ selectedMap, onSelectMap }) =
                   <img 
                     src={selectedMap.image} 
                     alt={selectedMap.name} 
-                    className="w-full h-full object-contain"
+                    className="w-full h-full object-cover"
                     onError={(e) => handleImageError(e, selectedMap.name)}
                   />
                 </div>
@@ -163,19 +168,6 @@ const MapSelector: React.FC<MapSelectorProps> = ({ selectedMap, onSelectMap }) =
                 </div>
               </div>
               
-              {filterMode && (
-                <div className="border-b border-gray-200 dark:border-gray-700">
-                  <img 
-                    src={getModeBanner(filterMode)} 
-                    alt={filterMode}
-                    className="w-full h-auto object-cover max-h-24"
-                    onError={(e) => {
-                      e.currentTarget.style.display = 'none';
-                    }}
-                  />
-                </div>
-              )}
-              
               <div className="max-h-60 overflow-y-auto py-1">
                 {filteredMaps.length > 0 ? (
                   filteredMaps.map(map => (
@@ -194,7 +186,7 @@ const MapSelector: React.FC<MapSelectorProps> = ({ selectedMap, onSelectMap }) =
                         <img 
                           src={map.image} 
                           alt={map.name} 
-                          className="w-full h-full object-contain"
+                          className="w-full h-full object-cover"
                           onError={(e) => handleImageError(e, map.name)}
                         />
                       </div>
@@ -283,19 +275,6 @@ const MapSelector: React.FC<MapSelectorProps> = ({ selectedMap, onSelectMap }) =
                 ))}
               </div>
               
-              {filterMode && (
-                <div className="mb-4 rounded-lg overflow-hidden">
-                  <img 
-                    src={getModeBanner(filterMode)} 
-                    alt={filterMode}
-                    className="w-full h-auto object-cover max-h-32"
-                    onError={(e) => {
-                      e.currentTarget.style.display = 'none';
-                    }}
-                  />
-                </div>
-              )}
-              
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-4 max-h-[50vh] overflow-y-auto p-2">
                 {filteredMaps.map(map => (
                   <div
@@ -310,7 +289,7 @@ const MapSelector: React.FC<MapSelectorProps> = ({ selectedMap, onSelectMap }) =
                       setIsExpandedView(false);
                     }}
                   >
-                    <div className="aspect-square overflow-hidden flex items-center justify-center bg-transparent">
+                    <div className="aspect-square overflow-hidden bg-black flex items-center justify-center">
                       <img
                         src={map.image}
                         alt={map.name}
@@ -334,14 +313,14 @@ const MapSelector: React.FC<MapSelectorProps> = ({ selectedMap, onSelectMap }) =
       )}
       
       {selectedMap && (
-        <div className="mt-2 relative rounded-lg overflow-hidden flex items-center justify-center bg-transparent">
+        <div className="mt-2 relative rounded-lg overflow-hidden bg-black flex items-center justify-center">
           <img
             src={selectedMap.image}
             alt={selectedMap.name}
             className="w-full object-contain h-48"
             onError={(e) => handleImageError(e, selectedMap.name)}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent pointer-events-none"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
           <div className="absolute bottom-0 left-0 right-0 p-2 text-white">
             <p className="font-bold">{i18n.language === 'es' && selectedMap.translatedName ? selectedMap.translatedName : selectedMap.name}</p>
             <p className="text-sm opacity-80 flex items-center">

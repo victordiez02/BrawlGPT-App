@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { GameMap, gameMaps, gameModes } from '@/lib/maps';
+import { GameMap, gameMaps } from '@/lib/maps';
 import { Search } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
@@ -49,18 +49,23 @@ const MapSelectionPage: React.FC<MapSelectionPageProps> = ({ onSelectMap }) => {
     return 'https://cdn.brawlify.com/placeholder.png';
   };
 
-  // Get mode banner based on map mode
-  const getModeBanner = (mode: string) => {
-    const gameMode = gameModes.find(m => m.name === mode);
-    return gameMode?.banner || '';
-  };
-
   // Get translated mode name
   const getTranslatedMode = (mode: string) => {
     if (i18n.language !== 'es') return mode;
     
-    const gameMode = gameModes.find(m => m.name === mode);
-    return gameMode?.translatedName || mode;
+    const modeMap: Record<string, string> = {
+      'Gem Grab': 'Atrapagemas',
+      'Brawl Ball': 'Balón Brawl',
+      'Heist': 'Atraco',
+      'Hot Zone': 'Zona Restringida',
+      'Bounty': 'Caza Estelar',
+      'Knockout': 'Noqueo',
+      'Brawl Hockey': 'Hockey Brawl',
+      'Showdown': 'Supervivencia',
+      'Siege': 'Asedio'
+    };
+    
+    return modeMap[mode] || mode;
   };
 
   return (
@@ -118,19 +123,6 @@ const MapSelectionPage: React.FC<MapSelectionPageProps> = ({ onSelectMap }) => {
         </div>
       </div>
       
-      {filterMode && (
-        <div className="mb-6 rounded-lg overflow-hidden">
-          <img 
-            src={getModeBanner(filterMode)} 
-            alt={filterMode}
-            className="w-full h-auto object-cover max-h-48"
-            onError={(e) => {
-              e.currentTarget.style.display = 'none';
-            }}
-          />
-        </div>
-      )}
-      
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
         {filteredMaps.map(map => (
           <div
@@ -139,11 +131,11 @@ const MapSelectionPage: React.FC<MapSelectionPageProps> = ({ onSelectMap }) => {
             onClick={() => onSelectMap(map)}
           >
             <div className="relative">
-              <div className="h-48 overflow-hidden flex items-center justify-center bg-transparent">
+              <div className="h-48 overflow-hidden bg-black flex items-center justify-center">
                 <img
                   src={map.image}
                   alt={map.name}
-                  className="w-full h-full object-contain"
+                  className="w-full h-full object-cover"
                   onError={(e) => handleImageError(e, map.name)}
                 />
               </div>
