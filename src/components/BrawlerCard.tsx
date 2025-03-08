@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Brawler } from '@/lib/brawlers';
 
 interface BrawlerCardProps {
@@ -39,14 +39,19 @@ const BrawlerCard: React.FC<BrawlerCardProps> = ({
       : 'ring-4 ring-brawl-red shadow-md shadow-red-500/30'
     : '';
     
-  // Add dragging animation classes - increase the scale reduction to 30%
+  // Add dragging animation classes - scale reduction to 30%
   const draggingClass = isDragging 
     ? 'scale-70 rotate-3 animate-sway shadow-2xl z-50' 
     : '';
 
   // Imagen de respaldo en caso de que falle la principal
   const fallbackImage = 'https://pbs.twimg.com/media/GkaLsRAXoAEltn9.jpg';
-  const [imgSrc, setImgSrc] = React.useState(brawler.image);
+  const [imgSrc, setImgSrc] = useState(brawler.image);
+  
+  // Force image update when brawler changes
+  useEffect(() => {
+    setImgSrc(brawler.image);
+  }, [brawler]);
 
   const handleImageError = () => {
     console.error(`Failed to load image for ${brawler.name}:`, brawler.image);

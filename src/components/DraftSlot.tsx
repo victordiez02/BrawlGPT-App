@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import BrawlerCard from './BrawlerCard';
 import { Brawler, brawlers } from '@/lib/brawlers';
@@ -32,25 +32,33 @@ const DraftSlot: React.FC<DraftSlotProps> = ({
   const { t } = useTranslation();
   const teamColorClass = team === 'blue' ? 'draft-slot-blue' : 'draft-slot-red';
 
+  // Add a local state to track the current brawler and force re-render when it changes
+  const [currentBrawlerId, setCurrentBrawlerId] = useState<number | null>(brawlerId);
+  
+  // Update the local state when the prop changes
+  useEffect(() => {
+    setCurrentBrawlerId(brawlerId);
+  }, [brawlerId]);
+
   // Find brawler by id
-  const brawler = brawlerId !== null ? brawlers.find(b => b.id === brawlerId) || null : null;
+  const brawler = currentBrawlerId !== null ? brawlers.find(b => b.id === currentBrawlerId) || null : null;
 
   // Set up drag
   const [{ isDragging }, drag] = useDrag(() => ({
     type: 'DRAFT_BRAWLER',
     item: () => {
       document.dispatchEvent(new CustomEvent('brawlerDragStart'));
-      return { id: brawlerId, slotIndex: index };
+      return { id: currentBrawlerId, slotIndex: index };
     },
     collect: monitor => ({
       isDragging: !!monitor.isDragging()
     }),
-    canDrag: brawlerId !== null,
+    canDrag: currentBrawlerId !== null,
     // Dispatch a custom event when dragging ends
     end: (item, monitor) => {
       document.dispatchEvent(new CustomEvent('brawlerDragEnd'));
     }
-  }), [brawlerId, index]);
+  }), [currentBrawlerId, index]);
 
   // Set up drop
   const [{ isOver }, drop] = useDrop(() => ({
@@ -68,7 +76,7 @@ const DraftSlot: React.FC<DraftSlotProps> = ({
   // Handle right-click to remove
   const handleContextMenu = (e: React.MouseEvent) => {
     e.preventDefault();
-    if (brawlerId !== null) {
+    if (currentBrawlerId !== null) {
       onRemoveBrawler(index);
     }
   };
