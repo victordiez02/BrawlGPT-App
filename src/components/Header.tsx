@@ -24,9 +24,8 @@ const Header = () => {
             />
           </div>
           
-          <h1 className="text-4xl md:text-5xl font-bold mb-2 font-brawl">
-            <span className="text-brawl-custom-yellow text-glow-neon-yellow">Brawl</span>
-            <span className="text-brawl-custom-green text-glow-neon-green">GPT</span>
+          <h1 className="text-4xl md:text-5xl font-bold mb-2 bg-gradient-to-r from-brawl-blue via-brawl-purple to-brawl-red bg-clip-text text-transparent font-brawl text-glow">
+            BrawlGPT
           </h1>
           
           <div className="h-1 w-40 bg-gradient-to-r from-brawl-blue to-brawl-red rounded-full mx-auto mb-3"></div>

@@ -26,9 +26,8 @@ const LandingPage: React.FC = () => {
             </div>
             
             {/* Title with BrawlGPT */}
-            <h1 className="text-5xl md:text-7xl font-bold font-brawl animate-fade-in mb-3">
-              <span className="text-brawl-custom-yellow text-glow-neon-yellow">Brawl</span>
-              <span className="text-brawl-custom-green text-glow-neon-green">GPT</span>
+            <h1 className="text-5xl md:text-7xl font-bold font-brawl text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-red-500 text-glow animate-fade-in mb-3">
+              BrawlGPT
             </h1>
             
             <h2 className="text-4xl md:text-5xl font-bold font-brawl text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-red-500 text-glow animate-fade-in">
@@ -45,7 +44,7 @@ const LandingPage: React.FC = () => {
                 {t('landing_subtitle_2')}
               </p>
               
-              {/* Generate Optimal Pick Button */}
+              {/* Moved Generate Optimal Pick Button */}
               <div className="space-y-8">
                 <Link 
                   to="/simulator" 
