@@ -20,7 +20,6 @@ const buttonVariants = cva(
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
         ai: "bg-[#00E5FF]/20 text-black font-semibold shadow-lg hover:shadow-[#00E5FF]/50 border border-black backdrop-blur-sm transition-all duration-300 overflow-hidden circuit-btn relative",
-        cyberpunk: "bg-[#1EAEDB] text-white font-semibold shadow-lg border-[#1EAEDB] circuit-cyberpunk relative overflow-hidden transition-all duration-300 hover:bg-[#33C3F0]",
       },
       size: {
         default: "h-10 px-4 py-2",
