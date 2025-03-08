@@ -56,9 +56,9 @@ export default {
 				brawl: {
 					blue: '#0EA5E9',
 					red: '#F43F5E',
-					yellow: '#FEBE20',
-					green: '#10A37F',
+					yellow: '#F59E0B',
 					purple: '#8B5CF6',
+					green: '#10B981',
 					dark: '#1E293B',
 					light: '#F8FAFC'
 				},
