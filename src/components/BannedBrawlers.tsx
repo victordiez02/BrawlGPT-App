@@ -42,6 +42,10 @@ const BannedBrawlers: React.FC<BannedBrawlersProps> = ({
     }
     onBanBrawler(brawlerId);
   };
+
+  // Split banned brawlers into two rows of 3
+  const firstRowBrawlers = bannedBrawlerObjects.slice(0, 3);
+  const secondRowBrawlers = bannedBrawlerObjects.slice(3, 6);
   
   return (
     <div className="animate-fade-in">
@@ -101,26 +105,51 @@ const BannedBrawlers: React.FC<BannedBrawlersProps> = ({
         )}
       </div>
       
-      <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-3">
-        {bannedBrawlerObjects.length > 0 ? (
-          bannedBrawlerObjects.map(brawler => (
-            <div key={brawler.id} className="relative">
-              <BrawlerCard
-                brawler={brawler}
-                banned={true}
-                size="sm"
-              />
-              <button
-                onClick={() => onUnbanBrawler(brawler.id)}
-                className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center hover:bg-red-600 transition-colors"
-              >
-                ×
-              </button>
+      {/* Display banned brawlers in two rows of 3 */}
+      <div className="space-y-3">
+        {/* First row */}
+        <div className="grid grid-cols-3 gap-3">
+          {firstRowBrawlers.length > 0 ? (
+            firstRowBrawlers.map(brawler => (
+              <div key={brawler.id} className="relative">
+                <BrawlerCard
+                  brawler={brawler}
+                  banned={true}
+                  size="sm"
+                />
+                <button
+                  onClick={() => onUnbanBrawler(brawler.id)}
+                  className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center hover:bg-red-600 transition-colors"
+                >
+                  ×
+                </button>
+              </div>
+            ))
+          ) : (
+            <div className="col-span-full text-center py-2 text-gray-500 dark:text-gray-400 font-brawl">
+              {t('no_banned_brawlers')}
             </div>
-          ))
-        ) : (
-          <div className="col-span-full text-center py-4 text-gray-500 dark:text-gray-400 font-brawl">
-            {t('no_banned_brawlers')}
+          )}
+        </div>
+        
+        {/* Second row - only render if there are more than 3 banned brawlers */}
+        {secondRowBrawlers.length > 0 && (
+          <div className="grid grid-cols-3 gap-3">
+            {secondRowBrawlers.map(brawler => (
+              <div key={brawler.id} className="relative">
+                <BrawlerCard
+                  brawler={brawler}
+                  banned={true}
+                  size="sm"
+                />
+                <button
+                  onClick={() => onUnbanBrawler(brawler.id)}
+                  className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center hover:bg-red-600 transition-colors"
+                >
+                  ×
+                </button>
+              </div>
+            ))}
           </div>
         )}
       </div>

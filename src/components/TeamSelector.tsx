@@ -16,10 +16,10 @@ const TeamSelector: React.FC<TeamSelectorProps> = ({ firstPick, onSelectFirstPic
         {t('who_picks_first')}
       </label>
       
-      <div className="flex space-x-4">
+      <div className="flex flex-col space-y-3">
         <button
           onClick={() => onSelectFirstPick('blue')}
-          className={`flex-1 glass-card py-3 transition-all duration-300 ${
+          className={`glass-card py-3 transition-all duration-300 ${
             firstPick === 'blue' 
               ? 'ring-2 ring-brawl-blue shadow-lg shadow-blue-500/20' 
               : 'opacity-70 hover:opacity-100'
@@ -33,7 +33,7 @@ const TeamSelector: React.FC<TeamSelectorProps> = ({ firstPick, onSelectFirstPic
         
         <button
           onClick={() => onSelectFirstPick('red')}
-          className={`flex-1 glass-card py-3 transition-all duration-300 ${
+          className={`glass-card py-3 transition-all duration-300 ${
             firstPick === 'red' 
               ? 'ring-2 ring-brawl-red shadow-lg shadow-red-500/20' 
               : 'opacity-70 hover:opacity-100'
