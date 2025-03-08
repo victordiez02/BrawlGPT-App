@@ -261,6 +261,14 @@
     text-shadow: 0 0 8px rgba(74, 222, 128, 0.3), 0 0 12px rgba(74, 222, 128, 0.2);
   }
   
+  .text-glow-neon-yellow {
+    text-shadow: 0 0 5px rgba(254, 190, 32, 0.5), 0 0 10px rgba(254, 190, 32, 0.3), 0 0 15px rgba(254, 190, 32, 0.2);
+  }
+  
+  .text-glow-neon-green {
+    text-shadow: 0 0 5px rgba(16, 163, 127, 0.5), 0 0 10px rgba(16, 163, 127, 0.3), 0 0 15px rgba(16, 163, 127, 0.2);
+  }
+  
   .bg-cybernetic {
     background-color: #111827;
     background-image: 
