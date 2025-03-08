@@ -28,7 +28,7 @@ const LandingPage: React.FC = () => {
               {t('landing_title')}
             </h2>
             
-            <div className="h-1 w-48 mx-auto bg-gradient-to-r from-brawl-yellow to-brawl-green rounded-full mb-8 relative z-10"></div>
+            <div className="h-1 w-48 mx-auto bg-gradient-to-r from-brawl-blue to-brawl-purple rounded-full mb-8 relative z-10"></div>
             
             <div className="max-w-3xl mx-auto">
               <p className="text-xl md:text-2xl opacity-90 mb-4 animate-fade-in delay-200 font-brawl">
