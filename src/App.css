@@ -50,3 +50,16 @@
   @apply absolute bg-black;
 }
 
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+.animate-pulse-soft {
+  animation: pulse-slow 2s ease-in-out infinite;
+}
+

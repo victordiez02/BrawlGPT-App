@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { GameMap, gameMaps } from '@/lib/maps';
+import { GameMap, gameMaps, getGameModeByName } from '@/lib/maps';
 import { Check, ChevronDown, ChevronUp, Map, Search, Maximize2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
@@ -71,6 +71,13 @@ const MapSelector: React.FC<MapSelectorProps> = ({ selectedMap, onSelectMap }) =
     return modeMap[mode] || mode;
   };
 
+  // Get current mode banner if a filter is active
+  const getCurrentModeBanner = () => {
+    if (!filterMode) return null;
+    const gameMode = getGameModeByName(filterMode);
+    return gameMode?.banner;
+  };
+
   return (
     <div className="w-full animate-slide-in">
       <div className="mb-2">
@@ -89,7 +96,7 @@ const MapSelector: React.FC<MapSelectorProps> = ({ selectedMap, onSelectMap }) =
                   <img 
                     src={selectedMap.image} 
                     alt={selectedMap.name} 
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-contain"
                     onError={(e) => handleImageError(e, selectedMap.name)}
                   />
                 </div>
@@ -168,6 +175,25 @@ const MapSelector: React.FC<MapSelectorProps> = ({ selectedMap, onSelectMap }) =
                 </div>
               </div>
               
+              {/* Mode Banner */}
+              {getCurrentModeBanner() && (
+                <div className="relative w-full overflow-hidden">
+                  <img 
+                    src={getCurrentModeBanner()!} 
+                    alt={filterMode || ''} 
+                    className="w-full h-20 object-cover"
+                    onError={(e) => e.currentTarget.src = 'https://cdn.brawlify.com/placeholder.png'}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
+                    <div className="p-2 w-full">
+                      <h3 className="text-white text-sm font-brawl text-center drop-shadow-lg">
+                        {getTranslatedMode(filterMode!)}
+                      </h3>
+                    </div>
+                  </div>
+                </div>
+              )}
+              
               <div className="max-h-60 overflow-y-auto py-1">
                 {filteredMaps.length > 0 ? (
                   filteredMaps.map(map => (
@@ -186,7 +212,7 @@ const MapSelector: React.FC<MapSelectorProps> = ({ selectedMap, onSelectMap }) =
                         <img 
                           src={map.image} 
                           alt={map.name} 
-                          className="w-full h-full object-cover"
+                          className="w-full h-full object-contain"
                           onError={(e) => handleImageError(e, map.name)}
                         />
                       </div>
@@ -275,6 +301,25 @@ const MapSelector: React.FC<MapSelectorProps> = ({ selectedMap, onSelectMap }) =
                 ))}
               </div>
               
+              {/* Mode Banner */}
+              {getCurrentModeBanner() && (
+                <div className="relative w-full mb-4 overflow-hidden rounded-lg">
+                  <img 
+                    src={getCurrentModeBanner()!} 
+                    alt={filterMode || ''} 
+                    className="w-full h-28 object-cover"
+                    onError={(e) => e.currentTarget.src = 'https://cdn.brawlify.com/placeholder.png'}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
+                    <div className="p-2 w-full">
+                      <h3 className="text-white text-lg font-brawl text-center drop-shadow-lg">
+                        {getTranslatedMode(filterMode!)}
+                      </h3>
+                    </div>
+                  </div>
+                </div>
+              )}
+              
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-4 max-h-[50vh] overflow-y-auto p-2">
                 {filteredMaps.map(map => (
                   <div
@@ -289,7 +334,7 @@ const MapSelector: React.FC<MapSelectorProps> = ({ selectedMap, onSelectMap }) =
                       setIsExpandedView(false);
                     }}
                   >
-                    <div className="aspect-square overflow-hidden bg-black flex items-center justify-center">
+                    <div className="aspect-square overflow-hidden bg-transparent flex items-center justify-center">
                       <img
                         src={map.image}
                         alt={map.name}
@@ -313,7 +358,7 @@ const MapSelector: React.FC<MapSelectorProps> = ({ selectedMap, onSelectMap }) =
       )}
       
       {selectedMap && (
-        <div className="mt-2 relative rounded-lg overflow-hidden bg-black flex items-center justify-center">
+        <div className="mt-2 relative rounded-lg overflow-hidden bg-transparent flex items-center justify-center">
           <img
             src={selectedMap.image}
             alt={selectedMap.name}

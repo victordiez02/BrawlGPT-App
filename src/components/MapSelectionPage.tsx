@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { GameMap, gameMaps } from '@/lib/maps';
+import { GameMap, gameMaps, getGameModeByName } from '@/lib/maps';
 import { Search } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
@@ -68,6 +68,13 @@ const MapSelectionPage: React.FC<MapSelectionPageProps> = ({ onSelectMap }) => {
     return modeMap[mode] || mode;
   };
 
+  // Get current mode banner if a filter is active
+  const getCurrentModeBanner = () => {
+    if (!filterMode) return null;
+    const gameMode = getGameModeByName(filterMode);
+    return gameMode?.banner;
+  };
+
   return (
     <div className="animate-fade-in max-w-5xl mx-auto">
       <div className="glass-panel p-6 mb-6">
@@ -121,6 +128,25 @@ const MapSelectionPage: React.FC<MapSelectionPageProps> = ({ onSelectMap }) => {
             </button>
           ))}
         </div>
+        
+        {/* Mode Banner */}
+        {getCurrentModeBanner() && (
+          <div className="relative w-full mb-6 overflow-hidden rounded-lg">
+            <img 
+              src={getCurrentModeBanner()!} 
+              alt={filterMode || ''} 
+              className="w-full h-32 object-cover"
+              onError={(e) => e.currentTarget.src = 'https://cdn.brawlify.com/placeholder.png'}
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
+              <div className="p-3 w-full text-center">
+                <h3 className="text-white text-xl font-brawl drop-shadow-lg">
+                  {getTranslatedMode(filterMode!)}
+                </h3>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
       
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
@@ -131,11 +157,11 @@ const MapSelectionPage: React.FC<MapSelectionPageProps> = ({ onSelectMap }) => {
             onClick={() => onSelectMap(map)}
           >
             <div className="relative">
-              <div className="h-48 overflow-hidden bg-black flex items-center justify-center">
+              <div className="h-48 overflow-hidden bg-transparent flex items-center justify-center">
                 <img
                   src={map.image}
                   alt={map.name}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain"
                   onError={(e) => handleImageError(e, map.name)}
                 />
               </div>
