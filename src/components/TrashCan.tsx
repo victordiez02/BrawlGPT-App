@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDrop } from 'react-dnd';
 import { useTranslation } from 'react-i18next';
 
@@ -17,6 +17,21 @@ const TrashCan: React.FC<TrashCanProps> = ({ onResetDraft, onRemoveBrawler }) =>
   const { t } = useTranslation();
   const [isHovered, setIsHovered] = useState(false);
   const [imageError, setImageError] = useState(false);
+  const [isDraggingBrawler, setIsDraggingBrawler] = useState(false);
+
+  // Escuchar eventos de arrastre de brawlers
+  useEffect(() => {
+    const handleDragStart = () => setIsDraggingBrawler(true);
+    const handleDragEnd = () => setIsDraggingBrawler(false);
+    
+    document.addEventListener('brawlerDragStart', handleDragStart);
+    document.addEventListener('brawlerDragEnd', handleDragEnd);
+    
+    return () => {
+      document.removeEventListener('brawlerDragStart', handleDragStart);
+      document.removeEventListener('brawlerDragEnd', handleDragEnd);
+    };
+  }, []);
 
   // Configuramos el drop target para recibir brawlers arrastrados
   const [{ isOver }, drop] = useDrop(() => ({
@@ -37,12 +52,12 @@ const TrashCan: React.FC<TrashCanProps> = ({ onResetDraft, onRemoveBrawler }) =>
   };
 
   // Efectos interactivos mejorados
-  const isActive = isOver || isHovered;
+  const isActive = isOver || isHovered || isDraggingBrawler;
 
   return (
     <div 
       ref={drop}
-      className={`flex items-center justify-center cursor-pointer transition-all duration-300 ${isActive ? 'scale-110' : ''}`}
+      className={`flex flex-col items-center justify-center cursor-pointer transition-all duration-300 ${isActive ? 'scale-110' : ''}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={onResetDraft}
@@ -62,11 +77,16 @@ const TrashCan: React.FC<TrashCanProps> = ({ onResetDraft, onRemoveBrawler }) =>
             filter: isActive 
               ? 'brightness(1.3) drop-shadow(0 0 8px rgba(239, 68, 68, 0.7))' 
               : 'brightness(1) drop-shadow(0 0 2px rgba(0, 0, 0, 0.3))',
-            transform: isOver ? 'rotate(-10deg)' : 'rotate(0)'
+            transform: isOver ? 'rotate(-10deg)' : isActive ? 'rotate(-5deg)' : 'rotate(0)'
           }}
           onError={handleImageError}
         />
       </div>
+      {isActive && (
+        <span className="text-xs font-brawl text-red-400 animate-pulse-soft mt-1">
+          {isOver ? t('delete') : t('drop_here')}
+        </span>
+      )}
     </div>
   );
 };

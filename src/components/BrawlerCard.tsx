@@ -9,6 +9,7 @@ interface BrawlerCardProps {
   onClick?: () => void;
   size?: 'sm' | 'md' | 'lg';
   team?: 'blue' | 'red' | null;
+  isDragging?: boolean;
 }
 
 const BrawlerCard: React.FC<BrawlerCardProps> = ({ 
@@ -17,7 +18,8 @@ const BrawlerCard: React.FC<BrawlerCardProps> = ({
   banned = false, 
   onClick, 
   size = 'md',
-  team = null 
+  team = null,
+  isDragging = false
 }) => {
   const sizeClasses = {
     sm: 'w-16 h-16',
@@ -35,6 +37,11 @@ const BrawlerCard: React.FC<BrawlerCardProps> = ({
     ? team === 'blue' 
       ? 'ring-4 ring-brawl-blue shadow-md shadow-blue-500/30' 
       : 'ring-4 ring-brawl-red shadow-md shadow-red-500/30'
+    : '';
+    
+  // Add dragging animation classes
+  const draggingClass = isDragging 
+    ? 'scale-90 rotate-3 animate-sway shadow-2xl z-50' 
     : '';
 
   // Imagen de respaldo en caso de que falle la principal
@@ -58,14 +65,14 @@ const BrawlerCard: React.FC<BrawlerCardProps> = ({
 
   return (
     <div 
-      className={`brawler-card ${sizeClasses[size]} ${statusClass} ${teamBorderClass} animate-scale-in`}
+      className={`brawler-card ${sizeClasses[size]} ${statusClass} ${teamBorderClass} ${draggingClass} animate-scale-in transition-all duration-200`}
       onClick={!disabled && !banned ? onClick : undefined}
     >
-      <div className="relative w-full h-full overflow-hidden rounded-xl">
+      <div className={`relative w-full h-full overflow-hidden rounded-xl ${isDragging ? 'shadow-lg' : ''}`}>
         <img 
           src={imgSrc} 
           alt={brawler.name}
-          className="w-full h-full object-cover transition-transform duration-300"
+          className={`w-full h-full object-cover transition-transform duration-300 ${isDragging ? 'rotate-2' : ''}`}
           loading="lazy"
           onError={handleImageError}
         />

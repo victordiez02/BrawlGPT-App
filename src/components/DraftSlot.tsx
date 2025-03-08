@@ -42,7 +42,15 @@ const DraftSlot: React.FC<DraftSlotProps> = ({
     collect: monitor => ({
       isDragging: !!monitor.isDragging()
     }),
-    canDrag: brawlerId !== null
+    canDrag: brawlerId !== null,
+    // Dispatch a custom event when dragging starts or ends
+    end: (item, monitor) => {
+      document.dispatchEvent(new CustomEvent('brawlerDragEnd'));
+    },
+    begin: (monitor) => {
+      document.dispatchEvent(new CustomEvent('brawlerDragStart'));
+      return { id: brawlerId, slotIndex: index };
+    }
   }), [brawlerId, index]);
 
   // Set up drop
@@ -86,7 +94,12 @@ const DraftSlot: React.FC<DraftSlotProps> = ({
             className={`relative w-full h-full ${isDragging ? 'opacity-50' : ''}`} 
             onContextMenu={handleContextMenu}
           >
-            <BrawlerCard brawler={brawler} size="lg" team={team} />
+            <BrawlerCard 
+              brawler={brawler} 
+              size="lg" 
+              team={team}
+              isDragging={isDragging} 
+            />
           </div>
         ) : (
           <div 
