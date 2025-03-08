@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Zap, Map, Ban, Target, Cpu, SparkleIcon } from 'lucide-react';
@@ -22,29 +21,29 @@ const LandingPage: React.FC = () => {
               <img src="/lovable-uploads/73ba99c9-265c-40aa-92f7-016afd79fabb.png" alt="Brawl Stars Logo Background" className="w-96 h-96" />
             </div>
             
-            {/* Title with BrawlGPT - COLORED SECTIONS WITH TEXT SHADOW */}
-            <h1 className="text-5xl md:text-7xl font-bold font-brawl mb-3 relative z-10 animate-fade-in text-shadow">
-              <span className="text-[#FEBE20]">Brawl</span><span className="text-[#10A37F]">GPT</span>
+            {/* Title with BrawlGPT - CHANGED FROM NEON TO FLAT COLORS */}
+            <h1 className="text-5xl md:text-7xl font-bold font-brawl text-brawl-yellow mb-3 relative z-10 animate-fade-in">
+              BrawlGPT
             </h1>
             
-            <h2 className="text-4xl font-bold font-brawl mb-3 relative z-10 animate-fade-in md:text-3xl bg-gradient-to-r from-brawl-blue to-brawl-red bg-clip-text text-transparent text-shadow">
+            <h2 className="text-4xl font-bold font-brawl mb-3 relative z-10 animate-fade-in md:text-3xl bg-gradient-to-r from-brawl-blue to-brawl-red bg-clip-text text-transparent">
               {t('landing_title')}
             </h2>
             
             <div className="h-1 w-48 mx-auto bg-gradient-to-r from-brawl-blue to-brawl-red rounded-full mb-8 relative z-10"></div>
             
             <div className="max-w-3xl mx-auto">
-              <p className="text-xl md:text-2xl opacity-90 mb-4 animate-fade-in delay-200 font-brawl text-shadow">
+              <p className="text-xl md:text-2xl opacity-90 mb-4 animate-fade-in delay-200 font-brawl">
                 {t('landing_subtitle_1')}
               </p>
-              <p className="text-lg opacity-80 animate-fade-in delay-200 mb-6 text-shadow">
+              <p className="text-lg opacity-80 animate-fade-in delay-200 mb-6">
                 {t('landing_subtitle_2')}
               </p>
               
-              {/* Button with digital circuits design */}
+              {/* Botón con diseño de circuitos digitales */}
               <div className="space-y-8">
                 <Link to="/simulator" className="inline-block relative">
-                  <Button variant="ai" size="lg" className="group relative px-12 py-8 text-xl font-medium font-brawl rounded-xl transition-all hover:scale-105 mx-auto text-shadow">
+                  <Button variant="ai" size="lg" className="group relative px-12 py-8 text-xl font-medium font-brawl rounded-xl transition-all hover:scale-105 mx-auto">
                     <div className="absolute inset-0 bg-[#00E5FF] rounded-xl opacity-100"></div>
                     
                     {/* Circuit nodes and lines - top */}
@@ -98,9 +97,9 @@ const LandingPage: React.FC = () => {
                 <div className="w-12 h-12 rounded-lg bg-blue-500/20 flex items-center justify-center mr-4">
                   <Map size={24} className="text-blue-400" />
                 </div>
-                <h3 className="font-bold text-xl font-brawl text-shadow">{t('step_1_title')}</h3>
+                <h3 className="font-bold text-xl font-brawl">{t('step_1_title')}</h3>
               </div>
-              <p className="opacity-80 text-shadow">{t('step_1_desc')}</p>
+              <p className="opacity-80">{t('step_1_desc')}</p>
             </div>
             
             <div className="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/20 transform transition-all duration-300 hover:translate-y-[-5px] hover:shadow-lg">
@@ -108,9 +107,9 @@ const LandingPage: React.FC = () => {
                 <div className="w-12 h-12 rounded-lg bg-red-500/20 flex items-center justify-center mr-4">
                   <Ban size={24} className="text-red-400" />
                 </div>
-                <h3 className="font-bold text-xl font-brawl text-shadow">{t('step_2_title')}</h3>
+                <h3 className="font-bold text-xl font-brawl">{t('step_2_title')}</h3>
               </div>
-              <p className="opacity-80 text-shadow">{t('step_2_desc')}</p>
+              <p className="opacity-80">{t('step_2_desc')}</p>
             </div>
             
             <div className="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/20 transform transition-all duration-300 hover:translate-y-[-5px] hover:shadow-lg">
@@ -118,9 +117,9 @@ const LandingPage: React.FC = () => {
                 <div className="w-12 h-12 rounded-lg bg-purple-500/20 flex items-center justify-center mr-4">
                   <Target size={24} className="text-purple-400" />
                 </div>
-                <h3 className="font-bold text-xl font-brawl text-shadow">{t('step_3_title')}</h3>
+                <h3 className="font-bold text-xl font-brawl">{t('step_3_title')}</h3>
               </div>
-              <p className="opacity-80 text-shadow">{t('step_3_desc')}</p>
+              <p className="opacity-80">{t('step_3_desc')}</p>
             </div>
           </div>
           
@@ -134,7 +133,7 @@ const LandingPage: React.FC = () => {
                     </div>}
                 </div>)}
             </div>
-            <p className="text-center opacity-80 font-brawl text-shadow">{t('draft_visualization_text')}</p>
+            <p className="text-center opacity-80 font-brawl">{t('draft_visualization_text')}</p>
           </div>
         </div>
       </div>
@@ -147,7 +146,7 @@ const LandingPage: React.FC = () => {
       </div>
       
       {/* Footer */}
-      <footer className="relative z-10 py-6 text-center text-sm opacity-70 font-brawl text-shadow">
+      <footer className="relative z-10 py-6 text-center text-sm opacity-70 font-brawl">
         &copy; 2025 BrawlGPT - {t('footer_text')}
       </footer>
     </div>;
