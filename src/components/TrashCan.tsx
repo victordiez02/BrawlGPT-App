@@ -4,7 +4,7 @@ import { useDrop } from 'react-dnd';
 import { useTranslation } from 'react-i18next';
 
 // Actualizamos la ruta de la imagen principal de la papelera
-const trashIcon = '/lovable-uploads/1d642bdb-e515-47a1-924b-f81098376345.png';
+const trashIcon = '/lovable-uploads/3db6d616-6f35-4b93-b55d-3597c0d2ab68.png';
 // Mantenemos la imagen de respaldo en caso de error
 const fallbackTrashIcon = 'https://pbs.twimg.com/media/GkaLsRAXoAEltn9.jpg';
 
