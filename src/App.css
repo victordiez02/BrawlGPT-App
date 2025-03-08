@@ -1,3 +1,4 @@
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -40,3 +41,12 @@
 .read-the-docs {
   color: #888;
 }
+
+.circuit-node {
+  @apply absolute w-2 h-2 bg-black rounded-full;
+}
+
+.circuit-line {
+  @apply absolute bg-black;
+}
+

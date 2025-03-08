@@ -5,6 +5,13 @@ import { ArrowRight, Zap, Map, Ban, Target, Cpu, SparkleIcon } from 'lucide-reac
 import { useTranslation } from 'react-i18next';
 import LanguageSelector from '@/components/LanguageSelector';
 import { Button } from '@/components/ui/button';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+
 const LandingPage: React.FC = () => {
   const {
     t
@@ -22,9 +29,31 @@ const LandingPage: React.FC = () => {
             </div>
             
             {/* Logo image instead of text title */}
-            <div className="flex justify-center mb-3 relative z-10 animate-fade-in">
-              <img src="/lovable-uploads/dcf0aba8-0227-4216-a7c2-faba072fd4ad.png" alt="BrawlGPT Logo" className="w-auto h-80 md:h-56" />
-            </div>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <div 
+                    className="flex justify-center mb-3 relative z-10 animate-fade-in cursor-pointer"
+                  >
+                    <img 
+                      src="/lovable-uploads/dcf0aba8-0227-4216-a7c2-faba072fd4ad.png" 
+                      alt="BrawlGPT Logo" 
+                      className="w-auto h-80 md:h-56 transition-all duration-500 hover:scale-110 hover:drop-shadow-[0_0_15px_rgba(0,229,255,0.6)] animate-float" 
+                      onClick={() => {
+                        const audio = new Audio('/lovable-uploads/73ba99c9-265c-40aa-92f7-016afd79fabb.png');
+                        audio.volume = 0.5;
+                        audio.play().catch(e => console.log('Audio autoplay prevented by browser'));
+                      }}
+                    />
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent 
+                  className="bg-gradient-to-r from-brawl-blue to-brawl-red text-white border-none px-4 py-2 font-brawl"
+                >
+                  {t('tooltip_click_logo') || "Click me!"}
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
             
             <h2 className="text-4xl font-bold font-brawl mb-3 relative z-10 animate-fade-in md:text-3xl bg-gradient-to-r from-brawl-blue to-brawl-red bg-clip-text text-transparent">
               {t('landing_title')}
