@@ -169,6 +169,26 @@
   .brawler-name {
     @apply text-center text-sm font-brawl text-white/90 absolute bottom-0 left-0 right-0 bg-black/40 py-1 truncate;
   }
+  
+  /* Neural button styles */
+  .neural-btn {
+    position: relative;
+    overflow: visible !important;
+  }
+  
+  .neural-btn::before {
+    content: '';
+    position: absolute;
+    inset: -5px;
+    background: transparent;
+    z-index: -1;
+    border-radius: 1rem;
+    transition: all 0.3s ease;
+  }
+  
+  .neural-btn:hover::before {
+    box-shadow: 0 0 25px rgba(254, 190, 32, 0.6);
+  }
 }
 
 @layer utilities {
