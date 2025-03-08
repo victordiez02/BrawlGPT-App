@@ -27,8 +27,8 @@ const LandingPage: React.FC = () => {
             
             {/* Title with BrawlGPT */}
             <h1 className="text-5xl md:text-7xl font-bold font-brawl animate-fade-in mb-3">
-              <span className="text-yellow-200 text-glow-yellow-soft">Brawl</span>
-              <span className="text-green-200 text-glow-green-soft">GPT</span>
+              <span className="text-brawl-custom-yellow text-glow-neon">Brawl</span>
+              <span className="text-brawl-custom-green text-glow-neon">GPT</span>
             </h1>
             
             <h2 className="text-4xl md:text-5xl font-bold font-brawl text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-red-500 text-glow animate-fade-in">
