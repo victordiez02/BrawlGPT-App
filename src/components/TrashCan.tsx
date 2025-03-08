@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 import { useDrop } from 'react-dnd';
 import { useTranslation } from 'react-i18next';
 
-// Actualizamos la ruta de la imagen principal de la papelera
-const trashIcon = '/lovable-uploads/3db6d616-6f35-4b93-b55d-3597c0d2ab68.png';
-// Mantenemos la imagen de respaldo en caso de error
+// Actualizamos las rutas de las imágenes de la papelera
+const trashIcon = 'https://cdn-icons-png.freepik.com/512/16/16367.png';
+// Imagen de respaldo en caso de que fallen las principales
 const fallbackTrashIcon = 'https://pbs.twimg.com/media/GkaLsRAXoAEltn9.jpg';
 
 interface TrashCanProps {
