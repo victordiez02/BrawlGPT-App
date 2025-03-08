@@ -255,21 +255,21 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({
     const fromBrawlerId = newSelectedBrawlers[fromIndex];
     const toBrawlerId = newSelectedBrawlers[toIndex];
     
-    if (fromBrawlerId !== null) {
-      newSelectedBrawlers[fromIndex] = toBrawlerId;
-      newSelectedBrawlers[toIndex] = fromBrawlerId;
-      
-      setSelectedBrawlers(newSelectedBrawlers);
-      
-      const fromBrawler = brawlers.find(b => b.id === fromBrawlerId);
-      const toBrawler = toBrawlerId !== null ? brawlers.find(b => b.id === toBrawlerId) : null;
-      
-      if (fromBrawler) {
-        if (toBrawler) {
-          toast.info(t('brawlers_swapped', { from: fromBrawler.name, to: toBrawler.name }));
-        } else {
-          toast.info(t('brawler_moved_position', { name: fromBrawler.name }));
-        }
+    // Swap the brawler IDs
+    newSelectedBrawlers[fromIndex] = toBrawlerId;
+    newSelectedBrawlers[toIndex] = fromBrawlerId;
+    
+    // Update state with the new brawler arrangement
+    setSelectedBrawlers(newSelectedBrawlers);
+    
+    const fromBrawler = brawlers.find(b => b.id === fromBrawlerId);
+    const toBrawler = toBrawlerId !== null ? brawlers.find(b => b.id === toBrawlerId) : null;
+    
+    if (fromBrawler) {
+      if (toBrawler) {
+        toast.info(t('brawlers_swapped', { from: fromBrawler.name, to: toBrawler.name }));
+      } else {
+        toast.info(t('brawler_moved_position', { name: fromBrawler.name }));
       }
     }
   };
