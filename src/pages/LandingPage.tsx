@@ -16,10 +16,10 @@ const LandingPage: React.FC = () => {
         <LanguageSelector />
       </div>
       
-      {/* Interactive Face and Hand */}
-      <div className="absolute left-4 top-1/2 transform -translate-y-1/2 flex items-center z-20 md:left-10 pointer-events-none md:pointer-events-auto hidden md:flex">
+      {/* Interactive Face and Hand - Repositioned higher up and closer together */}
+      <div className="absolute left-4 top-1/4 transform -translate-y-1/2 flex items-center z-20 md:left-10 pointer-events-none md:pointer-events-auto hidden md:flex">
         <div 
-          className="mr-2 transform transition-transform duration-200 hover:rotate-6"
+          className="mr-0 transform transition-transform duration-200 hover:rotate-6"
           onMouseEnter={() => setIsTalking(true)}
           onMouseLeave={() => setIsTalking(false)}
         >
@@ -30,7 +30,7 @@ const LandingPage: React.FC = () => {
           />
         </div>
         <div 
-          className={`transform transition-all duration-200 ${isTalking ? 'animate-sway' : ''}`} 
+          className={`-ml-2 transform transition-all duration-200 ${isTalking ? 'animate-sway' : ''}`} 
           onMouseEnter={() => setIsTalking(true)}
           onMouseLeave={() => setIsTalking(false)}
         >
