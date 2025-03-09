@@ -376,6 +376,35 @@
       @apply hidden;
     }
   }
+  
+  @keyframes talking {
+    0%, 100% {
+      transform: translateY(0) scale(1);
+    }
+    25% {
+      transform: translateY(-2px) scale(1.02);
+    }
+    75% {
+      transform: translateY(2px) scale(0.98);
+    }
+  }
+  
+  .animate-talking {
+    animation: talking 0.3s ease-in-out infinite;
+  }
+}
+
+@keyframes sway {
+  0%, 100% {
+    transform: rotate(-3deg);
+  }
+  50% {
+    transform: rotate(3deg);
+  }
+}
+
+.animate-sway {
+  animation: sway 1.5s ease-in-out infinite;
 }
 
 @keyframes pulse-soft {

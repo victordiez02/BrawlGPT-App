@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Zap, Map, Ban, Target, Cpu, SparkleIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -9,6 +8,7 @@ import Footer from '@/components/Footer';
 
 const LandingPage: React.FC = () => {
   const { t } = useTranslation();
+  const [isTalking, setIsTalking] = useState(false);
   
   return (
     <div className="min-h-screen flex flex-col relative bg-cybernetic text-white">
@@ -16,16 +16,40 @@ const LandingPage: React.FC = () => {
         <LanguageSelector />
       </div>
       
+      {/* Interactive Face and Hand */}
+      <div className="absolute left-4 top-1/2 transform -translate-y-1/2 flex items-center z-20 md:left-10 pointer-events-none md:pointer-events-auto hidden md:flex">
+        <div 
+          className="mr-2 transform transition-transform duration-200 hover:rotate-6"
+          onMouseEnter={() => setIsTalking(true)}
+          onMouseLeave={() => setIsTalking(false)}
+        >
+          <img 
+            src="/lovable-uploads/14aba118-5183-4256-9eec-d81ae061c04d.png" 
+            alt="Hand" 
+            className="w-16 h-auto select-none"
+          />
+        </div>
+        <div 
+          className={`transform transition-all duration-200 ${isTalking ? 'animate-sway' : ''}`} 
+          onMouseEnter={() => setIsTalking(true)}
+          onMouseLeave={() => setIsTalking(false)}
+        >
+          <img 
+            src="/lovable-uploads/654bd1a9-3cfd-4dca-8c8e-8a4933aa9bac.png" 
+            alt="Face with glasses" 
+            className={`w-24 h-auto select-none ${isTalking ? 'animate-talking' : ''}`}
+          />
+        </div>
+      </div>
+      
       {/* Hero Section */}
       <div className="flex-1 flex flex-col items-center justify-center w-full max-w-7xl mx-auto px-4 py-12 md:py-24 relative z-10 overflow-hidden">
         <div className="w-full max-w-6xl">
           <div className="mb-16 text-center relative">
-            {/* Logo Background */}
             <div className="absolute inset-0 flex justify-center items-center opacity-30 transform scale-150 pointer-events-none z-0">
               <img src="/lovable-uploads/73ba99c9-265c-40aa-92f7-016afd79fabb.png" alt="Brawl Stars Logo Background" className="w-96 h-96" />
             </div>
             
-            {/* Logo image instead of text title */}
             <div 
               className="flex justify-center mb-3 relative z-10 animate-fade-in cursor-pointer"
             >
@@ -55,13 +79,11 @@ const LandingPage: React.FC = () => {
                 {t('landing_subtitle_2')}
               </p>
               
-              {/* Botón con diseño de circuitos digitales */}
               <div className="space-y-8">
                 <Link to="/simulator" className="inline-block relative">
                   <Button variant="ai" size="lg" className="group relative px-12 py-8 text-xl font-medium font-brawl rounded-xl transition-all hover:scale-105 mx-auto">
                     <div className="absolute inset-0 bg-[#00E5FF] rounded-xl opacity-100"></div>
                     
-                    {/* Circuit nodes and lines - top */}
                     <div className="circuit-node top-0 left-1/2 -translate-x-1/2 -translate-y-full"></div>
                     <div className="circuit-line h-1 w-8 top-0 left-1/2 -translate-x-1/2 -translate-y-1/2"></div>
                     <div className="circuit-node top-0 left-1/4 -translate-y-full"></div>
@@ -69,7 +91,6 @@ const LandingPage: React.FC = () => {
                     <div className="circuit-node top-0 right-1/4 -translate-y-full"></div>
                     <div className="circuit-line h-1 w-8 top-0 right-1/4 -translate-y-1/2"></div>
                     
-                    {/* Circuit nodes and lines - bottom */}
                     <div className="circuit-node bottom-0 left-1/2 -translate-x-1/2 translate-y-full"></div>
                     <div className="circuit-line h-1 w-8 bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2"></div>
                     <div className="circuit-node bottom-0 left-1/4 translate-y-full"></div>
@@ -77,7 +98,6 @@ const LandingPage: React.FC = () => {
                     <div className="circuit-node bottom-0 right-1/4 translate-y-full"></div>
                     <div className="circuit-line h-1 w-8 bottom-0 right-1/4 translate-y-1/2"></div>
                     
-                    {/* Circuit nodes and lines - left */}
                     <div className="circuit-node left-0 top-1/2 -translate-x-full -translate-y-1/2"></div>
                     <div className="circuit-line w-1 h-8 left-0 top-1/2 -translate-x-1/2 -translate-y-1/2"></div>
                     <div className="circuit-node left-0 top-1/4 -translate-x-full"></div>
@@ -85,7 +105,6 @@ const LandingPage: React.FC = () => {
                     <div className="circuit-node left-0 bottom-1/4 -translate-x-full"></div>
                     <div className="circuit-line w-1 h-8 left-0 bottom-1/4 -translate-x-1/2"></div>
                     
-                    {/* Circuit nodes and lines - right */}
                     <div className="circuit-node right-0 top-1/2 translate-x-full -translate-y-1/2"></div>
                     <div className="circuit-line w-1 h-8 right-0 top-1/2 translate-x-1/2 -translate-y-1/2"></div>
                     <div className="circuit-node right-0 top-1/4 translate-x-full"></div>
@@ -105,7 +124,6 @@ const LandingPage: React.FC = () => {
             </div>
           </div>
           
-          {/* Features Section */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
             <div className="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/20 transform transition-all duration-300 hover:translate-y-[-5px] hover:shadow-lg">
               <div className="flex items-center mb-4">
@@ -138,7 +156,6 @@ const LandingPage: React.FC = () => {
             </div>
           </div>
           
-          {/* Draft Visualization */}
           <div className="glass-panel bg-white/5 backdrop-blur-lg p-8 rounded-2xl border border-white/10 shadow-xl mb-12">
             <div className="grid grid-cols-6 gap-3 mb-6">
               {[...Array(6)].map((_, i) => <div key={i} className={`aspect-square rounded-xl ${i < 3 ? 'bg-blue-500/30 border-[6px] border-blue-500/50' : 'bg-red-500/30 border-[6px] border-red-500/50'} 
@@ -153,14 +170,12 @@ const LandingPage: React.FC = () => {
         </div>
       </div>
       
-      {/* Abstract background blobs */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0 opacity-30">
         <div className="absolute top-0 left-0 w-96 h-96 bg-blue-600 rounded-full filter blur-[120px] opacity-20"></div>
         <div className="absolute top-1/3 right-0 w-96 h-96 bg-red-600 rounded-full filter blur-[120px] opacity-20"></div>
         <div className="absolute bottom-0 left-1/3 w-96 h-96 bg-purple-600 rounded-full filter blur-[120px] opacity-20"></div>
       </div>
       
-      {/* Footer - Reemplazado con el componente Footer completo */}
       <Footer />
     </div>
   );
