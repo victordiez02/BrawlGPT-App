@@ -1,4 +1,3 @@
-
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
@@ -39,31 +38,17 @@ export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean
-  aiIcon?: boolean
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, aiIcon = false, ...props }, ref) => {
+  ({ className, variant, size, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : "button"
     return (
       <Comp
         className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
         {...props}
-      >
-        {variant === 'ai' && aiIcon && (
-          <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
-            <div className="circuit-ai-icon absolute size-full flex items-center justify-center">
-              <img 
-                src="/lovable-uploads/e2f282b6-5151-418a-b04c-141d4e9ea3b8.png" 
-                alt="AI Circuit" 
-                className="size-6 object-contain animate-pulse-slow filter drop-shadow-[0_0_3px_#00E5FF]" 
-              />
-            </div>
-          </div>
-        )}
-        {props.children}
-      </Comp>
+      />
     )
   }
 )
