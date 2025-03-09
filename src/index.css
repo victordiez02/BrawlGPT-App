@@ -1,15 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Bungee&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@font-face {
-  font-family: 'Brawl';
-  src: url('/fonts/pf-square-sans-cond-pro-extrabold.ttf') format('truetype');
-  font-weight: 800;
-  font-display: swap;
-}
 
 @layer base {
   :root {
@@ -18,392 +10,83 @@
 
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
-
+ 
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
-
+ 
     --primary: 222.2 47.4% 11.2%;
     --primary-foreground: 210 40% 98%;
-
+ 
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
-
+ 
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
-
+ 
     --accent: 210 40% 96.1%;
     --accent-foreground: 222.2 47.4% 11.2%;
-
+ 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
     --ring: 222.2 84% 4.9%;
-
+ 
     --radius: 0.5rem;
   }
-
+ 
   .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
-
+ 
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
-
+ 
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
-
+ 
     --primary: 210 40% 98%;
     --primary-foreground: 222.2 47.4% 11.2%;
-
+ 
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
-
+ 
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
-
+ 
     --accent: 217.2 32.6% 17.5%;
     --accent-foreground: 210 40% 98%;
-
+ 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-
+ 
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
   }
 }
-
+ 
 @layer base {
   * {
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground overflow-x-hidden;
-    font-family: 'Brawl', 'PF Square Sans Cond Pro', 'Bungee', system-ui, sans-serif;
-  }
-  
-  .font-brawl {
-    font-family: 'Brawl', 'PF Square Sans Cond Pro', 'Bungee', system-ui, sans-serif;
-    letter-spacing: 0.02em;
+    @apply bg-background text-foreground;
   }
 }
 
-@layer components {
-  .btn-primary {
-    @apply bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg hover:from-blue-700 hover:to-indigo-700 font-brawl;
-  }
-  
-  .btn-success {
-    @apply bg-gradient-to-r from-green-500 to-emerald-500 text-white font-bold py-3 px-6 rounded-xl shadow-lg hover:from-green-600 hover:to-emerald-600 transition-colors;
-  }
-  
-  .glass-panel {
-    @apply bg-white/25 dark:bg-gray-800/30 backdrop-blur-md rounded-xl shadow-lg border border-white/30 dark:border-gray-700/50;
-  }
-  
-  .draft-slot-blue {
-    @apply bg-blue-500/20 dark:bg-blue-900/40 border-[6px] border-brawl-blue/80 rounded-xl overflow-hidden flex items-center justify-center cursor-pointer transition-all hover:border-brawl-blue;
-  }
-  
-  .draft-slot-red {
-    @apply bg-red-500/20 dark:bg-red-900/40 border-[6px] border-brawl-red/80 rounded-xl overflow-hidden flex items-center justify-center cursor-pointer transition-all hover:border-brawl-red;
-  }
-  
-  .brawler-card {
-    @apply rounded-xl overflow-hidden shadow-md transition-all duration-200;
-  }
-  
-  .brawler-card-banned {
-    @apply opacity-40 grayscale cursor-not-allowed;
-  }
-  
-  .brawler-card-disabled {
-    @apply opacity-80 cursor-not-allowed;
-  }
-  
-  .language-selector {
-    @apply fixed top-4 right-4 z-50 flex items-center gap-2 bg-white/20 dark:bg-gray-800/40 backdrop-blur-md p-2 rounded-lg shadow-md border border-white/30 dark:border-gray-700/50;
-  }
-  
-  .language-btn {
-    @apply flex items-center justify-center rounded-md transition-all hover:scale-110 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500;
-  }
-  
-  .language-btn.active {
-    @apply ring-2 ring-blue-500 bg-blue-500/30;
-  }
-
-  /* Sort by button */
-  .sort-by-button {
-    @apply bg-gray-800 text-white px-3 py-1 rounded-md text-sm flex items-center gap-1 hover:bg-gray-700 transition-colors;
-  }
-
-  /* Rarity background colors - more vibrant */
-  .rarity-common {
-    @apply bg-blue-400/70;
-  }
-  
-  .rarity-rare {
-    @apply bg-green-500/70;
-  }
-  
-  .rarity-super-rare {
-    @apply bg-blue-600/70;
-  }
-  
-  .rarity-epic {
-    @apply bg-purple-600/70;
-  }
-  
-  .rarity-mythic {
-    @apply bg-red-600/70;
-  }
-  
-  .rarity-legendary {
-    @apply bg-yellow-500/70;
-  }
-  
-  /* Brawler name on draft - Adaptado para móvil */
-  .brawler-name {
-    @apply text-center text-xs md:text-sm font-brawl text-white/90 absolute bottom-0 left-0 right-0 bg-black/40 py-0.5 md:py-1 truncate;
-  }
-  
-  /* Neural button styles */
-  .neural-btn {
-    position: relative;
-    overflow: visible !important;
-  }
-  
-  .neural-btn::before {
-    content: '';
-    position: absolute;
-    inset: -5px;
-    background: transparent;
-    z-index: -1;
-    border-radius: 1rem;
-    transition: all 0.3s ease;
-  }
-  
-  .neural-btn:hover::before {
-    box-shadow: 0 0 25px rgba(254, 190, 32, 0.6);
-  }
-  
-  /* Circuito digital button styles */
-  .circuit-btn {
-    position: relative;
-    overflow: visible !important;
-    border-radius: 0.75rem;
-    border: 2px solid black;
-    background-color: rgba(0, 229, 255, 0.1);
-  }
-  
-  .circuit-btn::before {
-    content: '';
-    position: absolute;
-    inset: -8px;
-    background: transparent;
-    z-index: -1;
-    border-radius: 1rem;
-    transition: all 0.3s ease;
-  }
-  
-  .circuit-btn:hover::before {
-    box-shadow: 0 0 25px rgba(0, 229, 255, 0.6);
-  }
-  
-  .circuit-btn::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url('/lovable-uploads/8ca57b4b-b9ec-4731-a438-a2eca154c699.png') center/contain no-repeat;
-    opacity: 0;
-    transform: scale(1.5);
-    transition: all 0.3s ease;
-    pointer-events: none;
-  }
-  
-  .circuit-btn:hover::after {
-    opacity: 0.15;
-    transform: scale(1);
-  }
-  
-  /* Circuit lines and nodes */
-  .circuit-btn .circuit-node {
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    background-color: black;
-    border-radius: 50%;
-    opacity: 0;
-    transition: all 0.4s ease;
-    z-index: 5;
-  }
-  
-  .circuit-btn .circuit-node::after {
-    content: '';
-    position: absolute;
-    width: 6px;
-    height: 6px;
-    background-color: #00E5FF;
-    border-radius: 50%;
-    top: 2px;
-    left: 2px;
-  }
-  
-  .circuit-btn .circuit-line {
-    position: absolute;
-    background-color: black;
-    opacity: 0;
-    transition: all 0.4s ease;
-    z-index: 5;
-  }
-  
-  .circuit-btn:hover .circuit-node,
-  .circuit-btn:hover .circuit-line {
-    opacity: 1;
-  }
-}
-
-@layer utilities {
-  .brawl-blue {
-    color: #1D71F2;
-  }
-  
-  .brawl-red {
-    color: #F23D3D;
-  }
-  
-  .brawl-purple {
-    color: #A854F2;
-  }
-  
-  .bg-brawl-blue {
-    background-color: #1D71F2;
-  }
-  
-  .bg-brawl-red {
-    background-color: #F23D3D;
-  }
-  
-  .bg-brawl-purple {
-    background-color: #A854F2;
-  }
-  
-  .ring-brawl-blue {
-    --tw-ring-color: #1D71F2;
-  }
-  
-  .ring-brawl-red {
-    --tw-ring-color: #F23D3D;
-  }
-  
-  .ring-3 {
-    --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
-    --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(3px + var(--tw-ring-offset-width)) var(--tw-ring-color);
-    box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
-  }
-  
-  .ring-4 {
-    --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
-    --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(4px + var(--tw-ring-offset-width)) var(--tw-ring-color);
-    box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
-  }
-  
-  .animate-pulse-soft {
-    animation: pulse-soft 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  }
-  
-  .animate-scale-in {
-    animation: scale-in 0.2s ease-out;
-  }
-  
-  .animate-fade-in {
-    animation: fade-in 0.5s ease-out;
-  }
-  
-  .delay-200 {
-    animation-delay: 200ms;
-  }
-  
-  .text-glow {
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.7), 0 0 20px rgba(255, 255, 255, 0.5);
-  }
-  
-  .text-glow-blue {
-    text-shadow: 0 0 10px rgba(29, 113, 242, 0.7), 0 0 20px rgba(29, 113, 242, 0.5);
-  }
-  
-  .text-glow-red {
-    text-shadow: 0 0 10px rgba(242, 61, 61, 0.7), 0 0 20px rgba(242, 61, 61, 0.5);
-  }
-  
-  .text-shadow {
-    text-shadow: 
-      -3px -3px 0 #000,
-       3px -3px 0 #000,
-      -3px  3px 0 #000,
-       3px  3px 0 #000,
-       4px 4px 0 rgba(0, 0, 0, 0.6);
-  }
-  
-  .bg-cybernetic {
-    background-color: #111827;
-    background-image: 
-      radial-gradient(circle at 0% 0%, rgba(29, 113, 242, 0.2) 0%, transparent 50%),
-      radial-gradient(circle at 100% 0%, rgba(242, 61, 61, 0.2) 0%, transparent 50%),
-      radial-gradient(circle at 50% 100%, rgba(168, 84, 242, 0.2) 0%, transparent 50%);
-  }
-  
-  .animate-spin-slow {
-    animation: spin 3s linear infinite;
-  }
-  
-  @media (max-width: 768px) {
-    .language-selector {
-      @apply scale-75 top-2 right-2;
-    }
-    
-    .draft-slot-blue, .draft-slot-red {
-      @apply border-[4px];
-    }
-    
-    .back-to-home-btn {
-      @apply hidden;
-    }
-  }
-}
-
-@keyframes pulse-soft {
+/* Animations */
+@keyframes pulse-slow {
   0%, 100% {
     opacity: 1;
+    filter: brightness(1);
+    transform: scale(1);
   }
   50% {
-    opacity: 0.8;
-  }
-}
-
-@keyframes scale-in {
-  0% {
-    transform: scale(0.95);
-    opacity: 0;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-@keyframes fade-in {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
+    opacity: 0.85;
+    filter: brightness(1.2);
+    transform: scale(1.05);
   }
 }
 
@@ -416,26 +99,40 @@
   }
 }
 
+@keyframes circuit-pulse {
+  0%, 100% {
+    box-shadow: 0 0 5px 2px rgba(0, 229, 255, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 10px 3px rgba(0, 229, 255, 0.8);
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 3s ease-in-out infinite;
+}
+
 .animate-float {
-  animation: float 4s ease-in-out infinite;
+  animation: float 6s ease-in-out infinite;
 }
 
-@keyframes pulse-circuit {
-  0%, 100% {
-    box-shadow: 0 0 5px rgba(0, 229, 255, 0.5);
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
   }
-  50% {
-    box-shadow: 0 0 15px rgba(0, 229, 255, 0.8);
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-@keyframes glow-circuit {
-  0%, 100% {
-    filter: drop-shadow(0 0 3px rgba(0, 229, 255, 0.6));
-  }
-  50% {
-    filter: drop-shadow(0 0 8px rgba(0, 229, 255, 0.9));
-  }
+.animate-spin-slow {
+  animation: spin 4s linear infinite;
 }
 
 @keyframes spin {
@@ -445,4 +142,82 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+/* Circuit styling */
+.circuit-btn .circuit-node {
+  @apply absolute w-2 h-2 bg-black rounded-full z-10;
+  box-shadow: 0 0 5px 2px rgba(0, 229, 255, 0.5);
+  animation: circuit-pulse 2s ease-in-out infinite;
+}
+
+.circuit-btn .circuit-line {
+  @apply absolute bg-black z-10;
+}
+
+.circuit-ai-icon {
+  position: relative;
+}
+
+.circuit-ai-icon::before,
+.circuit-ai-icon::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: conic-gradient(
+    from 0deg at 50% 50%,
+    #00E5FF,
+    #0047AB,
+    #00E5FF,
+    #0047AB,
+    #00E5FF
+  );
+  border-radius: 50%;
+  animation: rotate 4s linear infinite;
+  opacity: 0.5;
+  z-index: -1;
+}
+
+.circuit-ai-icon::after {
+  filter: blur(12px);
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Base styles */
+.bg-cybernetic {
+  background-color: #0c0e16;
+  background-image: 
+    radial-gradient(circle at 25% 25%, rgba(25, 55, 95, 0.2) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(95, 25, 95, 0.2) 0%, transparent 50%),
+    linear-gradient(to bottom, #0c0e16, #151a2c);
+}
+
+.text-glow {
+  text-shadow: 0 0 10px currentColor;
+}
+
+/* Glass Elements */
+.glass-panel {
+  @apply bg-gray-900/60 backdrop-blur-md rounded-xl border border-white/10 transition-all;
+}
+
+/* Fonts */
+@font-face {
+  font-family: 'BrawlStars';
+  src: url('/fonts/lilita-one.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+.font-brawl {
+  font-family: 'BrawlStars', sans-serif;
 }

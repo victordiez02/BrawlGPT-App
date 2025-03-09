@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useMemo } from 'react';
 import { brawlers, Brawler } from '@/lib/brawlers';
 import { GameMap } from '@/lib/maps';
@@ -455,6 +456,7 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({
                   disabled={!generateButtonConfig.enabled || isGenerating}
                   variant="ai"
                   size="lg"
+                  aiIcon={true}
                   className="w-full group transition-all duration-300 font-brawl"
                 >
                   <div className="absolute inset-0 bg-[#00E5FF] rounded-xl opacity-100"></div>
@@ -473,7 +475,7 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({
                   <div className="circuit-node bottom-0 right-1/4 translate-y-full"></div>
                   <div className="circuit-line h-1 w-8 bottom-0 right-1/4 translate-y-1/2"></div>
                   
-                  <div className="flex items-center justify-center relative z-10">
+                  <div className="flex items-center justify-center relative z-10 ml-8">
                     {isGenerating ? (
                       <>
                         <Loader2 size={20} className="mr-2 animate-spin" />
@@ -481,8 +483,8 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({
                       </>
                     ) : (
                       <>
-                        <Cpu size={20} className="mr-2 animate-spin-slow" />
-                        <SparkleIcon size={16} className="absolute -top-2 -left-1 text-[#00E5FF] animate-pulse" />
+                        {/* Invisible Spacer for Balance */}
+                        <div className="w-6 mr-2"></div>
                         {generateButtonConfig.text}
                       </>
                     )}
