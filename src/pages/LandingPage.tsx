@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Zap, Map, Ban, Target, Cpu, SparkleIcon } from 'lucide-react';
@@ -14,32 +15,6 @@ const LandingPage: React.FC = () => {
     <div className="min-h-screen flex flex-col relative bg-cybernetic text-white">
       <div className="absolute top-6 right-6 z-10 scale-75 md:scale-100 origin-top-right">
         <LanguageSelector />
-      </div>
-      
-      {/* Interactive Face and Hand - Repositioned higher up and closer together */}
-      <div className="absolute left-4 top-1/4 transform -translate-y-1/2 flex items-center z-20 md:left-10 pointer-events-none md:pointer-events-auto hidden md:flex">
-        <div 
-          className="mr-0 transform transition-transform duration-200 hover:rotate-6"
-          onMouseEnter={() => setIsTalking(true)}
-          onMouseLeave={() => setIsTalking(false)}
-        >
-          <img 
-            src="/lovable-uploads/14aba118-5183-4256-9eec-d81ae061c04d.png" 
-            alt="Hand" 
-            className="w-16 h-auto select-none"
-          />
-        </div>
-        <div 
-          className={`-ml-2 transform transition-all duration-200 ${isTalking ? 'animate-sway' : ''}`} 
-          onMouseEnter={() => setIsTalking(true)}
-          onMouseLeave={() => setIsTalking(false)}
-        >
-          <img 
-            src="/lovable-uploads/654bd1a9-3cfd-4dca-8c8e-8a4933aa9bac.png" 
-            alt="Face with glasses" 
-            className={`w-24 h-auto select-none ${isTalking ? 'animate-talking' : ''}`}
-          />
-        </div>
       </div>
       
       {/* Hero Section */}
@@ -79,7 +54,33 @@ const LandingPage: React.FC = () => {
                 {t('landing_subtitle_2')}
               </p>
               
-              <div className="space-y-8">
+              <div className="space-y-8 relative">
+                {/* Interactive Face and Hand - Repositioned to the left of the button */}
+                <div className="absolute left-0 top-1/2 transform -translate-y-1/2 flex items-center z-20 pointer-events-none md:pointer-events-auto hidden md:flex">
+                  <div 
+                    className="mr-[-10px] transform transition-transform duration-200 hover:rotate-6"
+                    onMouseEnter={() => setIsTalking(true)}
+                    onMouseLeave={() => setIsTalking(false)}
+                  >
+                    <img 
+                      src="/lovable-uploads/14aba118-5183-4256-9eec-d81ae061c04d.png" 
+                      alt="Hand" 
+                      className="w-16 h-auto select-none"
+                    />
+                  </div>
+                  <div 
+                    className={`transform transition-all duration-200 ${isTalking ? 'animate-sway' : ''}`} 
+                    onMouseEnter={() => setIsTalking(true)}
+                    onMouseLeave={() => setIsTalking(false)}
+                  >
+                    <img 
+                      src="/lovable-uploads/654bd1a9-3cfd-4dca-8c8e-8a4933aa9bac.png" 
+                      alt="Face with glasses" 
+                      className={`w-24 h-auto select-none ${isTalking ? 'animate-talking' : ''}`}
+                    />
+                  </div>
+                </div>
+                
                 <Link to="/simulator" className="inline-block relative">
                   <Button variant="ai" size="lg" className="group relative px-12 py-8 text-xl font-medium font-brawl rounded-xl transition-all hover:scale-105 mx-auto">
                     <div className="absolute inset-0 bg-[#00E5FF] rounded-xl opacity-100"></div>
