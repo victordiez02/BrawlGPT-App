@@ -4,7 +4,7 @@ import { useDrop } from 'react-dnd';
 import { useTranslation } from 'react-i18next';
 
 // Actualizamos las rutas de las imágenes de la papelera
-const trashIcon = 'https://cdn-icons-png.freepik.com/512/802/802085.png';
+const trashIcon = '/lovable-uploads/trashIcon.png';
 // Imagen de respaldo en caso de que fallen las principales
 const fallbackTrashIcon = 'https://pbs.twimg.com/media/GkaLsRAXoAEltn9.jpg';
 
