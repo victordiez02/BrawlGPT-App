@@ -56,14 +56,14 @@ const LandingPage: React.FC = () => {
               
               <div className="space-y-8 relative">
                 {/* Interactive Face and Hand - Repositioned to the left of the button */}
-                <div className="absolute left-0 top-1/2 transform -translate-y-1/2 flex items-center z-20 pointer-events-none md:pointer-events-auto hidden md:flex">
+                <div className="absolute left-[-50px] top-1/2 transform -translate-y-1/2 flex items-center z-20 pointer-events-none md:pointer-events-auto hidden md:flex">
                   <div 
-                    className="mr-[-10px] transform transition-transform duration-200 hover:rotate-6"
+                    className="mr-[-30px] transform transition-transform duration-200 hover:rotate-6"
                     onMouseEnter={() => setIsTalking(true)}
                     onMouseLeave={() => setIsTalking(false)}
                   >
                     <img 
-                      src="/lovable-uploads/14aba118-5183-4256-9eec-d81ae061c04d.png" 
+                      src="/lovable-uploads/friki_mano.png" 
                       alt="Hand" 
                       className="w-16 h-auto select-none"
                     />
@@ -74,7 +74,7 @@ const LandingPage: React.FC = () => {
                     onMouseLeave={() => setIsTalking(false)}
                   >
                     <img 
-                      src="/lovable-uploads/654bd1a9-3cfd-4dca-8c8e-8a4933aa9bac.png" 
+                      src="/lovable-uploads/friki_cara.png" 
                       alt="Face with glasses" 
                       className={`w-24 h-auto select-none ${isTalking ? 'animate-talking' : ''}`}
                     />
