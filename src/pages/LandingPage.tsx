@@ -57,9 +57,9 @@ const LandingPage = () => {
               
               <div className="space-y-8 relative">
                 {/* Interactive Friki Face and Hand - Left side of the button */}
-                <div className="absolute left-[-80px] top-[50%] transform -translate-y-1/2 flex items-center z-20 pointer-events-none md:pointer-events-auto hidden md:flex">
+                <div className="absolute left-[-30px] top-[70%] transform -translate-y-1/2 flex items-center z-20 pointer-events-none md:pointer-events-auto hidden md:flex">
                   <div 
-                    className="mr-[-25px] transform transition-transform duration-200 hover:rotate-6"
+                    className="mr-[-70px] transform transition-transform duration-200 hover:rotate-6"
                     onMouseEnter={() => setIsFrikiTalking(true)}
                     onMouseLeave={() => setIsFrikiTalking(false)}
                   >
@@ -83,7 +83,7 @@ const LandingPage = () => {
                 </div>
                 
                 {/* Interactive Thinking Face and Hand - Right side of the button */}
-                <div className="absolute right-[-80px] top-[50%] transform -translate-y-1/2 flex items-center z-20 pointer-events-none md:pointer-events-auto hidden md:flex">
+                <div className="absolute right-[-40px] top-[30%] transform -translate-y-1/2 flex items-center z-20 pointer-events-none md:pointer-events-auto hidden md:flex">
                   <div 
                     className={`transform transition-all duration-200 ${isPensacionThinking ? 'animate-thinking' : ''}`}
                     onMouseEnter={() => setIsPensacionThinking(true)}
@@ -96,14 +96,14 @@ const LandingPage = () => {
                     />
                   </div>
                   <div 
-                    className="ml-[-35px] transform transition-transform duration-200"
+                    className="ml-[-78px] transform transition-transform duration-200"
                     onMouseEnter={() => setIsPensacionThinking(true)}
                     onMouseLeave={() => setIsPensacionThinking(false)}
                   >
                     <img 
                       src="/lovable-uploads/pensacion_mano.png" 
                       alt="Thinking hand" 
-                      className={`w-16 h-auto select-none ${isPensacionThinking ? 'animate-thinking-hand' : ''}`}
+                      className={`w-24 h-auto select-none ${isPensacionThinking ? 'animate-thinking-hand' : ''}`}
                     />
                   </div>
                 </div>
