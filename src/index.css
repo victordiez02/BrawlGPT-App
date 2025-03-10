@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Bungee&display=swap');
 
 @tailwind base;
@@ -391,6 +392,45 @@
   
   .animate-talking {
     animation: talking 0.3s ease-in-out infinite;
+  }
+  
+  @keyframes thinking-head {
+    0%, 100% {
+      transform: rotate(-1deg) translateY(0);
+    }
+    50% {
+      transform: rotate(1deg) translateY(-2px);
+    }
+  }
+  
+  .animate-thinking-head {
+    animation: thinking-head 1.8s ease-in-out infinite;
+  }
+  
+  @keyframes thinking-hand {
+    0%, 100% {
+      transform: translateY(0) rotate(0deg);
+    }
+    50% {
+      transform: translateY(-1px) rotate(-2deg);
+    }
+  }
+  
+  .animate-thinking-hand {
+    animation: thinking-hand 1.5s ease-in-out infinite;
+  }
+  
+  @keyframes thinking {
+    0%, 100% {
+      transform: rotate(-1deg);
+    }
+    50% {
+      transform: rotate(1deg);
+    }
+  }
+  
+  .animate-thinking {
+    animation: thinking 2s ease-in-out infinite;
   }
 }
 

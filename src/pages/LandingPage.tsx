@@ -9,7 +9,8 @@ import Footer from '@/components/Footer';
 
 const LandingPage = () => {
   const { t } = useTranslation();
-  const [isTalking, setIsTalking] = React.useState(false);
+  const [isFrikiTalking, setIsFrikiTalking] = React.useState(false);
+  const [isPensacionThinking, setIsPensacionThinking] = React.useState(false);
   
   return (
     <div className="min-h-screen flex flex-col relative bg-cybernetic text-white">
@@ -55,28 +56,54 @@ const LandingPage = () => {
               </p>
               
               <div className="space-y-8 relative">
-                {/* Interactive Face and Hand - Repositioned to the left of the button */}
-                <div className="absolute left-[-80px] top-[65%] transform -translate-y-1/2 flex items-center z-20 pointer-events-none md:pointer-events-auto hidden md:flex">
+                {/* Interactive Friki Face and Hand - Left side of the button */}
+                <div className="absolute left-[-80px] top-[50%] transform -translate-y-1/2 flex items-center z-20 pointer-events-none md:pointer-events-auto hidden md:flex">
                   <div 
-                    className="mr-[-70px] transform transition-transform duration-200 hover:rotate-6"
-                    onMouseEnter={() => setIsTalking(true)}
-                    onMouseLeave={() => setIsTalking(false)}
+                    className="mr-[-25px] transform transition-transform duration-200 hover:rotate-6"
+                    onMouseEnter={() => setIsFrikiTalking(true)}
+                    onMouseLeave={() => setIsFrikiTalking(false)}
                   >
                     <img 
                       src="/lovable-uploads/friki_mano.png" 
                       alt="Hand" 
-                      className="w-16 h-auto select-none"
+                      className={`w-16 h-auto select-none ${isFrikiTalking ? 'animate-sway' : ''}`}
                     />
                   </div>
                   <div 
-                    className={`transform transition-all duration-200 ${isTalking ? 'animate-sway' : ''}`} 
-                    onMouseEnter={() => setIsTalking(true)}
-                    onMouseLeave={() => setIsTalking(false)}
+                    className={`transform transition-all duration-200 ${isFrikiTalking ? 'animate-sway' : ''}`}
+                    onMouseEnter={() => setIsFrikiTalking(true)}
+                    onMouseLeave={() => setIsFrikiTalking(false)}
                   >
                     <img 
                       src="/lovable-uploads/friki_cara.png" 
                       alt="Face with glasses" 
-                      className={`w-24 h-auto select-none ${isTalking ? 'animate-talking' : ''}`}
+                      className={`w-24 h-auto select-none ${isFrikiTalking ? 'animate-talking' : ''}`}
+                    />
+                  </div>
+                </div>
+                
+                {/* Interactive Thinking Face and Hand - Right side of the button */}
+                <div className="absolute right-[-80px] top-[50%] transform -translate-y-1/2 flex items-center z-20 pointer-events-none md:pointer-events-auto hidden md:flex">
+                  <div 
+                    className={`transform transition-all duration-200 ${isPensacionThinking ? 'animate-thinking' : ''}`}
+                    onMouseEnter={() => setIsPensacionThinking(true)}
+                    onMouseLeave={() => setIsPensacionThinking(false)}
+                  >
+                    <img 
+                      src="/lovable-uploads/pensacion_cara.png" 
+                      alt="Thinking face" 
+                      className={`w-24 h-auto select-none ${isPensacionThinking ? 'animate-thinking-head' : ''}`}
+                    />
+                  </div>
+                  <div 
+                    className="ml-[-35px] transform transition-transform duration-200"
+                    onMouseEnter={() => setIsPensacionThinking(true)}
+                    onMouseLeave={() => setIsPensacionThinking(false)}
+                  >
+                    <img 
+                      src="/lovable-uploads/pensacion_mano.png" 
+                      alt="Thinking hand" 
+                      className={`w-16 h-auto select-none ${isPensacionThinking ? 'animate-thinking-hand' : ''}`}
                     />
                   </div>
                 </div>
