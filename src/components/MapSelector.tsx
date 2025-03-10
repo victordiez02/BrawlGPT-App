@@ -1,4 +1,4 @@
-
+/** @jsxImportSource react */
 import React, { useState } from 'react';
 import { GameMap, gameMaps, getGameModeByName } from '@/lib/maps';
 import { Map, ArrowLeft } from 'lucide-react';

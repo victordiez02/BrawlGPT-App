@@ -1,4 +1,4 @@
-
+/** @jsxImportSource react */
 import React from 'react';
 import { UserRound } from 'lucide-react';
 import DraftSlot from './DraftSlot';

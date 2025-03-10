@@ -1,5 +1,5 @@
-
-import React, { useState } from 'react';
+/** @jsxImportSource react */
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Zap, Map, Ban, Target, Cpu, SparkleIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -7,9 +7,9 @@ import LanguageSelector from '@/components/LanguageSelector';
 import { Button } from '@/components/ui/button';
 import Footer from '@/components/Footer';
 
-const LandingPage: React.FC = () => {
+const LandingPage = () => {
   const { t } = useTranslation();
-  const [isTalking, setIsTalking] = useState(false);
+  const [isTalking, setIsTalking] = React.useState(false);
   
   return (
     <div className="min-h-screen flex flex-col relative bg-cybernetic text-white">

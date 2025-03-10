@@ -1,4 +1,4 @@
-
+/** @jsxImportSource react */
 import React, { useState, useEffect } from 'react';
 import { useDrop } from 'react-dnd';
 import { useTranslation } from 'react-i18next';
@@ -82,7 +82,6 @@ const TrashCan: React.FC<TrashCanProps> = ({ onResetDraft, onRemoveBrawler }) =>
           onError={handleImageError}
         />
       </div>
-      {/* Eliminado el texto "delete" que aparecía al arrastrar un brawler */}
     </div>
   );
 };
