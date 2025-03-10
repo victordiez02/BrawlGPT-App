@@ -56,9 +56,9 @@ const LandingPage: React.FC = () => {
               
               <div className="space-y-8 relative">
                 {/* Interactive Face and Hand - Repositioned to the left of the button */}
-                <div className="absolute left-[-50px] top-1/2 transform -translate-y-1/2 flex items-center z-20 pointer-events-none md:pointer-events-auto hidden md:flex">
+                <div className="absolute left-[-80px] top-[65%] transform -translate-y-1/2 flex items-center z-20 pointer-events-none md:pointer-events-auto hidden md:flex">
                   <div 
-                    className="mr-[-30px] transform transition-transform duration-200 hover:rotate-6"
+                    className="mr-[-70px] transform transition-transform duration-200 hover:rotate-6"
                     onMouseEnter={() => setIsTalking(true)}
                     onMouseLeave={() => setIsTalking(false)}
                   >
