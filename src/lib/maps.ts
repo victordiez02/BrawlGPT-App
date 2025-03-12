@@ -46,21 +46,21 @@ export const gameMaps: GameMap[] = [
   {
     id: 1,
     name: 'Center Stage',
-    translatedName: 'Escenario Central',
+    translatedName: 'Palco central',
     mode: 'Brawl Ball',
     image: 'https://static.wikia.nocookie.net/brawlstars/images/8/82/Center_Stage-Map.png'
   },
   {
     id: 2,
     name: 'Pinball Dreams',
-    translatedName: 'Sueños de Pinball',
+    translatedName: 'Pinball',
     mode: 'Brawl Ball',
     image: 'https://static.wikia.nocookie.net/brawlstars/images/e/e9/Pinball_Dreams-Map.png'
   },
   {
     id: 3,
     name: 'Sneaky Fields',
-    translatedName: 'Campos Sigilosos',
+    translatedName: 'Campos furtivos',
     mode: 'Brawl Ball',
     image: 'https://static.wikia.nocookie.net/brawlstars/images/1/10/Sneaky_Fields-Map.png'
   },
@@ -69,14 +69,14 @@ export const gameMaps: GameMap[] = [
   {
     id: 4,
     name: 'Below Zero',
-    translatedName: 'Bajo Cero',
+    translatedName: 'Temperatura tumultosa',
     mode: 'Brawl Hockey',
     image: 'https://static.wikia.nocookie.net/brawlstars/images/d/d6/Below_Zero-Map.png'
   },
   {
     id: 5,
     name: 'Cool Box',
-    translatedName: 'Caja Fría',
+    translatedName: 'Caja confidencial',
     mode: 'Brawl Hockey',
     image: 'https://static.wikia.nocookie.net/brawlstars/images/5/5f/Cool_Box-Map.png'
   },
@@ -89,13 +89,7 @@ export const gameMaps: GameMap[] = [
   },
   
   // Gem Grab Maps
-  {
-    id: 7,
-    name: 'Double Swoosh',
-    translatedName: 'Doble Curva',
-    mode: 'Gem Grab',
-    image: 'https://static.wikia.nocookie.net/brawlstars/images/3/3e/Double_Swoosh-Map.png'
-  },
+
   {
     id: 8,
     name: 'Hard Rock Mine',

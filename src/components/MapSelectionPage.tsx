@@ -81,7 +81,7 @@ const MapSelectionPage: React.FC<MapSelectionPageProps> = ({ onSelectMap }) => {
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold font-brawl text-center">{t('select_map_first')}</h2>
           <img 
-            src="/lovable-uploads/73ba99c9-265c-40aa-92f7-016afd79fabb.png" 
+            src="/resources/iconBS.png" 
             alt="Brawl Stars Logo" 
             className="w-16 h-16 hover:scale-110 transition-transform cursor-pointer animate-pulse-soft"
           />

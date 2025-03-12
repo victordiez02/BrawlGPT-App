@@ -23,18 +23,18 @@ const LandingPage = () => {
         <div className="w-full max-w-6xl">
           <div className="mb-16 text-center relative">
             <div className="absolute inset-0 flex justify-center items-center opacity-30 transform scale-150 pointer-events-none z-0">
-              <img src="/lovable-uploads/73ba99c9-265c-40aa-92f7-016afd79fabb.png" alt="Brawl Stars Logo Background" className="w-96 h-96" />
+              <img src="/resources/iconBS.png" alt="Brawl Stars Logo Background" className="w-96 h-96" />
             </div>
             
             <div 
               className="flex justify-center mb-3 relative z-10 animate-fade-in cursor-pointer"
             >
               <img 
-                src="/lovable-uploads/Logo.png" 
+                src="/resources/Logo.png" 
                 alt="BrawlGPT Logo" 
                 className="w-auto h-80 md:h-56 transition-all duration-500 hover:scale-110 hover:drop-shadow-[0_0_15px_rgba(0,229,255,0.6)] animate-float" 
                 onClick={() => {
-                  const audio = new Audio('/lovable-uploads/73ba99c9-265c-40aa-92f7-016afd79fabb.png');
+                  const audio = new Audio('/resources/iconBS.png');
                   audio.volume = 0.5;
                   audio.play().catch(e => console.log('Audio autoplay prevented by browser'));
                 }}
@@ -64,7 +64,7 @@ const LandingPage = () => {
                     onMouseLeave={() => setIsFrikiTalking(false)}
                   >
                     <img 
-                      src="/lovable-uploads/friki_mano.png" 
+                      src="/resources/friki_mano.png" 
                       alt="Hand" 
                       className={`w-16 h-auto select-none ${isFrikiTalking ? 'animate-sway' : ''}`}
                     />
@@ -75,7 +75,7 @@ const LandingPage = () => {
                     onMouseLeave={() => setIsFrikiTalking(false)}
                   >
                     <img 
-                      src="/lovable-uploads/friki_cara.png" 
+                      src="/resources/friki_cara.png" 
                       alt="Face with glasses" 
                       className={`w-24 h-auto select-none ${isFrikiTalking ? 'animate-talking' : ''}`}
                     />
@@ -90,7 +90,7 @@ const LandingPage = () => {
                     onMouseLeave={() => setIsPensacionThinking(false)}
                   >
                     <img 
-                      src="/lovable-uploads/pensacion_cara.png" 
+                      src="/resources/pensacion_cara.png" 
                       alt="Thinking face" 
                       className={`w-24 h-auto select-none ${isPensacionThinking ? 'animate-thinking-head' : ''}`}
                     />
@@ -101,7 +101,7 @@ const LandingPage = () => {
                     onMouseLeave={() => setIsPensacionThinking(false)}
                   >
                     <img 
-                      src="/lovable-uploads/pensacion_mano.png" 
+                      src="/resources/pensacion_mano.png" 
                       alt="Thinking hand" 
                       className={`w-24 h-auto select-none ${isPensacionThinking ? 'animate-thinking-hand' : ''}`}
                     />

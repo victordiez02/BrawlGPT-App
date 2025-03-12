@@ -17,7 +17,7 @@ const LanguageSelector: React.FC = () => {
         title="English"
       >
         <img 
-          src="/lovable-uploads/e3fc2912-d0fa-4dab-a69b-24b2c9c5e742.png" 
+          src="/resources/iconUSA.png" 
           alt="English" 
           className="w-full h-full object-cover"
         />
@@ -29,7 +29,7 @@ const LanguageSelector: React.FC = () => {
         title="Español"
       >
         <img 
-          src="/lovable-uploads/39d7e2ca-f838-45b3-a243-e1adea00c090.png" 
+          src="/resources/iconSP.png" 
           alt="Español" 
           className="w-full h-full object-cover"
         />
