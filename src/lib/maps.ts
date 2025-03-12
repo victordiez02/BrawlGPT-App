@@ -202,7 +202,7 @@ export const allGameMaps: GameMap[] = [
     name: "New Horizons",
     translatedName: "Nuevos horizontes",
     mode: "Knockout",
-    image: "https://static.wikia.nocookie.net/brawlstars/images/5/5d/New_Horizons-Map.png/revision/latest?cb=20250301003721"
+    image: "https://static.wikia.nocookie.net/brawlstars/images/5/5d/New_Horizons-Map.png"
   },
   {
     id: 504,

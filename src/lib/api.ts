@@ -77,11 +77,12 @@ export const getAIRecommendation = async (
   console.log('Sending request to BrawlGPT API:', requestData);
 
   try {
+    const apiKey = import.meta.env.VITE_BRAWLGPT_API_KEY;
     const response = await fetch('https://brawlgpt-api.onrender.com/draft', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': 'BRAWLGPT_API_KEY'
+        'x-api-key': apiKey
       },
       body: JSON.stringify(requestData)
     });
