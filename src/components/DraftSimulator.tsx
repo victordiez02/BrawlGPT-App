@@ -8,7 +8,8 @@ import BannedBrawlers from './BannedBrawlers';
 import BrawlerGrid from './BrawlerGrid';
 import ResultModal from './ResultModal';
 import TrashCan from './TrashCan';
-import { ApiResponse, DraftData, submitDraft } from '@/lib/api';
+import AIRecommendations from './AIRecommendations';
+import { ApiResponse, DraftData, GeminiResponse, GeminiSuggestion, getAIRecommendation, submitDraft } from '@/lib/api';
 import { ArrowLeft, Cpu, Info, Loader2, SparkleIcon, Zap } from 'lucide-react';
 import { toast } from 'sonner';
 import { DndProvider } from 'react-dnd';
@@ -35,6 +36,11 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({
   const [isGenerating, setIsGenerating] = useState<boolean>(false);
   const [apiResult, setApiResult] = useState<ApiResponse | null>(null);
   const [showResultModal, setShowResultModal] = useState<boolean>(false);
+  
+  // Estado para las recomendaciones de la IA
+  const [isLoadingAIRecommendation, setIsLoadingAIRecommendation] = useState<boolean>(false);
+  const [aiRecommendations, setAIRecommendations] = useState<GeminiSuggestion[] | null>(null);
+  const [aiRecommendationError, setAIRecommendationError] = useState<Error | null>(null);
   
   const findTeamByIndex = (index: number) => {
     if (index < 3) return 'blue';
@@ -324,29 +330,37 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({
       return;
     }
     
-    setIsGenerating(true);
+    const phase = getCurrentDraftPhase();
+    if (![1, 2, 3, 4].includes(phase)) {
+      toast.error(t('invalid_draft_phase'));
+      return;
+    }
+    
+    setIsLoadingAIRecommendation(true);
+    setAIRecommendationError(null);
+    setAIRecommendations(null);
     
     try {
-      const draftData: DraftData = {
-        map: {
-          id: selectedMap.id,
-          name: selectedMap.name,
-          mode: selectedMap.mode
-        },
-        userTeam: 'blue',
-        blueTeam: selectedBrawlers.slice(0, 3),
-        redTeam: selectedBrawlers.slice(3, 6),
-        banned: bannedBrawlers
-      };
+      const response = await getAIRecommendation(
+        phase,
+        selectedMap,
+        bannedBrawlers,
+        firstPick,
+        selectedBrawlers
+      );
       
-      const result = await submitDraft(draftData);
-      setApiResult(result);
-      setShowResultModal(true);
+      if (response?.gemini_response?.gemini_suggestions) {
+        setAIRecommendations(response.gemini_response.gemini_suggestions);
+        toast.success(t('ai_recommendations_generated'));
+      } else {
+        throw new Error(t('unexpected_api_response'));
+      }
     } catch (error) {
-      console.error('Error generating recommendation:', error);
+      console.error('Error generating AI recommendation:', error);
+      setAIRecommendationError(error instanceof Error ? error : new Error(String(error)));
       toast.error(t('error_generating_recommendation'));
     } finally {
-      setIsGenerating(false);
+      setIsLoadingAIRecommendation(false);
     }
   };
   
@@ -354,6 +368,8 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({
     setSelectedBrawlers([null, null, null, null, null, null]);
     setBannedBrawlers([]);
     setCurrentPickIndex(firstPick === 'blue' ? 0 : 3);
+    setAIRecommendations(null);
+    setAIRecommendationError(null);
     toast.info(t('draft_reset'));
   };
   
@@ -452,7 +468,7 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({
               <div className="p-4 bg-gray-800/30">
                 <Button
                   onClick={handleGenerateRecommendation}
-                  disabled={!generateButtonConfig.enabled || isGenerating}
+                  disabled={!generateButtonConfig.enabled || isLoadingAIRecommendation}
                   variant="ai"
                   size="lg"
                   className="w-full group transition-all duration-300 font-brawl"
@@ -497,6 +513,16 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({
                 )}
               </div>
             </div>
+            
+            {/* Área de recomendaciones de la IA */}
+            {(isLoadingAIRecommendation || aiRecommendations || aiRecommendationError) && (
+              <AIRecommendations
+                isLoading={isLoadingAIRecommendation}
+                error={aiRecommendationError}
+                recommendations={aiRecommendations}
+                phase={getCurrentDraftPhase()}
+              />
+            )}
             
             <div className="md:col-span-2 order-1 md:order-2">
               <BrawlerGrid

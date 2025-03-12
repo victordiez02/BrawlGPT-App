@@ -1,4 +1,3 @@
-
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
@@ -73,6 +72,19 @@ const enTranslations = {
   'who_picks_first': 'Who picks first?',
   'select_map': 'Select map',
   'search_maps': 'Search maps...',
+  
+  // AI Recommendations
+  'ai_recommendations': 'AI Recommendations',
+  'generating_ai_recommendation': 'Analyzing draft and generating recommendations...',
+  'this_might_take_a_moment': 'This might take a moment',
+  'please_try_again': 'Please try again',
+  'showing_best_picks': 'Showing best picks for this phase',
+  'showing_best_pick_pairs': 'Showing best pick combinations for this phase',
+  'best_pick': 'Best Pick',
+  'best_combination': 'Best Combination',
+  'unexpected_api_response': 'Unexpected API response',
+  'ai_recommendations_generated': 'AI recommendations generated successfully',
+  'invalid_draft_phase': 'Invalid draft phase',
   
   // Game modes
   'gem_grab': 'Gem Grab',
@@ -173,6 +185,19 @@ const esTranslations = {
   'select_map': 'Seleccionar mapa',
   'search_maps': 'Buscar mapas...',
   
+  // AI Recommendations
+  'ai_recommendations': 'Recomendaciones de la IA',
+  'generating_ai_recommendation': 'Analizando draft y generando recomendaciones...',
+  'this_might_take_a_moment': 'Esto puede tardar un momento',
+  'please_try_again': 'Por favor, inténtalo de nuevo',
+  'showing_best_picks': 'Mostrando los mejores picks para esta fase',
+  'showing_best_pick_pairs': 'Mostrando las mejores combinaciones para esta fase',
+  'best_pick': 'Mejor pick',
+  'best_combination': 'Mejores picks',
+  'unexpected_api_response': 'Respuesta inesperada de la API',
+  'ai_recommendations_generated': 'Recomendaciones de la IA generadas correctamente',
+  'invalid_draft_phase': 'Fase de draft no válida',
+
   // Game modes
   'gem_grab': 'Atrapagemas',
   'brawl_ball': 'Balón Brawl',
