@@ -1,99 +1,139 @@
 
-/** @jsxImportSource react */
-import React, { useState, useEffect } from 'react';
-import { useDrop } from 'react-dnd';
+import React, { useState } from 'react';
+import { UseDraggableArguments, UseDragLayerArguments, useDrag, useDragLayer, useDrop } from 'react-dnd';
+import { Trash2 } from 'lucide-react';
+import { toast } from 'sonner';
 import { useTranslation } from 'react-i18next';
-
-// Actualizamos las rutas de las imágenes de la papelera
-const trashIcon = '/resources/trashIcon.png';
-// Imagen de respaldo en caso de que fallen las principales
-const fallbackTrashIcon = 'https://pbs.twimg.com/media/GkaLsRAXoAEltn9.jpg';
+import { 
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 interface TrashCanProps {
   onResetDraft: () => void;
-  onRemoveBrawler: (id: number) => void;
+  onRemoveBrawler: (brawlerId: number) => void;
 }
 
 const TrashCan: React.FC<TrashCanProps> = ({ onResetDraft, onRemoveBrawler }) => {
   const { t } = useTranslation();
-  const [isHovered, setIsHovered] = useState(false);
-  const [imageError, setImageError] = useState(false);
-  const [isDraggingBrawler, setIsDraggingBrawler] = useState(false);
-
-  // Escuchar eventos de arrastre de brawlers
-  useEffect(() => {
-    const handleDragStart = () => setIsDraggingBrawler(true);
-    const handleDragEnd = () => setIsDraggingBrawler(false);
-    
-    document.addEventListener('brawlerDragStart', handleDragStart);
-    document.addEventListener('brawlerDragEnd', handleDragEnd);
-    
-    return () => {
-      document.removeEventListener('brawlerDragStart', handleDragStart);
-      document.removeEventListener('brawlerDragEnd', handleDragEnd);
-    };
-  }, []);
-
-  // Configuramos el drop target para recibir brawlers arrastrados
+  const [isHovering, setIsHovering] = useState(false);
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  
+  // Drop handling for the trash can
   const [{ isOver }, drop] = useDrop(() => ({
-    accept: 'DRAFT_BRAWLER',
-    drop: (item: { id: number | null }) => {
-      if (item.id !== null) {
-        onRemoveBrawler(item.id);
+    accept: 'BRAWLER_ICON',
+    drop: (item: { id: number }) => {
+      onRemoveBrawler(item.id);
+      
+      // Trigger an animation or something to indicate the brawler was dropped in the trash
+      const audio = new Audio('/resources/trash-sound.mp3');
+      audio.volume = 0.3;
+      
+      try {
+        audio.play().catch(error => console.error("Error playing sound:", error));
+      } catch (e) {
+        console.error("Error playing sound:", e);
       }
     },
     collect: (monitor) => ({
-      isOver: !!monitor.isOver()
-    })
-  }), [onRemoveBrawler]);
-
-  const handleImageError = () => {
-    console.error('Failed to load trash can image, using fallback');
-    setImageError(true);
+      isOver: !!monitor.isOver(),
+    }),
+  }));
+  
+  // Get drag item preview for showing animation
+  const { isDragging, item } = useDragLayer((monitor) => ({
+    isDragging: monitor.isDragging(),
+    item: monitor.getItem(),
+  }));
+  
+  // Handle reset with confirmation
+  const handleResetClick = () => {
+    setConfirmOpen(true);
   };
-
-  // Efectos interactivos mejorados
-  const isActive = isOver || isHovered || isDraggingBrawler;
-
-  const handleClick = () => {
-    // Limpiar tambien las recomendaciones de la IA
-    // Enviamos un evento personalizado para que el componente DraftSimulator pueda escucharlo
-    const event = new CustomEvent('resetAIRecommendations');
-    document.dispatchEvent(event);
-    
-    // Llamamos a la función original para resetear el draft
+  
+  const handleConfirmReset = () => {
     onResetDraft();
+    
+    // Also reset AI recommendations by triggering a custom event
+    const resetEvent = new CustomEvent('resetAIRecommendations');
+    document.dispatchEvent(resetEvent);
+    
+    setConfirmOpen(false);
   };
-
+  
   return (
-    <div 
-      ref={drop}
-      className={`flex flex-col items-center justify-center cursor-pointer transition-all duration-300 ${isActive ? 'scale-110' : ''}`}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      onClick={handleClick}
-      title={t('reset')}
-    >
-      <div className={`
-        p-3 rounded-full 
-        ${isActive ? 'bg-red-500/20 animate-pulse-soft' : 'bg-transparent'} 
-        transition-all duration-300
-      `}>
-        <img 
-          src={imageError ? fallbackTrashIcon : trashIcon} 
-          alt={t('reset')} 
-          className="w-12 h-12"
-          style={{ 
-            transition: 'all 0.3s ease',
-            filter: isActive 
-              ? 'brightness(1.3) drop-shadow(0 0 8px rgba(239, 68, 68, 0.7))' 
-              : 'brightness(1) drop-shadow(0 0 2px rgba(0, 0, 0, 0.3))',
-            transform: isOver ? 'rotate(-10deg)' : isActive ? 'rotate(-5deg)' : 'rotate(0)'
-          }}
-          onError={handleImageError}
-        />
+    <>
+      <div
+        ref={drop}
+        className={`relative p-2 rounded-lg transition-all duration-300 ${
+          isOver 
+            ? 'bg-red-500/60 scale-110'
+            : isHovering
+              ? 'bg-red-500/30'
+              : 'bg-gray-700/50 hover:bg-red-500/20'
+        }`}
+        onMouseEnter={() => setIsHovering(true)}
+        onMouseLeave={() => setIsHovering(false)}
+        onClick={handleResetClick}
+      >
+        <div className="flex items-center justify-center relative group cursor-pointer">
+          <Trash2 
+            size={24} 
+            className={`${
+              isOver 
+                ? 'text-white animate-bounce'
+                : isHovering
+                  ? 'text-red-400' 
+                  : 'text-gray-400 group-hover:text-red-400'
+            } transition-all duration-300`} 
+          />
+          
+          {isHovering && !isOver && (
+            <div className="absolute -bottom-2 transform translate-y-full w-24 text-center text-xs bg-gray-900/80 text-white rounded px-2 py-1 shadow pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              {t('reset')}
+            </div>
+          )}
+        </div>
+        
+        {/* Glowing effect when dragging over */}
+        {isOver && (
+          <div className="absolute inset-0 rounded-lg animate-pulse ring-4 ring-red-500 pointer-events-none"></div>
+        )}
       </div>
-    </div>
+      
+      <AlertDialog
+        open={confirmOpen}
+        onOpenChange={setConfirmOpen}
+      >
+        <AlertDialogContent className="glass-panel">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="font-brawl text-lg text-red-500">
+              {t('confirm_reset_draft')}
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              {t('confirm_reset_message')}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel className="border border-gray-700 hover:bg-gray-700/30 hover:text-white transition-all duration-300">
+              {t('cancel')}
+            </AlertDialogCancel>
+            <AlertDialogAction 
+              onClick={handleConfirmReset}
+              className="bg-red-500 hover:bg-red-600 transition-all duration-300"
+            >
+              {t('reset')}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
   );
 };
 
