@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import Header from '@/components/Header';
 import DraftSimulator from '@/components/DraftSimulator';
@@ -32,6 +31,7 @@ const SimulatorPage: React.FC = () => {
   return (
     <div className="min-h-screen pb-12 bg-cybernetic text-white">
       <Header />
+      
       <div className="absolute top-6 right-6 z-10 scale-75 md:scale-100 origin-top-right">
         <LanguageSelector />
       </div>

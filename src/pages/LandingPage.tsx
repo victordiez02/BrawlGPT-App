@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Zap, Map, Ban, Target, Cpu, SparkleIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import LanguageSelector from '@/components/LanguageSelector';
+import HelpDialog from '@/components/HelpDialog';
 import { Button } from '@/components/ui/button';
 import Footer from '@/components/Footer';
 
@@ -16,6 +17,10 @@ const LandingPage = () => {
     <div className="min-h-screen flex flex-col relative bg-cybernetic text-white">
       <div className="absolute top-6 right-6 z-10 scale-75 md:scale-100 origin-top-right">
         <LanguageSelector />
+      </div>
+      
+      <div className="absolute top-6 right-20 z-10 scale-75 md:scale-100 origin-top-right">
+        <HelpDialog />
       </div>
       
       {/* Hero Section */}
