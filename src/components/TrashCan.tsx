@@ -1,3 +1,4 @@
+
 /** @jsxImportSource react */
 import React, { useState, useEffect } from 'react';
 import { useDrop } from 'react-dnd';
@@ -54,13 +55,23 @@ const TrashCan: React.FC<TrashCanProps> = ({ onResetDraft, onRemoveBrawler }) =>
   // Efectos interactivos mejorados
   const isActive = isOver || isHovered || isDraggingBrawler;
 
+  const handleClick = () => {
+    // Limpiar tambien las recomendaciones de la IA
+    // Enviamos un evento personalizado para que el componente DraftSimulator pueda escucharlo
+    const event = new CustomEvent('resetAIRecommendations');
+    document.dispatchEvent(event);
+    
+    // Llamamos a la función original para resetear el draft
+    onResetDraft();
+  };
+
   return (
     <div 
       ref={drop}
       className={`flex flex-col items-center justify-center cursor-pointer transition-all duration-300 ${isActive ? 'scale-110' : ''}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      onClick={onResetDraft}
+      onClick={handleClick}
       title={t('reset')}
     >
       <div className={`

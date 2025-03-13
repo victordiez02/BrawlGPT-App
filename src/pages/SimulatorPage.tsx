@@ -5,6 +5,7 @@ import DraftSimulator from '@/components/DraftSimulator';
 import LanguageSelector from '@/components/LanguageSelector';
 import MapSelectionPage from '@/components/MapSelectionPage';
 import Footer from '@/components/Footer';
+import HelpDialog from '@/components/HelpDialog';
 import { GameMap } from '@/lib/maps';
 import { useTranslation } from 'react-i18next';
 import { Sparkle } from 'lucide-react';
@@ -33,6 +34,10 @@ const SimulatorPage: React.FC = () => {
       <Header />
       <div className="absolute top-6 right-6 z-10 scale-75 md:scale-100 origin-top-right">
         <LanguageSelector />
+      </div>
+      
+      <div className="absolute top-6 right-20 z-10 scale-75 md:scale-100 origin-top-right">
+        <HelpDialog />
       </div>
       
       <main className="container mx-auto pb-20 relative">
