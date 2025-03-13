@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useMemo } from 'react';
 import { brawlers, Brawler } from '@/lib/brawlers';
 import { GameMap } from '@/lib/maps';
@@ -397,9 +396,35 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({
   
   // Nueva función para manejar la selección de una recomendación
   const handleSelectRecommendation = (suggestion: GeminiSuggestion, phase: number) => {
-    if (phase === 4) {
-      // Para la fase 4, mostrar el diálogo de draft completado
+    if (phase === 4 && selectedBrawlersCount === 5) {
+      // Para la fase 4, mostrar el diálogo de draft completado, pero primero vamos a añadir el brawler seleccionado
+      const brawlerNames = typeof suggestion.brawlers === 'string' 
+        ? suggestion.brawlers.includes('+') 
+          ? suggestion.brawlers.split('+').map(b => b.trim()) 
+          : [suggestion.brawlers]
+        : suggestion.brawlers;
+      
+      // Obtener los IDs de los brawlers recomendados
+      const brawlerIds = brawlerNames.map(name => {
+        const brawler = brawlers.find(b => b.name === name);
+        return brawler ? brawler.id : null;
+      }).filter(id => id !== null) as number[];
+      
+      // Clonar el array de brawlers seleccionados para añadir el último pick
+      const newSelectedBrawlers = [...selectedBrawlers];
+      
+      // Colocar el último brawler en la posición 5 (último pick)
+      if (brawlerIds.length > 0) {
+        newSelectedBrawlers[pickOrder[5]] = brawlerIds[0];
+        setSelectedBrawlers(newSelectedBrawlers);
+      }
+      
       setShowDraftCompletionDialog(true);
+      return;
+    }
+    
+    // Si no es fase 4 o no hay 5 brawlers seleccionados, no mostramos el diálogo
+    if (phase === 4 && selectedBrawlersCount !== 5) {
       return;
     }
     
@@ -418,14 +443,22 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({
     // Clonar el array de brawlers seleccionados
     const newSelectedBrawlers = [...selectedBrawlers];
     
-    // Según la fase, añadir los brawlers en las posiciones correctas
+    // Según la fase, reemplazar los brawlers en las posiciones correctas
     if (phase === 1) {
-      // Fase 1: Colocar en la primera posición (eliminar si ya hay un brawler)
+      // Fase 1: Limpiar y colocar en la primera posición
       if (brawlerIds.length > 0) {
+        // Limpiar el primer pick actual
+        newSelectedBrawlers[pickOrder[0]] = null;
+        // Colocar el nuevo pick
         newSelectedBrawlers[pickOrder[0]] = brawlerIds[0];
       }
     } else if (phase === 2) {
-      // Fase 2: Colocar en las posiciones 2 y 3 (eliminar si ya hay brawlers)
+      // Fase 2: Limpiar y colocar en las posiciones 2 y 3
+      // Limpiar las posiciones actuales
+      newSelectedBrawlers[pickOrder[1]] = null;
+      newSelectedBrawlers[pickOrder[2]] = null;
+      
+      // Colocar los nuevos picks si hay brawlers disponibles
       if (brawlerIds.length >= 2) {
         newSelectedBrawlers[pickOrder[1]] = brawlerIds[0];
         newSelectedBrawlers[pickOrder[2]] = brawlerIds[1];
@@ -433,7 +466,12 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({
         newSelectedBrawlers[pickOrder[1]] = brawlerIds[0];
       }
     } else if (phase === 3) {
-      // Fase 3: Colocar en las posiciones 4 y 5 (eliminar si ya hay brawlers)
+      // Fase 3: Limpiar y colocar en las posiciones 4 y 5
+      // Limpiar las posiciones actuales
+      newSelectedBrawlers[pickOrder[3]] = null;
+      newSelectedBrawlers[pickOrder[4]] = null;
+      
+      // Colocar los nuevos picks si hay brawlers disponibles
       if (brawlerIds.length >= 2) {
         newSelectedBrawlers[pickOrder[3]] = brawlerIds[0];
         newSelectedBrawlers[pickOrder[4]] = brawlerIds[1];
@@ -445,7 +483,7 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({
     // Actualizar el estado
     setSelectedBrawlers(newSelectedBrawlers);
     
-    // Mostrar mensaje de éxito
+    // Mostrar mensaje de éxito y minimizar el panel
     if (brawlerIds.length > 0) {
       const brawlerNames = brawlerIds.map(id => {
         const brawler = brawlers.find(b => b.id === id);
@@ -453,6 +491,7 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({
       }).filter(name => name !== '').join(', ');
       
       toast.success(t('recommendation_applied', { brawlers: brawlerNames }));
+      setIsAIRecommendationsOpen(false);
     }
   };
   
