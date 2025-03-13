@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import Header from '@/components/Header';
 import DraftSimulator from '@/components/DraftSimulator';
@@ -23,9 +24,21 @@ const SimulatorPage: React.FC = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   // Function to return to map selection
   const returnToMapSelection = () => {
     setSelectedMap(null);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // Function to handle map selection with scroll to top
+  const handleSelectMap = (map: GameMap) => {
+    setSelectedMap(map);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -50,7 +63,7 @@ const SimulatorPage: React.FC = () => {
         {selectedMap ? (
           <DraftSimulator initialMap={selectedMap} onReturnToMapSelection={returnToMapSelection} />
         ) : (
-          <MapSelectionPage onSelectMap={setSelectedMap} />
+          <MapSelectionPage onSelectMap={handleSelectMap} />
         )}
       </main>
       

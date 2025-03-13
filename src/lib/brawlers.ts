@@ -95,6 +95,6 @@ export const brawlers: Brawler[] = [
   { id: 86, name: 'Juju', image: 'https://cdn.brawlify.com/brawlers/borderless/16000087.png', rarity: 'Mythic' },
   { id: 87, name: 'Meeple', image: 'https://cdn.brawlify.com/brawlers/borderless/16000089.png', rarity: 'Epic' },
   { id: 88, name: 'Ollie', image: 'https://cdn.brawlify.com/brawlers/borderless/16000090.png', rarity: 'Mythic' },
-  { id: 89, name: 'Lumi', image: 'https://cdn.brawlify.com/brawlers/borderless/16000091.png', rarity: 'Mythic' },
+  //{ id: 89, name: 'Lumi', image: 'https://cdn.brawlify.com/brawlers/borderless/16000091.png', rarity: 'Mythic' },
   { id: 90, name: 'Finx', image: 'https://cdn.brawlify.com/brawlers/borderless/16000092.png', rarity: 'Mythic' }
 ];
