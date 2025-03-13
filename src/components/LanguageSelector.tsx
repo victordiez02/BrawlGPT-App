@@ -1,3 +1,4 @@
+
 /** @jsxImportSource react */
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -15,6 +16,7 @@ const LanguageSelector: React.FC = () => {
         className={`language-btn rounded-xl overflow-hidden w-10 h-7 transition-all hover:scale-110 ${i18n.language === 'en' ? 'ring-2 ring-white scale-110' : 'opacity-70 hover:opacity-100'}`}
         onClick={() => changeLanguage('en')}
         title="English"
+        type="button"
       >
         <img 
           src="/resources/iconUSA.png" 
@@ -27,6 +29,7 @@ const LanguageSelector: React.FC = () => {
         className={`language-btn rounded-xl overflow-hidden w-10 h-7 transition-all hover:scale-110 ${i18n.language === 'es' ? 'ring-2 ring-white scale-110' : 'opacity-70 hover:opacity-100'}`}
         onClick={() => changeLanguage('es')}
         title="Español"
+        type="button"
       >
         <img 
           src="/resources/iconSP.png" 
