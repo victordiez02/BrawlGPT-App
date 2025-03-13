@@ -42,6 +42,20 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({
   const [aiRecommendations, setAIRecommendations] = useState<GeminiSuggestion[] | null>(null);
   const [aiRecommendationError, setAIRecommendationError] = useState<Error | null>(null);
   
+  // Efecto para escuchar el evento de reset de recomendaciones
+  useEffect(() => {
+    const handleResetRecommendations = () => {
+      setAIRecommendations(null);
+      setAIRecommendationError(null);
+    };
+    
+    document.addEventListener('resetAIRecommendations', handleResetRecommendations);
+    
+    return () => {
+      document.removeEventListener('resetAIRecommendations', handleResetRecommendations);
+    };
+  }, []);
+  
   const findTeamByIndex = (index: number) => {
     if (index < 3) return 'blue';
     return 'red';
@@ -430,7 +444,7 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({
         
         {selectedMap && (
           <>
-            <div className="glass-panel mb-6 overflow-hidden">
+            <div className="glass-panel mb-6 overflow-hidden transition-all duration-300">
               <div className="p-4">
                 <div className="flex justify-between items-center mb-4">
                   <h2 className="text-xl font-bold font-brawl">{t('current_draft')}</h2>

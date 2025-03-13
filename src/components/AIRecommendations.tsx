@@ -1,3 +1,4 @@
+
 /** @jsxImportSource react */
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -27,7 +28,7 @@ const AIRecommendations: React.FC<AIRecommendationsProps> = ({
   // Si está cargando, mostrar indicador de carga
   if (isLoading) {
     return (
-      <div className="glass-panel p-6 mt-6 mb-6 text-center">
+      <div className="glass-panel p-6 mt-6 mb-6 text-center animate-fade-in">
         <div className="flex flex-col items-center justify-center">
           <div className="animate-spin mb-4">
             <Bot size={40} className="text-blue-400" />
@@ -42,7 +43,7 @@ const AIRecommendations: React.FC<AIRecommendationsProps> = ({
   // Si hay un error, mostrar mensaje de error
   if (error) {
     return (
-      <div className="glass-panel p-6 mt-6 mb-6 text-center">
+      <div className="glass-panel p-6 mt-6 mb-6 text-center animate-fade-in">
         <div className="flex flex-col items-center justify-center">
           <div className="bg-red-500/20 p-4 rounded-full mb-4">
             <Bot size={40} className="text-red-500" />
@@ -131,7 +132,7 @@ const AIRecommendations: React.FC<AIRecommendationsProps> = ({
     <Collapsible 
       open={isOpen} 
       onOpenChange={setIsOpen}
-      className="glass-panel mt-6 mb-6 animate-fade-in overflow-hidden transition-all duration-300"
+      className="glass-panel mt-6 mb-6 animate-fade-in overflow-hidden transition-all duration-500"
     >
       <div className="flex justify-between items-center p-6 pb-4">
         <h3 className="text-xl font-bold font-brawl flex items-center">
@@ -141,14 +142,14 @@ const AIRecommendations: React.FC<AIRecommendationsProps> = ({
         <div className="flex items-center gap-3">
           <span className="text-xs opacity-70">{phase === 1 || phase === 4 ? t('showing_best_picks') : t('showing_best_pick_pairs')}</span>
           <CollapsibleTrigger asChild>
-            <Button variant="ghost" size="sm" className="h-8 w-8 p-0 rounded-full">
+            <Button variant="ghost" size="sm" className="h-8 w-8 p-0 rounded-full transition-all duration-300 hover:bg-gray-700/30">
               {isOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
             </Button>
           </CollapsibleTrigger>
         </div>
       </div>
       
-      <CollapsibleContent className="px-6 pb-6 transition-all">
+      <CollapsibleContent className="px-6 pb-6 transition-all duration-500">
         <div className="grid grid-cols-1 gap-4">
           {recommendations.map((suggestion, index) => {
             const medalStyle = getMedalStyle(index);
@@ -156,7 +157,7 @@ const AIRecommendations: React.FC<AIRecommendationsProps> = ({
               <div 
                 key={index} 
                 className={`relative ${index < 3 ? `border-2 ${medalStyle.borderColor} ${medalStyle.shadow}` : 'border border-gray-700/30'} 
-                        bg-gray-800/60 rounded-lg p-4 transition-all hover:scale-[1.01] hover:shadow-md`}
+                        bg-gray-800/60 rounded-lg p-4 transition-all duration-300 hover:scale-[1.01] hover:shadow-md`}
               >
                 {medalStyle.icon}
                 <div className="flex flex-col md:flex-row md:items-center gap-4">
@@ -168,7 +169,7 @@ const AIRecommendations: React.FC<AIRecommendationsProps> = ({
                           {getBrawlersArray(suggestion.brawlers).length === 1 ? t('best_pick') : t('best_combination')}
                         </h4>
                       </div>
-                      <div className={`${getProbabilityColorClass(suggestion.probability)} text-white px-3 py-1 rounded-full text-sm font-bold`}>
+                      <div className={`${getProbabilityColorClass(suggestion.probability)} text-white px-3 py-1 rounded-full text-sm font-bold transition-all duration-300 hover:brightness-110`}>
                         {suggestion.probability}%
                       </div>
                     </div>
