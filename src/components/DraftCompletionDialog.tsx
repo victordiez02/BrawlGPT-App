@@ -80,7 +80,7 @@ const DraftCompletionDialog: React.FC<DraftCompletionDialogProps> = ({
                 {t('red_team')}
               </div>
               <div className="bg-white/10 p-4 rounded-b-lg flex flex-col space-y-2">
-                {selectedBrawlers.slice(3).map((id, idx) => {
+                {selectedBrawlers.slice(3, 6).map((id, idx) => {
                   const brawler = getBrawler(id);
                   return brawler ? (
                     <div key={idx} className="flex items-center space-x-2 p-2 bg-gray-800/40 rounded-lg transition-all duration-300 hover:bg-gray-800/60">

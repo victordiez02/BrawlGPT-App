@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useMemo } from 'react';
 import { brawlers, Brawler } from '@/lib/brawlers';
 import { GameMap } from '@/lib/maps';
@@ -397,64 +396,72 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({
   
   // Nueva función para manejar la selección de una recomendación
   const handleSelectRecommendation = (suggestion: GeminiSuggestion, phase: number) => {
-    if (phase === 4) {
-      // Para la fase 4, mostrar el diálogo de draft completado
-      setShowDraftCompletionDialog(true);
-      return;
-    }
-    
     const brawlerNames = typeof suggestion.brawlers === 'string' 
       ? suggestion.brawlers.includes('+') 
         ? suggestion.brawlers.split('+').map(b => b.trim()) 
         : [suggestion.brawlers]
       : suggestion.brawlers;
-    
+
     // Obtener los IDs de los brawlers recomendados
     const brawlerIds = brawlerNames.map(name => {
       const brawler = brawlers.find(b => b.name === name);
       return brawler ? brawler.id : null;
     }).filter(id => id !== null) as number[];
-    
-    // Clonar el array de brawlers seleccionados
-    const newSelectedBrawlers = [...selectedBrawlers];
-    
-    // Según la fase, añadir los brawlers en las posiciones correctas
-    if (phase === 1) {
-      // Fase 1: Colocar en la primera posición (eliminar si ya hay un brawler)
-      if (brawlerIds.length > 0) {
+
+    setSelectedBrawlers(prevSelectedBrawlers => {
+      const newSelectedBrawlers = [...prevSelectedBrawlers];
+
+      // 🧹 PRIMERO: Eliminar los brawlers anteriores en la fase actual
+      if (phase === 1) {
+        newSelectedBrawlers[pickOrder[0]] = null;
+      } else if (phase === 2) {
+        newSelectedBrawlers[pickOrder[1]] = null;
+        newSelectedBrawlers[pickOrder[2]] = null;
+      } else if (phase === 3) {
+        newSelectedBrawlers[pickOrder[3]] = null;
+        newSelectedBrawlers[pickOrder[4]] = null;
+      }
+
+      // ✅ Colocar los nuevos picks en las posiciones adecuadas
+      if (phase === 1 && brawlerIds.length > 0) {
         newSelectedBrawlers[pickOrder[0]] = brawlerIds[0];
+      } else if (phase === 2) {
+        if (brawlerIds.length >= 2) {
+          newSelectedBrawlers[pickOrder[1]] = brawlerIds[0];
+          newSelectedBrawlers[pickOrder[2]] = brawlerIds[1];
+        } else if (brawlerIds.length === 1) {
+          newSelectedBrawlers[pickOrder[1]] = brawlerIds[0];
+        }
+      } else if (phase === 3) {
+        if (brawlerIds.length >= 2) {
+          newSelectedBrawlers[pickOrder[3]] = brawlerIds[0];
+          newSelectedBrawlers[pickOrder[4]] = brawlerIds[1];
+        } else if (brawlerIds.length === 1) {
+          newSelectedBrawlers[pickOrder[3]] = brawlerIds[0];
+        }
       }
-    } else if (phase === 2) {
-      // Fase 2: Colocar en las posiciones 2 y 3 (eliminar si ya hay brawlers)
-      if (brawlerIds.length >= 2) {
-        newSelectedBrawlers[pickOrder[1]] = brawlerIds[0];
-        newSelectedBrawlers[pickOrder[2]] = brawlerIds[1];
-      } else if (brawlerIds.length === 1) {
-        newSelectedBrawlers[pickOrder[1]] = brawlerIds[0];
+
+      // 🌟 Para la fase 4, aseguramos que hay 5 picks antes de completar el draft
+      if (phase === 4 && newSelectedBrawlers.filter(id => id !== null).length === 5) {
+        newSelectedBrawlers[pickOrder[5]] = brawlerIds[0] ?? null;
+        setShowDraftCompletionDialog(true);
       }
-    } else if (phase === 3) {
-      // Fase 3: Colocar en las posiciones 4 y 5 (eliminar si ya hay brawlers)
-      if (brawlerIds.length >= 2) {
-        newSelectedBrawlers[pickOrder[3]] = brawlerIds[0];
-        newSelectedBrawlers[pickOrder[4]] = brawlerIds[1];
-      } else if (brawlerIds.length === 1) {
-        newSelectedBrawlers[pickOrder[3]] = brawlerIds[0];
-      }
-    }
-    
-    // Actualizar el estado
-    setSelectedBrawlers(newSelectedBrawlers);
-    
-    // Mostrar mensaje de éxito
+
+      return newSelectedBrawlers;
+    });
+
+    // 🎉 Mensaje de éxito
     if (brawlerIds.length > 0) {
-      const brawlerNames = brawlerIds.map(id => {
-        const brawler = brawlers.find(b => b.id === id);
-        return brawler ? brawler.name : '';
-      }).filter(name => name !== '').join(', ');
-      
-      toast.success(t('recommendation_applied', { brawlers: brawlerNames }));
+      const brawlerNamesStr = brawlerIds
+        .map(id => brawlers.find(b => b.id === id)?.name)
+        .filter(name => name)
+        .join(', ');
+
+      toast.success(t('recommendation_applied', { brawlers: brawlerNamesStr }));
+      setIsAIRecommendationsOpen(false); // Cerrar recomendaciones después de aplicarlas
     }
   };
+
   
   useEffect(() => {
     setCurrentPickIndex(firstPick === 'blue' ? 0 : 3);
