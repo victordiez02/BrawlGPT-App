@@ -1,4 +1,3 @@
-
 /** @jsxImportSource react */
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -13,17 +12,22 @@ interface AIRecommendationsProps {
   error: Error | null;
   recommendations: GeminiSuggestion[] | null;
   phase: number;
+  onSelectRecommendation: (suggestion: GeminiSuggestion, phase: number) => void;
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
 }
 
 const AIRecommendations: React.FC<AIRecommendationsProps> = ({
   isLoading,
   error,
   recommendations,
-  phase
+  phase,
+  onSelectRecommendation,
+  isOpen,
+  setIsOpen
 }) => {
   const { t, i18n } = useTranslation();
   const currentLanguage = i18n.language;
-  const [isOpen, setIsOpen] = useState(true);
   
   // Si está cargando, mostrar indicador de carga
   if (isLoading) {
@@ -127,6 +131,12 @@ const AIRecommendations: React.FC<AIRecommendationsProps> = ({
         };
     }
   };
+
+  // Función para manejar el clic en una recomendación
+  const handleSelectRecommendation = (suggestion: GeminiSuggestion) => {
+    onSelectRecommendation(suggestion, phase);
+    setIsOpen(false); // Minimizar el cuadro
+  };
   
   return (
     <Collapsible 
@@ -157,7 +167,8 @@ const AIRecommendations: React.FC<AIRecommendationsProps> = ({
               <div 
                 key={index} 
                 className={`relative ${index < 3 ? `border-2 ${medalStyle.borderColor} ${medalStyle.shadow}` : 'border border-gray-700/30'} 
-                        bg-gray-800/60 rounded-lg p-4 transition-all duration-300 hover:scale-[1.01] hover:shadow-md`}
+                        bg-gray-800/60 rounded-lg p-4 transition-all duration-300 hover:scale-[1.01] hover:shadow-md cursor-pointer`}
+                onClick={() => handleSelectRecommendation(suggestion)}
               >
                 {medalStyle.icon}
                 <div className="flex flex-col md:flex-row md:items-center gap-4">

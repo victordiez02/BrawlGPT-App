@@ -28,6 +28,8 @@ const enTranslations = {
   'search_to_ban': 'Search to ban...',
   'no_banned_brawlers': 'No banned brawlers',
   'locked': 'Locked',
+  'cancel': 'Cancel',
+  'close': 'Close',
   
   // Simulator page
   'select_brawlers': 'Select Brawlers',
@@ -68,11 +70,18 @@ const enTranslations = {
   'max_picks_error': 'You can\'t select more than 5 brawlers',
   'must_select_map': 'You must select a map',
   'error_generating_recommendation': 'Error generating the recommendation. Try again.',
-  'confirm_reset_draft': 'Are you sure you want to reset the draft? You will lose all current selections.',
+  'confirm_reset_draft': 'Are you sure you want to reset the draft?',
+  'confirm_reset_message': 'You will lose all current selections and AI recommendations.',
   'draft_reset': 'Draft reset',
   'who_picks_first': 'Who picks first?',
   'select_map': 'Select map',
   'search_maps': 'Search maps...',
+  'recommendation_applied': 'Recommendation applied: {{brawlers}}',
+  
+  // Draft Completion
+  'draft_completed': 'Draft Completed!',
+  'draft_completion_message': 'Here\'s the final draft configuration for your match.',
+  'good_luck': 'Good luck in your match!',
   
   // AI Recommendations
   'ai_recommendations': 'AI Recommendations',
@@ -122,6 +131,7 @@ const enTranslations = {
   'tip_medals': 'Gold, silver, and bronze medals highlight the top three recommended options.',
   'tip_reset': 'Use the trash can to reset the draft completely if you want to start over.',
   'tip_experiment': 'Experiment with different scenarios to better understand counterpick strategies.',
+  'tip_click_suggestions': 'Click on any AI recommendation to automatically apply it to your draft!',
   
   // Game modes
   'gem_grab': 'Gem Grab',
@@ -176,6 +186,8 @@ const esTranslations = {
   'search_to_ban': 'Buscar para banear...',
   'no_banned_brawlers': 'No hay brawlers baneados',
   'locked': 'Bloqueado',
+  'cancel': 'Cancelar',
+  'close': 'Cerrar',
   
   // Simulator page
   'select_brawlers': 'Seleccionar Brawlers',
@@ -216,11 +228,18 @@ const esTranslations = {
   'max_picks_error': 'No puedes seleccionar más de 5 brawlers',
   'must_select_map': 'Debes seleccionar un mapa',
   'error_generating_recommendation': 'Error al buscar la recomendación. Inténtalo de nuevo.',
-  'confirm_reset_draft': '¿Estás seguro de que quieres reiniciar el draft? Perderás todas las selecciones actuales.',
+  'confirm_reset_draft': '¿Estás seguro de que quieres reiniciar el draft?',
+  'confirm_reset_message': 'Perderás todas las selecciones actuales y las recomendaciones de la IA.',
   'draft_reset': 'Draft reiniciado',
   'who_picks_first': '¿Quién empieza eligiendo?',
   'select_map': 'Seleccionar mapa',
   'search_maps': 'Buscar mapas...',
+  'recommendation_applied': 'Recomendación aplicada: {{brawlers}}',
+  
+  // Draft Completion
+  'draft_completed': '¡Draft Completado!',
+  'draft_completion_message': 'Aquí está la configuración final del draft para tu partida.',
+  'good_luck': '¡Buena suerte en tu partida!',
   
   // AI Recommendations
   'ai_recommendations': 'Recomendaciones de la IA',
@@ -270,6 +289,7 @@ const esTranslations = {
   'tip_medals': 'Las medallas de oro, plata y bronce destacan las tres mejores opciones recomendadas.',
   'tip_reset': 'Usa la papelera para reiniciar el draft completamente si quieres empezar de nuevo.',
   'tip_experiment': 'Experimenta con diferentes escenarios para entender mejor las estrategias de contrapiick.',
+  'tip_click_suggestions': '¡Haz clic en cualquier recomendación de la IA para aplicarla automáticamente a tu draft!',
 
   // Game modes
   'gem_grab': 'Atrapagemas',

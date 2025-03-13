@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useMemo } from 'react';
 import { brawlers, Brawler } from '@/lib/brawlers';
 import { GameMap } from '@/lib/maps';
@@ -9,6 +10,7 @@ import BrawlerGrid from './BrawlerGrid';
 import ResultModal from './ResultModal';
 import TrashCan from './TrashCan';
 import AIRecommendations from './AIRecommendations';
+import DraftCompletionDialog from './DraftCompletionDialog';
 import { ApiResponse, DraftData, GeminiResponse, GeminiSuggestion, getAIRecommendation, submitDraft } from '@/lib/api';
 import { ArrowLeft, Cpu, Info, Loader2, SparkleIcon, Zap } from 'lucide-react';
 import { toast } from 'sonner';
@@ -41,6 +43,10 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({
   const [isLoadingAIRecommendation, setIsLoadingAIRecommendation] = useState<boolean>(false);
   const [aiRecommendations, setAIRecommendations] = useState<GeminiSuggestion[] | null>(null);
   const [aiRecommendationError, setAIRecommendationError] = useState<Error | null>(null);
+  const [isAIRecommendationsOpen, setIsAIRecommendationsOpen] = useState<boolean>(true);
+  
+  // Estado para el diálogo de draft completado
+  const [showDraftCompletionDialog, setShowDraftCompletionDialog] = useState<boolean>(false);
   
   // Efecto para escuchar el evento de reset de recomendaciones
   useEffect(() => {
@@ -353,6 +359,7 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({
     setIsLoadingAIRecommendation(true);
     setAIRecommendationError(null);
     setAIRecommendations(null);
+    setIsAIRecommendationsOpen(true);
     
     try {
       const response = await getAIRecommendation(
@@ -384,7 +391,69 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({
     setCurrentPickIndex(firstPick === 'blue' ? 0 : 3);
     setAIRecommendations(null);
     setAIRecommendationError(null);
+    setShowDraftCompletionDialog(false);
     toast.info(t('draft_reset'));
+  };
+  
+  // Nueva función para manejar la selección de una recomendación
+  const handleSelectRecommendation = (suggestion: GeminiSuggestion, phase: number) => {
+    if (phase === 4) {
+      // Para la fase 4, mostrar el diálogo de draft completado
+      setShowDraftCompletionDialog(true);
+      return;
+    }
+    
+    const brawlerNames = typeof suggestion.brawlers === 'string' 
+      ? suggestion.brawlers.includes('+') 
+        ? suggestion.brawlers.split('+').map(b => b.trim()) 
+        : [suggestion.brawlers]
+      : suggestion.brawlers;
+    
+    // Obtener los IDs de los brawlers recomendados
+    const brawlerIds = brawlerNames.map(name => {
+      const brawler = brawlers.find(b => b.name === name);
+      return brawler ? brawler.id : null;
+    }).filter(id => id !== null) as number[];
+    
+    // Clonar el array de brawlers seleccionados
+    const newSelectedBrawlers = [...selectedBrawlers];
+    
+    // Según la fase, añadir los brawlers en las posiciones correctas
+    if (phase === 1) {
+      // Fase 1: Colocar en la primera posición (eliminar si ya hay un brawler)
+      if (brawlerIds.length > 0) {
+        newSelectedBrawlers[pickOrder[0]] = brawlerIds[0];
+      }
+    } else if (phase === 2) {
+      // Fase 2: Colocar en las posiciones 2 y 3 (eliminar si ya hay brawlers)
+      if (brawlerIds.length >= 2) {
+        newSelectedBrawlers[pickOrder[1]] = brawlerIds[0];
+        newSelectedBrawlers[pickOrder[2]] = brawlerIds[1];
+      } else if (brawlerIds.length === 1) {
+        newSelectedBrawlers[pickOrder[1]] = brawlerIds[0];
+      }
+    } else if (phase === 3) {
+      // Fase 3: Colocar en las posiciones 4 y 5 (eliminar si ya hay brawlers)
+      if (brawlerIds.length >= 2) {
+        newSelectedBrawlers[pickOrder[3]] = brawlerIds[0];
+        newSelectedBrawlers[pickOrder[4]] = brawlerIds[1];
+      } else if (brawlerIds.length === 1) {
+        newSelectedBrawlers[pickOrder[3]] = brawlerIds[0];
+      }
+    }
+    
+    // Actualizar el estado
+    setSelectedBrawlers(newSelectedBrawlers);
+    
+    // Mostrar mensaje de éxito
+    if (brawlerIds.length > 0) {
+      const brawlerNames = brawlerIds.map(id => {
+        const brawler = brawlers.find(b => b.id === id);
+        return brawler ? brawler.name : '';
+      }).filter(name => name !== '').join(', ');
+      
+      toast.success(t('recommendation_applied', { brawlers: brawlerNames }));
+    }
   };
   
   useEffect(() => {
@@ -413,6 +482,14 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({
       window.removeEventListener('removeBrawlerFromDraft', handleRemoveBrawlerEvent);
     };
   }, [selectedBrawlers, bannedBrawlers]);
+
+  // Efecto para limpiar las recomendaciones cuando se resetea el draft
+  useEffect(() => {
+    if (selectedBrawlersCount === 0) {
+      setAIRecommendations(null);
+      setAIRecommendationError(null);
+    }
+  }, [selectedBrawlersCount]);
 
   return (
     <DndProvider backend={HTML5Backend}>
@@ -535,6 +612,9 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({
                 error={aiRecommendationError}
                 recommendations={aiRecommendations}
                 phase={getCurrentDraftPhase()}
+                onSelectRecommendation={handleSelectRecommendation}
+                isOpen={isAIRecommendationsOpen}
+                setIsOpen={setIsAIRecommendationsOpen}
               />
             )}
             
@@ -554,6 +634,12 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({
               isOpen={showResultModal}
               onClose={() => setShowResultModal(false)}
               result={apiResult}
+            />
+            
+            <DraftCompletionDialog
+              isOpen={showDraftCompletionDialog}
+              onClose={() => setShowDraftCompletionDialog(false)}
+              selectedBrawlers={selectedBrawlers}
             />
           </>
         )}
