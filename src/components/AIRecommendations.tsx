@@ -1,3 +1,4 @@
+
 /** @jsxImportSource react */
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -80,6 +81,20 @@ const AIRecommendations: React.FC<AIRecommendationsProps> = ({
     return suggestion.explanationUSA || '';
   };
   
+  // Función para convertir brawlers a un array, independientemente de si es string o array
+  const getBrawlersArray = (brawlers: string | string[]): string[] => {
+    if (typeof brawlers === 'string') {
+      // Si es un string como "Stu + Angelo", dividirlo
+      if (brawlers.includes('+')) {
+        return brawlers.split('+').map(b => b.trim());
+      }
+      // Si es solo un nombre como "Janet"
+      return [brawlers];
+    }
+    // Si ya es un array, devolverlo tal cual
+    return brawlers;
+  };
+  
   return (
     <div className="glass-panel p-6 mt-6 mb-6 animate-fade-in">
       <div className="flex justify-between items-center mb-4">
@@ -103,7 +118,7 @@ const AIRecommendations: React.FC<AIRecommendationsProps> = ({
                   <div className="flex items-center">
                     <span className="text-sm font-bold bg-gray-700/70 px-2 py-1 rounded-lg mr-2">#{index + 1}</span>
                     <h4 className="font-bold text-lg">
-                      {suggestion.brawlers.length === 1 ? t('best_pick') : t('best_combination')}
+                      {getBrawlersArray(suggestion.brawlers).length === 1 ? t('best_pick') : t('best_combination')}
                     </h4>
                   </div>
                   <div className={`${getProbabilityColorClass(suggestion.probability)} text-white px-3 py-1 rounded-full text-sm font-bold`}>
@@ -112,7 +127,7 @@ const AIRecommendations: React.FC<AIRecommendationsProps> = ({
                 </div>
                 
                 <div className="flex flex-wrap gap-3 mt-3 justify-center md:justify-start">
-                  {suggestion.brawlers.map((brawlerName, idx) => (
+                  {getBrawlersArray(suggestion.brawlers).map((brawlerName, idx) => (
                     <div key={idx} className="flex flex-col items-center">
                       <div className="relative w-20 h-20 rounded-full overflow-hidden border-2 border-gray-700 bg-gray-900/50">
                         <img 

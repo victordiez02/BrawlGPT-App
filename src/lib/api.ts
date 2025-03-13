@@ -1,3 +1,4 @@
+
 import { toast } from 'sonner';
 import { brawlers } from './brawlers';
 import { GameMap } from './maps';
@@ -28,7 +29,7 @@ export interface ApiResponse {
 }
 
 export interface GeminiSuggestion {
-  brawlers: string[];
+  brawlers: string[] | string;
   probability: number;
   explanationUSA?: string;
   explanationESP?: string;
