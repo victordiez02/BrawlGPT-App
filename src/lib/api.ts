@@ -30,6 +30,8 @@ export interface ApiResponse {
 export interface GeminiSuggestion {
   brawlers: string[];
   probability: number;
+  explanationUSA?: string;
+  explanationESP?: string;
 }
 
 export interface GeminiResponse {
@@ -77,8 +79,7 @@ export const getAIRecommendation = async (
   console.log('Sending request to BrawlGPT API:', requestData);
 
   try {
-    // const apiKey = import.meta.env.VITE_BRAWLGPT_API_KEY;
-    const apiKey = 7777777;
+    const apiKey = import.meta.env.VITE_BRAWLGPT_API_KEY;
     const response = await fetch('https://brawlgpt-api.onrender.com/draft', {
       method: 'POST',
       headers: {

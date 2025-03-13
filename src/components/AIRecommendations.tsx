@@ -3,7 +3,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { GeminiSuggestion } from '@/lib/api';
 import { brawlers } from '@/lib/brawlers';
-import { Sparkle, Bot } from 'lucide-react';
+import { Sparkle, Bot, Info } from 'lucide-react';
 
 interface AIRecommendationsProps {
   isLoading: boolean;
@@ -18,7 +18,8 @@ const AIRecommendations: React.FC<AIRecommendationsProps> = ({
   recommendations,
   phase
 }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const currentLanguage = i18n.language;
   
   // Si está cargando, mostrar indicador de carga
   if (isLoading) {
@@ -70,6 +71,14 @@ const AIRecommendations: React.FC<AIRecommendationsProps> = ({
     if (probability >= 50) return 'bg-yellow-500';
     return 'bg-orange-500';
   };
+
+  // Función para obtener el texto de explicación según el idioma actual
+  const getExplanationText = (suggestion: GeminiSuggestion) => {
+    if (currentLanguage === 'es' && suggestion.explanationESP) {
+      return suggestion.explanationESP;
+    }
+    return suggestion.explanationUSA || '';
+  };
   
   return (
     <div className="glass-panel p-6 mt-6 mb-6 animate-fade-in">
@@ -88,31 +97,47 @@ const AIRecommendations: React.FC<AIRecommendationsProps> = ({
             className={`${index === 0 ? 'border-2 border-yellow-400 shadow-lg shadow-yellow-400/30' : ''} 
                        bg-gray-800/60 rounded-lg p-4 transition-all hover:shadow-md`}
           >
-            <div className="flex justify-between items-center mb-2">
-              <div className="flex items-center">
-                <span className="text-sm font-bold bg-gray-700/70 px-2 py-1 rounded-lg mr-2">#{index + 1}</span>
-                <h4 className="font-bold text-lg">
-                  {suggestion.brawlers.length === 1 ? t('best_pick') : t('best_combination')}
-                </h4>
-              </div>
-              <div className={`${getProbabilityColorClass(suggestion.probability)} text-white px-3 py-1 rounded-full text-sm font-bold`}>
-                {suggestion.probability}%
-              </div>
-            </div>
-            
-            <div className="flex flex-wrap gap-3 mt-3">
-              {suggestion.brawlers.map((brawlerName, idx) => (
-                <div key={idx} className="flex flex-col items-center">
-                  <div className="relative w-20 h-20 rounded-full overflow-hidden border-2 border-gray-700 bg-gray-900/50">
-                    <img 
-                      src={getBrawlerImage(brawlerName)} 
-                      alt={brawlerName}
-                      className="w-full h-full object-cover"
-                    />
+            <div className="flex flex-col md:flex-row md:items-center gap-4">
+              <div className="md:w-1/3">
+                <div className="flex justify-between items-center mb-2">
+                  <div className="flex items-center">
+                    <span className="text-sm font-bold bg-gray-700/70 px-2 py-1 rounded-lg mr-2">#{index + 1}</span>
+                    <h4 className="font-bold text-lg">
+                      {suggestion.brawlers.length === 1 ? t('best_pick') : t('best_combination')}
+                    </h4>
                   </div>
-                  <span className="text-sm mt-1 text-center">{brawlerName}</span>
+                  <div className={`${getProbabilityColorClass(suggestion.probability)} text-white px-3 py-1 rounded-full text-sm font-bold`}>
+                    {suggestion.probability}%
+                  </div>
                 </div>
-              ))}
+                
+                <div className="flex flex-wrap gap-3 mt-3 justify-center md:justify-start">
+                  {suggestion.brawlers.map((brawlerName, idx) => (
+                    <div key={idx} className="flex flex-col items-center">
+                      <div className="relative w-20 h-20 rounded-full overflow-hidden border-2 border-gray-700 bg-gray-900/50">
+                        <img 
+                          src={getBrawlerImage(brawlerName)} 
+                          alt={brawlerName}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <span className="text-sm mt-1 text-center">{brawlerName}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              
+              {/* Explicación */}
+              {(suggestion.explanationUSA || suggestion.explanationESP) && (
+                <div className="md:w-2/3 bg-gray-700/30 p-3 rounded-lg">
+                  <div className="flex items-start">
+                    <Info size={18} className="text-blue-400 mr-2 mt-1 shrink-0" />
+                    <p className="text-sm text-gray-100">
+                      {getExplanationText(suggestion)}
+                    </p>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         ))}
