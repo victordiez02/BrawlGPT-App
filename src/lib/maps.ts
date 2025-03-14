@@ -17,12 +17,12 @@ export const gameModes: GameMode[] = [
   {
     name: 'Gem Grab',
     translatedName: 'Atrapagemas',
-    banner: 'https://static.wikia.nocookie.net/brawlstars/images/0/09/Mine-Environment.png'
+    banner: 'public/resources/banners/GGBanner.png'
   },
   {
     name: 'Brawl Ball',
     translatedName: 'Balón Brawl',
-    banner: 'https://static.wikia.nocookie.net/brawlstars/images/4/4b/Brawl_Ball_Arena-Environment.png'
+    banner: 'public/resources/banners/BBBanner.png'
   },
   {
     name: 'Bounty',

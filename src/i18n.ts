@@ -15,7 +15,7 @@ const enTranslations = {
   'step_3_title': 'Get AI Recommendations',
   'step_3_desc': 'Receive optimal pick recommendations in seconds.',
   'draft_visualization_text': 'Visual representation of the draft with dynamic picks.',
-  'cta_button': 'Generate Optimal Pick with AI',
+  'cta_button': 'Try BrawlGPT',
   'footer_text': 'Unofficial tool for Brawl Stars',
   
   // Common
@@ -163,17 +163,17 @@ const enTranslations = {
 // Spanish translations
 const esTranslations = {
   // Landing page
-  'landing_title': '¡Descubre el Mejor Pick con IA en Brawl Stars!',
-  'landing_subtitle_1': 'Una IA avanzada analiza tu draft y te recomienda la mejor estrategia en tiempo real.',
+  'landing_title': '¡Descubre el mejor pick con IA en Brawl Stars!',
+  'landing_subtitle_1': 'Una IA avanzada analiza tu draft y te dice la mejor elección en tiempo real.',
   'landing_subtitle_2': 'Simula selecciones, realiza baneos y obtén los mejores picks para cada partida.',
-  'step_1_title': 'Configura tu Draft',
+  'step_1_title': 'Configura tu draft',
   'step_1_desc': 'Selecciona tu mapa y equipo para comenzar.',
-  'step_2_title': 'Banea Inteligentemente',
+  'step_2_title': 'Banea acorde a tu partida',
   'step_2_desc': 'Elimina hasta 6 brawlers del pool para adaptar las estrategias.',
-  'step_3_title': 'Obtén Recomendaciones IA',
+  'step_3_title': 'Obtén el mejor pick según la IA',
   'step_3_desc': 'La IA te dará los mejores picks posibles en segundos.',
   'draft_visualization_text': 'Representación visual del draft con picks dinámicos.',
-  'cta_button': 'Buscar el mejor Pick con IA',
+  'cta_button': 'Probar BrawlGPT',
   'footer_text': 'Herramienta no oficial para Brawl Stars',
   
   // Common
@@ -190,19 +190,19 @@ const esTranslations = {
   'close': 'Cerrar',
   
   // Simulator page
-  'select_brawlers': 'Seleccionar Brawlers',
+  'select_brawlers': 'Seleccionar brawlers',
   'sort_by': 'Ordenar por',
   'by_rarity': 'Por rareza',
   'name_az': 'Nombre (A-Z)',
   'name_za': 'Nombre (Z-A)',
   'no_brawlers_found': 'No se encontraron brawlers',
-  'current_draft': 'Draft Actual',
+  'current_draft': 'Draft actual',
   'reset': 'Reiniciar',
-  'blue_team': 'Equipo Azul',
-  'red_team': 'Equipo Rojo',
+  'blue_team': 'Equipo azul',
+  'red_team': 'Equipo rojo',
   'select': 'Selecciona',
   'generating': 'Generando...',
-  'generate_best_option': 'Buscar la Mejor Opción',
+  'generate_best_option': 'Buscar la mejor opción',
   'generate_phase_1': 'Buscar la mejor opción para la primera fase (PRIMER PICK)',
   'generate_phase_2': 'Buscar las mejores opción para la segunda fase',
   'generate_phase_3': 'Buscar las mejores opción para la tercera fase',
@@ -237,8 +237,8 @@ const esTranslations = {
   'recommendation_applied': 'Recomendación aplicada: {{brawlers}}',
   
   // Draft Completion
-  'draft_completed': '¡Draft Completado!',
-  'draft_completion_message': 'Aquí está la configuración final del draft para tu partida.',
+  'draft_completed': '¡Draft completado!',
+  'draft_completion_message': 'Aquí está el draft final.',
   'good_luck': '¡Buena suerte en tu partida!',
   
   // AI Recommendations
@@ -257,9 +257,9 @@ const esTranslations = {
   // Help Dialog
   'how_brawlgpt_works': '¿Cómo funciona BrawlGPT?',
   'help_subtitle': 'Una guía completa para utilizar el simulador de draft con IA',
-  'ai_powered': 'Inteligencia Artificial Avanzada',
+  'ai_powered': 'Inteligencia Artificial avanzada',
   'ai_description': 'BrawlGPT utiliza un modelo de inteligencia artificial (Google Gemini) para analizar tu draft y generar recomendaciones de picks óptimos en tiempo real. El modelo ha sido entrenado con miles de partidas competitivas para ofrecerte las mejores opciones estratégicas posibles.',
-  'basic_usage': 'Uso Básico',
+  'basic_usage': 'Uso básico',
   'step_map': 'Selecciona un mapa',
   'step_map_desc': 'Comienza seleccionando un mapa de juego. Esto es crucial porque las recomendaciones se basarán en los brawlers más efectivos para ese mapa específico.',
   'step_team': 'Elige quién empieza',
@@ -270,20 +270,20 @@ const esTranslations = {
   'step_simulate_desc': 'Selecciona brawlers para ambos equipos siguiendo el orden de draft indicado. Puedes hacerlo en cualquier fase del draft.',
   'step_generate': 'Genera recomendaciones',
   'step_generate_desc': 'Presiona el botón azul brillante para que la IA analice el draft actual y genere las mejores opciones para la fase actual.',
-  'controls': 'Controles Interactivos',
-  'control_left_click': 'Click Izquierdo',
+  'controls': 'Controles interactivos',
+  'control_left_click': 'Click izquierdo',
   'control_left_click_desc': 'Selecciona un brawler para añadirlo al draft en la posición actual.',
-  'control_right_click': 'Click Derecho',
+  'control_right_click': 'Click derecho',
   'control_right_click_desc': 'Banea un brawler para que no esté disponible en el draft.',
-  'control_drag': 'Arrastrar y Soltar',
+  'control_drag': 'Arrastrar y soltar',
   'control_drag_desc': 'Arrastra brawlers dentro del draft para reorganizarlos o a la papelera para eliminarlos.',
   'control_recommendations': 'Recomendaciones IA',
   'control_recommendations_desc': 'El panel de recomendaciones puede contraerse o expandirse con el botón en la esquina superior derecha.',
-  'phases': 'Fases del Draft',
-  'phase_1': 'Primera fase: Recomendación para el primer pick (sin selecciones previas)',
-  'phase_2': 'Segunda fase: Mejores combinaciones para los picks 2 y 3 (con el primer pick ya seleccionado)',
-  'phase_3': 'Tercera fase: Mejores combinaciones para los picks 4 y 5 (con los picks 1, 2 y 3 ya seleccionados)',
-  'phase_4': 'Cuarta fase: Recomendación para el último pick (con 5 picks ya seleccionados)',
+  'phases': 'Fases del draft',
+  'phase_1': 'Primera fase: recomendación para el primer pick (sin selecciones previas)',
+  'phase_2': 'Segunda fase: mejores combinaciones para los picks 2 y 3 (con el primer pick ya seleccionado)',
+  'phase_3': 'Tercera fase: mejores combinaciones para los picks 4 y 5 (con los picks 1, 2 y 3 ya seleccionados)',
+  'phase_4': 'Cuarta fase: recomendación para el último pick (con 5 picks ya seleccionados)',
   'pro_tips': 'Consejos Pro',
   'tip_percentage': 'Las recomendaciones de la IA muestran un porcentaje de efectividad basado en el análisis del draft.',
   'tip_medals': 'Las medallas de oro, plata y bronce destacan las tres mejores opciones recomendadas.',
@@ -295,15 +295,15 @@ const esTranslations = {
   'gem_grab': 'Atrapagemas',
   'brawl_ball': 'Balón Brawl',
   'heist': 'Atraco',
-  'hot_zone': 'Zona Restringida',
-  'bounty': 'Caza Estelar',
+  'hot_zone': 'Zona restringida',
+  'bounty': 'Caza estelar',
   'knockout': 'Noqueo',
   'basket_brawl': 'Hockey Brawl',
   
   // Rarities
   'common': 'Común',
   'rare': 'Raro',
-  'super_rare': 'Super Raro',
+  'super_rare': 'Super raro',
   'epic': 'Épico',
   'mythic': 'Mítico',
   'legendary': 'Legendario',
@@ -326,8 +326,8 @@ i18n
       en: { translation: enTranslations },
       es: { translation: esTranslations }
     },
-    lng: 'en', // Default language
-    fallbackLng: 'en',
+    lng: 'es', // Default language
+    fallbackLng: 'es',
     interpolation: {
       escapeValue: false // React already escapes values
     }
