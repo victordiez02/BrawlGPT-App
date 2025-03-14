@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useMemo } from 'react';
+
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { brawlers, Brawler } from '@/lib/brawlers';
 import { GameMap } from '@/lib/maps';
 import MapSelector from './MapSelector';
