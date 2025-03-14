@@ -1,3 +1,4 @@
+
 /** @jsxImportSource react */
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -15,6 +16,7 @@ interface AIRecommendationsProps {
   onSelectRecommendation: (suggestion: GeminiSuggestion, phase: number) => void;
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
+  onRecommendationClick?: () => void;
 }
 
 const AIRecommendations: React.FC<AIRecommendationsProps> = ({
@@ -24,7 +26,8 @@ const AIRecommendations: React.FC<AIRecommendationsProps> = ({
   phase,
   onSelectRecommendation,
   isOpen,
-  setIsOpen
+  setIsOpen,
+  onRecommendationClick
 }) => {
   const { t, i18n } = useTranslation();
   const currentLanguage = i18n.language;
@@ -136,6 +139,11 @@ const AIRecommendations: React.FC<AIRecommendationsProps> = ({
   const handleSelectRecommendation = (suggestion: GeminiSuggestion) => {
     onSelectRecommendation(suggestion, phase);
     setIsOpen(false); // Minimizar el cuadro
+    
+    // Ejecutar el callback de desplazamiento si existe
+    if (onRecommendationClick) {
+      onRecommendationClick();
+    }
   };
   
   return (

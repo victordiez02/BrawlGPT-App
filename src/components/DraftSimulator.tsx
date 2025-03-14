@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useMemo } from 'react';
+
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { brawlers, Brawler } from '@/lib/brawlers';
 import { GameMap } from '@/lib/maps';
 import MapSelector from './MapSelector';
@@ -28,6 +29,7 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({
   onReturnToMapSelection 
 }) => {
   const { t } = useTranslation();
+  const draftContainerRef = useRef<HTMLDivElement>(null);
   
   const [selectedMap, setSelectedMap] = useState<GameMap | null>(initialMap);
   const [firstPick, setFirstPick] = useState<'blue' | 'red'>('blue');
@@ -46,6 +48,13 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({
   
   // Estado para el diálogo de draft completado
   const [showDraftCompletionDialog, setShowDraftCompletionDialog] = useState<boolean>(false);
+  
+  // Función para desplazarse al área del draft
+  const scrollToDraft = () => {
+    if (draftContainerRef.current) {
+      draftContainerRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
   
   // Efecto para escuchar el evento de reset de recomendaciones
   useEffect(() => {
@@ -444,7 +453,10 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({
       // 🌟 Para la fase 4, aseguramos que hay 5 picks antes de completar el draft
       if (phase === 4 && newSelectedBrawlers.filter(id => id !== null).length === 5) {
         newSelectedBrawlers[pickOrder[5]] = brawlerIds[0] ?? null;
-        setShowDraftCompletionDialog(true);
+        // Programar el diálogo para mostrarse después de un pequeño retraso
+        setTimeout(() => {
+          setShowDraftCompletionDialog(true);
+        }, 100);
       }
 
       return newSelectedBrawlers;
@@ -459,6 +471,9 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({
 
       toast.success(t('recommendation_applied', { brawlers: brawlerNamesStr }));
       setIsAIRecommendationsOpen(false); // Cerrar recomendaciones después de aplicarlas
+      
+      // Desplazarse al draft después de aplicar la recomendación
+      scrollToDraft();
     }
   };
 
@@ -528,7 +543,7 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({
         
         {selectedMap && (
           <>
-            <div className="glass-panel mb-6 overflow-hidden transition-all duration-300">
+            <div className="glass-panel mb-6 overflow-hidden transition-all duration-300" ref={draftContainerRef}>
               <div className="p-4">
                 <div className="flex justify-between items-center mb-4">
                   <h2 className="text-xl font-bold font-brawl">{t('current_draft')}</h2>
@@ -622,6 +637,7 @@ const DraftSimulator: React.FC<DraftSimulatorProps> = ({
                 onSelectRecommendation={handleSelectRecommendation}
                 isOpen={isAIRecommendationsOpen}
                 setIsOpen={setIsAIRecommendationsOpen}
+                onRecommendationClick={scrollToDraft}
               />
             )}
             
