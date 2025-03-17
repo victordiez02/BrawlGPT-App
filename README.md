@@ -17,11 +17,11 @@ BrawlGPT es una app para Brawl Stars que utiliza inteligencia artificial para re
 
 ## 🖼️ Vista previa de la aplicación
 
-| ![Landing Page](public\resources\demos\Demo1.png) | ![Cuadro de Draft](public\resources\demos\Demo2.png) |
+| ![Landing Page](public/resources/demos/Demo1.png) | ![Cuadro de Draft](public/resources/demos/Demo2.png) |
 |:--:|:--:|
 | **Página de inicio de BrawlGPT** | **Visualización del draft en progreso** |
 
-| ![Recomendaciones de la IA](public\resources\demos\Demo3.png) | ![Selección de Brawlers](public\resources\demos\Demo4.png) |
+| ![Recomendaciones de la IA](public/resources/demos/Demo3.png) | ![Selección de Brawlers](public/resources/demos/Demo4.png) |
 |:--:|:--:|
 | **Recomendaciones de IA en tiempo real** | **Menú de selección de brawlers** |
 
