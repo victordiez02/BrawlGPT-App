@@ -1,4 +1,4 @@
-# <img src="public/resources/IconBS.png" alt="BrawlGPT Icon" height="30" /> BrawlGPT App- Asistente Inteligente para Drafts de Brawl Stars
+# <img src="public/resources/iconBS.png" alt="BrawlGPT Icon" height="30" /> BrawlGPT App- Asistente Inteligente para Drafts de Brawl Stars
 
 <div align="center">
   <img src="public/resources/Logo.png" alt="BrawlGPT Logo" height="300" />
@@ -15,9 +15,17 @@ BrawlGPT es un simulador de drafts para Brawl Stars potenciado por inteligencia 
 - 🌐 Soporte multilenguaje (Español e Inglés)
 - 🔮 Inteligencia artificial que recomienda los mejores picks en cada fase
 
-## 📱 Demostración
+## 🖼️ Vista previa de la aplicación
 
-![BrawlGPT Demo](public/og-image.png)
+| ![Landing Page](https://private-user-images.githubusercontent.com/187178116/423411932-b70cd37a-28ef-4350-b041-cf1d644eafb0.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NDIyMDUxODgsIm5iZiI6MTc0MjIwNDg4OCwicGF0aCI6Ii8xODcxNzgxMTYvNDIzNDExOTMyLWI3MGNkMzdhLTI4ZWYtNDM1MC1iMDQxLWNmMWQ2NDRlYWZiMC5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUwMzE3JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MDMxN1QwOTQ4MDhaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1iMWU1ZjA1NmIxYTYzZmEwMTljNGQ4MDQyOTc2MDExOTUzNmFjNWY4OTE5ZTlmODMwZDgzOGMyN2JmOTFmNzk5JlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.kXD8NJD--W7g5HWlpPontWPqbwpcssDoJikIiYFeJjc) | ![Cuadro de Draft](https://private-user-images.githubusercontent.com/187178116/423411933-199f9e38-d123-4bfd-9555-05fc4b8b81a4.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NDIyMDUxODgsIm5iZiI6MTc0MjIwNDg4OCwicGF0aCI6Ii8xODcxNzgxMTYvNDIzNDExOTMzLTE5OWY5ZTM4LWQxMjMtNGJmZC05NTU1LTA1ZmM0YjhiODFhNC5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUwMzE3JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MDMxN1QwOTQ4MDhaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT03YWIzZGE0OTFlOThmMWUyYzA1ZDhjMWQwZTJkMzk0NmJjODZlOTg5ZThhODZhYzc4OTdjZGFkZjE3ZTZlMzRjJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.vKJv1L6qde1ZOkCGAVDPWniOTt5d08uXogQknuFLi3U) |
+|:--:|:--:|
+| **Página de inicio de BrawlGPT** | **Visualización del draft en progreso** |
+
+| ![Recomendaciones de la IA](https://private-user-images.githubusercontent.com/187178116/423411931-eaca270b-8edf-4c86-9b91-233744ee0e13.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NDIyMDUxODgsIm5iZiI6MTc0MjIwNDg4OCwicGF0aCI6Ii8xODcxNzgxMTYvNDIzNDExOTMxLWVhY2EyNzBiLThlZGYtNGM4Ni05YjkxLTIzMzc0NGVlMGUxMy5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUwMzE3JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MDMxN1QwOTQ4MDhaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT04OGYyNjFhZGQzZDk3Njc1MDVjYmVkNTVmOTc3ZDFiMzFhNzZmMDc2YzcyOWJlZTEzMmQ4NWZiZDUwZmNkMGRiJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.nOeGGRtV1bSZRQ91RZOAO99z5pZYCWhXdjX_dayHNVQ) | ![Selección de Brawlers](https://private-user-images.githubusercontent.com/187178116/423411930-ad84e3e1-7a76-420c-83fe-dd24fd867bb4.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NDIyMDUxODgsIm5iZiI6MTc0MjIwNDg4OCwicGF0aCI6Ii8xODcxNzgxMTYvNDIzNDExOTMwLWFkODRlM2UxLTdhNzYtNDIwYy04M2ZlLWRkMjRmZDg2N2JiNC5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUwMzE3JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MDMxN1QwOTQ4MDhaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT02MjNjODkxMmJiZmI2OWNlNTlhMzBjZDY4ZDViOThjZTRiY2VjYWNhN2UyZWU1NDg2NmQ3NGFlODY5YjdhNzBkJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.iohOrubcBLloI4027rALMtj-Ev3ZsrJDYMYNXABQnnA) |
+|:--:|:--:|
+| **Recomendaciones de IA en tiempo real** | **Menú de selección de brawlers** |
+
+
 
 ## 🛠️ Tecnologías utilizadas
 
@@ -43,6 +51,8 @@ La API está construida con FastAPI y utiliza modelos de IA para proporcionar re
 - **Fase 2**: Sugiere la mejor combinación de dos brawlers
 - **Fase 3**: Recomienda picks para completar la estrategia
 - **Fase 4**: Sugiere el brawler final para cerrar la composición
+
+[![GitHub Repo](https://img.shields.io/badge/GitHub-BrawlGPT%20API-blue?style=for-the-badge&logo=github)](https://github.com/victordiez02/BrawlGPT-API.git)
 
 ## 🚀 ¿Cómo funciona?
 
