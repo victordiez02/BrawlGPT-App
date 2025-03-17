@@ -1,69 +1,117 @@
-# Welcome to your Lovable project
 
-## Project info
+# BrawlGPT - Asistente Inteligente para Drafts de Brawl Stars 🌟
 
-**URL**: https://lovable.dev/projects/26ad3480-16b2-4fb9-9a58-fca32d62f032
+![Banner](public/resources/iconBS.png)
 
-## How can I edit this code?
+BrawlGPT es un simulador de drafts para Brawl Stars potenciado por inteligencia artificial que ayuda a los jugadores a tomar mejores decisiones durante el proceso de selección de personajes. Con una interfaz intuitiva y recomendaciones generadas por IA, BrawlGPT te permite optimizar tu estrategia en cada fase del draft.
 
-There are several ways of editing your application.
+## ✨ Características principales
 
-**Use Lovable**
+- 🗺️ Selección de mapas con filtros por modo de juego
+- 🧠 Recomendaciones de picks inteligentes basadas en el contexto del draft
+- 🚫 Sistema de bans para personajes
+- 🔄 Simulación completa de drafts con turnos
+- 🌐 Soporte multilenguaje (Español e Inglés)
+- 🔮 Inteligencia artificial que recomienda los mejores picks en cada fase
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/26ad3480-16b2-4fb9-9a58-fca32d62f032) and start prompting.
+## 📱 Demostración
 
-Changes made via Lovable will be committed automatically to this repo.
+![BrawlGPT Demo](public/og-image.png)
 
-**Use your preferred IDE**
+## 🛠️ Tecnologías utilizadas
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+- **React** - Framework de UI
+- **TypeScript** - Tipado estático
+- **Tailwind CSS** - Framework de estilos
+- **shadcn/ui** - Componentes de UI
+- **i18next** - Internacionalización
+- **React DnD** - Drag and Drop de brawlers
+- **Vite** - Build tool
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## 🧠 Conexión con BrawlGPT API
 
-Follow these steps:
+Este proyecto se conecta con [BrawlGPT API](https://github.com/victordiez02/BrawlGPT-API.git), un servicio desarrollado por mí que:
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+1. Recibe información del estado actual del draft (mapa, brawlers seleccionados, brawlers baneados)
+2. Utiliza Google Gemini para analizar la situación y generar recomendaciones contextuales
+3. Devuelve las mejores opciones con explicaciones detalladas
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+La API está construida con FastAPI y utiliza modelos de IA para proporcionar recomendaciones precisas en diferentes fases del draft:
 
-# Step 3: Install the necessary dependencies.
-npm i
+- **Fase 1**: Recomienda el primer brawler para elegir
+- **Fase 2**: Sugiere la mejor combinación de dos brawlers
+- **Fase 3**: Recomienda picks para completar la estrategia
+- **Fase 4**: Sugiere el brawler final para cerrar la composición
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+## 🚀 ¿Cómo funciona?
+
+1. **Selecciona un mapa** - Escoge el mapa donde se jugará la partida
+2. **Configura el draft** - Decide qué equipo tiene el primer pick
+3. **Banea brawlers** - Excluye personajes que no quieres que aparezcan
+4. **Recibe recomendaciones de IA** - En cada fase del draft, recibe sugerencias inteligentes
+5. **Completa tu draft** - Selecciona los brawlers finales para tu equipo
+
+## 💻 Instalación local
+
+Para ejecutar BrawlGPT en tu máquina local:
+
+```bash
+# Clona este repositorio
+git clone https://github.com/tuusuario/BrawlGPT.git
+
+# Navega al directorio del proyecto
+cd BrawlGPT
+
+# Instala las dependencias
+npm install
+
+# Crea un archivo .env con tu clave de API
+echo "VITE_BRAWLGPT_API_KEY=tu_clave_api" > .env
+
+# Inicia el servidor de desarrollo
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+> 🔑 **Nota:** Necesitarás una clave API de BrawlGPT. Puedes obtenerla configurando tu propia instancia de [BrawlGPT API](https://github.com/victordiez02/BrawlGPT-API.git).
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## 🤔 ¿Cómo obtener la clave API?
 
-**Use GitHub Codespaces**
+1. Clona y configura el repositorio [BrawlGPT API](https://github.com/victordiez02/BrawlGPT-API.git)
+2. Sigue las instrucciones en ese repositorio para generar tu clave API
+3. Agrega la clave a tu archivo .env como se muestra arriba
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## 🌐 Despliegue
 
-## What technologies are used for this project?
+El proyecto está optimizado para ser desplegado en plataformas como Vercel, Netlify o GitHub Pages.
 
-This project is built with .
+## 📚 Estructura del proyecto
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+```
+BrawlGPT/
+├── src/
+│   ├── components/     # Componentes React
+│   ├── lib/            # Utilidades y datos
+│   ├── pages/          # Páginas principales
+│   └── i18n.ts         # Configuración de internacionalización
+├── public/             # Recursos estáticos
+└── README.md           # Documentación
+```
 
-## How can I deploy this project?
+## 🔮 Próximas mejoras
 
-Simply open [Lovable](https://lovable.dev/projects/26ad3480-16b2-4fb9-9a58-fca32d62f032) and click on Share -> Publish.
+- Historial de drafts con estadísticas
+- Más idiomas disponibles
+- Modo oscuro/claro
+- Sincronización con la API oficial de Brawl Stars
 
-## I want to use a custom domain - is that possible?
+## 🤝 Contribuciones
 
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
+Las contribuciones son bienvenidas. Por favor, abre un issue o un pull request para sugerencias.
+
+## 📄 Licencia
+
+Este proyecto está bajo la licencia MIT.
+
+---
+
+Desarrollado con ❤️ por [Tu nombre]
