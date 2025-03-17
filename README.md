@@ -1,7 +1,8 @@
+# <img src="public/resources/IconBS.png" alt="BrawlGPT Icon" height="30" /> BrawlGPT App- Asistente Inteligente para Drafts de Brawl Stars
 
-# BrawlGPT - Asistente Inteligente para Drafts de Brawl Stars 🌟
-
-![Banner](public/resources/iconBS.png)
+<div align="center">
+  <img src="public/resources/Logo.png" alt="BrawlGPT Logo" height="300" />
+</div>
 
 BrawlGPT es un simulador de drafts para Brawl Stars potenciado por inteligencia artificial que ayuda a los jugadores a tomar mejores decisiones durante el proceso de selección de personajes. Con una interfaz intuitiva y recomendaciones generadas por IA, BrawlGPT te permite optimizar tu estrategia en cada fase del draft.
 
@@ -53,11 +54,11 @@ La API está construida con FastAPI y utiliza modelos de IA para proporcionar re
 
 ## 💻 Instalación local
 
-Para ejecutar BrawlGPT en tu máquina local:
+Para ejecutar BrawlGPT App en tu máquina local:
 
 ```bash
 # Clona este repositorio
-git clone https://github.com/tuusuario/BrawlGPT.git
+git clone https://github.com/victordiez02/brawl-draft-magic.git
 
 # Navega al directorio del proyecto
 cd BrawlGPT
@@ -114,4 +115,4 @@ Este proyecto está bajo la licencia MIT.
 
 ---
 
-Desarrollado con ❤️ por [Tu nombre]
+Desarrollado **Víctor Díez**
