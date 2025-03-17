@@ -1,4 +1,4 @@
-# <img src="public/resources/iconBS.png" alt="BrawlGPT Icon" height="30" /> BrawlGPT App- Asistente IA para drafts de Brawl Stars competitivo
+# <img src="public/resources/iconBS.png" alt="BrawlGPT Icon" height="30" /> BrawlGPT App - Asistente IA para drafts de Brawl Stars competitivo
 
 <div align="center">
   <img src="public/resources/Logo.png" alt="BrawlGPT Logo" height="300" />
