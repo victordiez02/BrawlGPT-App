@@ -4,7 +4,7 @@
   <img src="public/resources/Logo.png" alt="BrawlGPT Logo" height="300" />
 </div>
 
-BrawlGPT es un simulador de drafts para Brawl Stars potenciado por inteligencia artificial que ayuda a los jugadores a tomar mejores decisiones durante el proceso de selección de personajes. Con una interfaz intuitiva y recomendaciones generadas por IA, BrawlGPT te permite optimizar tu estrategia en cada fase del draft.
+BrawlGPT es una app para Brawl Stars que utiliza inteligencia artificial para recomendar la mejor elección de personaje durante el draft previo a la partida. Con una interfaz intuitiva y recomendaciones generadas por IA, BrawlGPT te permite optimizar tu estrategia en cada fase del draft.
 
 ## ✨ Características principales
 
@@ -17,15 +17,13 @@ BrawlGPT es un simulador de drafts para Brawl Stars potenciado por inteligencia 
 
 ## 🖼️ Vista previa de la aplicación
 
-| ![Landing Page](https://private-user-images.githubusercontent.com/187178116/423411932-b70cd37a-28ef-4350-b041-cf1d644eafb0.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NDIyMDUxODgsIm5iZiI6MTc0MjIwNDg4OCwicGF0aCI6Ii8xODcxNzgxMTYvNDIzNDExOTMyLWI3MGNkMzdhLTI4ZWYtNDM1MC1iMDQxLWNmMWQ2NDRlYWZiMC5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUwMzE3JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MDMxN1QwOTQ4MDhaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1iMWU1ZjA1NmIxYTYzZmEwMTljNGQ4MDQyOTc2MDExOTUzNmFjNWY4OTE5ZTlmODMwZDgzOGMyN2JmOTFmNzk5JlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.kXD8NJD--W7g5HWlpPontWPqbwpcssDoJikIiYFeJjc) | ![Cuadro de Draft](https://private-user-images.githubusercontent.com/187178116/423411933-199f9e38-d123-4bfd-9555-05fc4b8b81a4.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NDIyMDUxODgsIm5iZiI6MTc0MjIwNDg4OCwicGF0aCI6Ii8xODcxNzgxMTYvNDIzNDExOTMzLTE5OWY5ZTM4LWQxMjMtNGJmZC05NTU1LTA1ZmM0YjhiODFhNC5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUwMzE3JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MDMxN1QwOTQ4MDhaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT03YWIzZGE0OTFlOThmMWUyYzA1ZDhjMWQwZTJkMzk0NmJjODZlOTg5ZThhODZhYzc4OTdjZGFkZjE3ZTZlMzRjJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.vKJv1L6qde1ZOkCGAVDPWniOTt5d08uXogQknuFLi3U) |
+| ![Landing Page](public\resources\demos\Demo1.png) | ![Cuadro de Draft](public\resources\demos\Demo2.png) |
 |:--:|:--:|
 | **Página de inicio de BrawlGPT** | **Visualización del draft en progreso** |
 
-| ![Recomendaciones de la IA](https://private-user-images.githubusercontent.com/187178116/423411931-eaca270b-8edf-4c86-9b91-233744ee0e13.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NDIyMDUxODgsIm5iZiI6MTc0MjIwNDg4OCwicGF0aCI6Ii8xODcxNzgxMTYvNDIzNDExOTMxLWVhY2EyNzBiLThlZGYtNGM4Ni05YjkxLTIzMzc0NGVlMGUxMy5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUwMzE3JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MDMxN1QwOTQ4MDhaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT04OGYyNjFhZGQzZDk3Njc1MDVjYmVkNTVmOTc3ZDFiMzFhNzZmMDc2YzcyOWJlZTEzMmQ4NWZiZDUwZmNkMGRiJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.nOeGGRtV1bSZRQ91RZOAO99z5pZYCWhXdjX_dayHNVQ) | ![Selección de Brawlers](https://private-user-images.githubusercontent.com/187178116/423411930-ad84e3e1-7a76-420c-83fe-dd24fd867bb4.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NDIyMDUxODgsIm5iZiI6MTc0MjIwNDg4OCwicGF0aCI6Ii8xODcxNzgxMTYvNDIzNDExOTMwLWFkODRlM2UxLTdhNzYtNDIwYy04M2ZlLWRkMjRmZDg2N2JiNC5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUwMzE3JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MDMxN1QwOTQ4MDhaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT02MjNjODkxMmJiZmI2OWNlNTlhMzBjZDY4ZDViOThjZTRiY2VjYWNhN2UyZWU1NDg2NmQ3NGFlODY5YjdhNzBkJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.iohOrubcBLloI4027rALMtj-Ev3ZsrJDYMYNXABQnnA) |
+| ![Recomendaciones de la IA](public\resources\demos\Demo3.png) | ![Selección de Brawlers](public\resources\demos\Demo4.png) |
 |:--:|:--:|
 | **Recomendaciones de IA en tiempo real** | **Menú de selección de brawlers** |
-
-
 
 ## 🛠️ Tecnologías utilizadas
 
@@ -126,3 +124,10 @@ Este proyecto está bajo la licencia MIT.
 ---
 
 Desarrollado **Víctor Díez**
+
+<div align="center">
+  <p><strong>⚠️ Aviso importante</strong></p>
+  <p>Este proyecto no está afiliado, respaldado ni patrocinado por Supercell.</p>
+  <p>Brawl Stars y sus activos son propiedad de Supercell.</p>
+  <p>Para más información, consulta la <a href="https://supercell.com/en/fan-content-policy/">Política de Contenidos de Supercell</a>.</p>
+</div>
