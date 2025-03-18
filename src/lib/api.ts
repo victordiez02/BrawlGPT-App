@@ -59,8 +59,19 @@ export const getAIRecommendation = async (
     return brawler ? brawler.name : '';
   }).filter(name => name !== '');
 
-  // Filtrar brawlers seleccionados no nulos y convertir a nombres
-  const pickedBrawlersNames = selectedBrawlers
+  // Definir el orden de los picks según quién empieza primero
+  const pickOrder = firstPick === 'blue' 
+    ? [0, 3, 4, 1, 2, 5] // Blue first: Blue picks 1st, 4th, 5th; Red picks 2nd, 3rd, 6th
+    : [3, 0, 1, 4, 5, 2]; // Red first: Red picks 1st, 4th, 5th; Blue picks 2nd, 3rd, 6th
+  
+  // Reorganizar los brawlers seleccionados según el orden de picks
+  const orderedBrawlers: (number | null)[] = new Array(6).fill(null);
+  pickOrder.forEach((newIndex, originalIndex) => {
+    orderedBrawlers[originalIndex] = selectedBrawlers[newIndex];
+  });
+  
+  // Filtrar brawlers seleccionados no nulos y convertir a nombres, ya en el orden correcto
+  const pickedBrawlersNames = orderedBrawlers
     .filter(id => id !== null)
     .map(id => {
       const brawler = brawlers.find(b => b.id === id);
