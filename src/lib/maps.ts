@@ -244,7 +244,7 @@ export const allGameMaps: GameMap[] = [
 ];
 
 // List of map IDs that should be excluded from the map selection UI
-const excludedMapIds = [106];
+const excludedMapIds = [102, 105, 106, 204, 301, 302, 303, 304, 601];
 
 // Filtered list of maps that will be shown in the UI
 export const gameMaps: GameMap[] = allGameMaps.filter(map => !excludedMapIds.includes(map.id));
