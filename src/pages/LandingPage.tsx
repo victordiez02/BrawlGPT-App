@@ -35,9 +35,9 @@ const LandingPage = () => {
               className="flex justify-center mb-3 relative z-10 animate-fade-in cursor-pointer"
             >
               <img 
-                src="/resources/Logo.png" 
+                src={`${import.meta.env.BASE_URL}resources/Logo.png`} 
                 alt="BrawlGPT Logo" 
-                className="w-auto h-80 md:h-56 transition-all duration-500 hover:scale-110 hover:drop-shadow-[0_0_15px_rgba(0,229,255,0.6)] animate-float" 
+                className="w-auto h-80 md:h-56 transition-all duration-500 hover:scale-110 hover:drop-shadow-[0_0_15px_rgba(0,229,255,0.6)] animate-float"
                 onClick={() => {
                   const audio = new Audio('/resources/iconBS.png');
                   audio.volume = 0.5;
