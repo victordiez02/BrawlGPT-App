@@ -15,6 +15,25 @@ BrawlGPT es una app para Brawl Stars que utiliza inteligencia artificial para re
 - 🌐 Soporte multilenguaje (Español e Inglés)
 - 🔮 Inteligencia artificial que recomienda los mejores picks en cada fase
 
+---
+
+## 🔗 **Prueba la aplicación en línea**
+
+La app está desplegada públicamente en **Render** usando un plan gratuito, por lo que **puede tardar unos segundos en cargarse** si ha estado inactiva.
+Además, la aplicación se conecta con una **API externa también desplegada en Render sin plan de pago** desarrolada por mí, por lo que **al solicitar una recomendación con IA, es posible que la primera respuesta tarde unos segundos en llegar**. Más abajo explico donde encontrar esta API.
+
+Puedes acceder directamente desde el siguiente enlace:
+
+<div align="center">
+
+<a href="https://brawlgpt-app.onrender.com" target="_blank">
+  <img src="https://img.shields.io/badge/🚀%20Probar%20BrawlGPT%20App%20en%20línea-Click%20Aquí-blueviolet?style=for-the-badge" alt="Abrir aplicación BrawlGPT">
+</a>
+
+</div>
+
+---
+
 ## 🖼️ Vista previa de la aplicación
 
 | ![Landing Page](public/resources/demos/Demo1.png) | ![Cuadro de Draft](public/resources/demos/Demo2.png) |
@@ -37,7 +56,7 @@ BrawlGPT es una app para Brawl Stars que utiliza inteligencia artificial para re
 
 ## 🧠 Conexión con BrawlGPT API
 
-Este proyecto se conecta con [BrawlGPT API](https://github.com/victordiez02/BrawlGPT-API.git), un servicio desarrollado por mí que:
+Este proyecto se conecta con BrawlGPT API, un servicio desarrollado por mí que:
 
 1. Recibe información del estado actual del draft (mapa, brawlers seleccionados, brawlers baneados)
 2. Utiliza Google Gemini para analizar la situación y generar recomendaciones contextuales
@@ -49,6 +68,8 @@ La API está construida con FastAPI y utiliza modelos de IA para proporcionar re
 - **Fase 2**: Sugiere la mejor combinación de dos brawlers
 - **Fase 3**: Recomienda picks para completar la estrategia
 - **Fase 4**: Sugiere el brawler final para cerrar la composición
+
+Puedes econtrarla en este repositorio:
 
 [![GitHub Repo](https://img.shields.io/badge/GitHub-BrawlGPT%20API-blue?style=for-the-badge&logo=github)](https://github.com/victordiez02/BrawlGPT-API.git)
 
