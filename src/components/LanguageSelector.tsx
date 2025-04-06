@@ -20,7 +20,7 @@ const LanguageSelector: React.FC = () => {
         aria-label="Switch to English"
       >
         <img 
-          src={`${import.meta.env.BASE_URL}resources/iconUSA.png`}
+          src="/resources/iconUSA.png"
           alt="English" 
           className="w-full h-full object-cover"
         />
@@ -34,7 +34,7 @@ const LanguageSelector: React.FC = () => {
         aria-label="Cambiar a Español"
       >
         <img 
-          src={`${import.meta.env.BASE_URL}resources/iconSP.png`}
+          src="/resources/iconSP.png"
           alt="Español" 
           className="w-full h-full object-cover"
         />
