@@ -17,9 +17,10 @@ const LanguageSelector: React.FC = () => {
         onClick={() => changeLanguage('en')}
         title="English"
         type="button"
+        aria-label="Switch to English"
       >
         <img 
-          src="/resources/iconUSA.png" 
+          src="/resources/iconUSA.png"
           alt="English" 
           className="w-full h-full object-cover"
         />
@@ -30,9 +31,10 @@ const LanguageSelector: React.FC = () => {
         onClick={() => changeLanguage('es')}
         title="Español"
         type="button"
+        aria-label="Cambiar a Español"
       >
         <img 
-          src="/resources/iconSP.png" 
+          src="/resources/iconSP.png"
           alt="Español" 
           className="w-full h-full object-cover"
         />
