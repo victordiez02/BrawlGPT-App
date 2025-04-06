@@ -1,4 +1,3 @@
-
 /** @jsxImportSource react */
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -19,7 +18,7 @@ const Header = () => {
         <div className="flex flex-col items-center justify-center relative">
           <div className="absolute opacity-30 -z-10 transform scale-150">
             <img 
-              src={`${import.meta.env.BASE_URL}resources/iconBS.png`} 
+              src="/resources/iconBS.png" 
               alt="Brawl Stars Logo Background" 
               className="w-48 h-48"
             />
