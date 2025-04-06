@@ -16,6 +16,25 @@ const MapSelectionPage: React.FC<MapSelectionPageProps> = ({ onSelectMap }) => {
   // Get unique modes for filtering
   const modes = Array.from(new Set(gameMaps.map(map => map.mode)));
   
+  // Get translated mode name
+  const getTranslatedMode = (mode: string) => {
+    if (i18n.language !== 'es') return mode;
+    
+    const modeMap: Record<string, string> = {
+      'Gem Grab': 'Atrapagemas',
+      'Brawl Ball': 'Balón Brawl',
+      'Heist': 'Atraco',
+      'Hot Zone': 'Zona Restringida',
+      'Bounty': 'Caza Estelar',
+      'Knockout': 'Noqueo',
+      'Brawl Hockey': 'Hockey Brawl',
+      'Showdown': 'Supervivencia',
+      'Siege': 'Asedio'
+    };
+    
+    return modeMap[mode] || mode;
+  };
+
   // Filter maps by selected mode and search term
   const filteredMaps = gameMaps
     .filter(map => filterMode ? map.mode === filterMode : true)
@@ -57,25 +76,6 @@ const MapSelectionPage: React.FC<MapSelectionPageProps> = ({ onSelectMap }) => {
     if (lowerMode === 'brawl hockey' || lowerMode === 'hockey brawl') 
       return 'https://cdn.brawlify.com/game-modes/regular/48000045.png';
     return 'https://cdn.brawlify.com/placeholder.png';
-  };
-
-  // Get translated mode name
-  const getTranslatedMode = (mode: string) => {
-    if (i18n.language !== 'es') return mode;
-    
-    const modeMap: Record<string, string> = {
-      'Gem Grab': 'Atrapagemas',
-      'Brawl Ball': 'Balón Brawl',
-      'Heist': 'Atraco',
-      'Hot Zone': 'Zona Restringida',
-      'Bounty': 'Caza Estelar',
-      'Knockout': 'Noqueo',
-      'Brawl Hockey': 'Hockey Brawl',
-      'Showdown': 'Supervivencia',
-      'Siege': 'Asedio'
-    };
-    
-    return modeMap[mode] || mode;
   };
 
   // Get current mode banner if a filter is active
