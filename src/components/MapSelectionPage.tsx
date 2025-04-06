@@ -19,10 +19,20 @@ const MapSelectionPage: React.FC<MapSelectionPageProps> = ({ onSelectMap }) => {
   // Filter maps by selected mode and search term
   const filteredMaps = gameMaps
     .filter(map => filterMode ? map.mode === filterMode : true)
-    .filter(map => 
-      map.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      map.mode.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    .filter(map => {
+      const currentLanguage = i18n.language;
+      const searchLower = searchTerm.toLowerCase();
+      
+      // Search by name (in the current language) or mode
+      if (currentLanguage === 'es') {
+        return (map.translatedName?.toLowerCase().includes(searchLower) || 
+                map.name.toLowerCase().includes(searchLower) || 
+                getTranslatedMode(map.mode).toLowerCase().includes(searchLower));
+      } else {
+        return (map.name.toLowerCase().includes(searchLower) || 
+                map.mode.toLowerCase().includes(searchLower));
+      }
+    });
 
   const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>, mapName: string) => {
     console.error(`Failed to load image for map ${mapName}:`, e.currentTarget.src);
@@ -73,6 +83,14 @@ const MapSelectionPage: React.FC<MapSelectionPageProps> = ({ onSelectMap }) => {
     if (!filterMode) return null;
     const gameMode = getGameModeByName(filterMode);
     return gameMode?.banner;
+  };
+
+  // Get map name based on current language
+  const getLocalizedMapName = (map: GameMap) => {
+    if (i18n.language === 'es' && map.translatedName) {
+      return map.translatedName;
+    }
+    return map.name;
   };
 
   return (
@@ -170,7 +188,7 @@ const MapSelectionPage: React.FC<MapSelectionPageProps> = ({ onSelectMap }) => {
               </div>
             </div>
             <div className="p-3 bg-gray-800/80">
-              <p className="font-medium text-lg font-brawl">{i18n.language === 'es' && map.translatedName ? map.translatedName : map.name}</p>
+              <p className="font-medium text-lg font-brawl">{getLocalizedMapName(map)}</p>
               <p className="text-sm text-gray-300">{getTranslatedMode(map.mode)}</p>
             </div>
           </div>
